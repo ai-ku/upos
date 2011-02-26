@@ -1,19 +1,31 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+use strict;
+use IO::All;
 
-my @data;
-my $col = 0;
+sub myopen {
+    my ($path) = @_;
+    $path = "zcat $path |" if $path =~ /gz$/;
+    return io($path);
+}
 
-for my $file (@ARGV) {
-    open(FP, $file) || die $!;
-    my $row = 0;
-    while(<FP>) {
-	s/\s+$//;
-	$data[$row++][$col] = $_;
+my @fp;
+push @fp, myopen($_) for @ARGV;
+
+while(1) {
+    my $eof = 0;
+    my $col = 0;
+    for my $f (@fp) {
+	my $line = $f->getline;
+	if (not defined $line) {
+	    $eof = 1;
+	    last;
+	}
+	chomp($line);
+	print "\t" if $col++;
+	print "$line";
     }
-    close(FP);
-    $col++;
+    print "\n";
+    last if $eof;
 }
 
-for my $row (@data) {
-    print join("\t", @$row) . "\n";
-}
+$_->close for @fp;
