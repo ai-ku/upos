@@ -10,7 +10,7 @@ open(FP, "wsj.test1M.gold");
 while(<FP>) {
     next unless /\S/;
     my ($w, $p) = split;
-    $w =~ tr/A-Z/a-z/;
+    # $w =~ tr/A-Z/a-z/;
     push @words, $w;
 }
 close(FP);
@@ -20,7 +20,7 @@ while(<>) {			# wsj.test1M.lc.500.n0p09.subf
     my @a = split;
     my $w = $a[0];
     next if $w eq '</s>';
-    $w =~ tr/A-Z/a-z/;
+    # $w =~ tr/A-Z/a-z/;
     if ($w ne '<unk>' and $w ne $words[$index]) {
 	die "Bad word: [$w] != [$words[$index]]";
     }
