@@ -24,8 +24,8 @@ while(1) {
 	print "\t" if $col++;
 	print $line;
     }
-    print "\n";
     last if $eof;
+    print "\n";
 }
 
 close for @fp;
