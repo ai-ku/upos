@@ -23,7 +23,7 @@ while(<>) {
 close(GOLD);
 
 if ($opt_m and $opt_v) {
-    print STDERR join("\t", vm(), m2o())."\n";
+    print STDERR join("\t", m2o(), vm())."\n";
 } elsif ($opt_v) {
     print STDERR join("\t", vm())."\n";
 } else {
