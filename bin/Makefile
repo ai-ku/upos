@@ -19,3 +19,6 @@ kmeans:
 
 scode:
 	ln -s ../src/scode/scode .
+
+clean:
+	-rm *.pl ngram-count fastsubs dists preinput.py kmeans scode
