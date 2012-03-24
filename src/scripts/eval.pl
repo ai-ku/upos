@@ -4,7 +4,7 @@ use strict;
 my $usage = qq{eval.pl [-m -v] -g <gold> < input
 Calculates many-to-one and v-measure evaluations.
 -m prints many-to-one (default)
--v prints v-measure
+-v prints v-measure (homogeneity, completeness, v-measure)
 -g file with gold answers
 };
 
@@ -23,11 +23,11 @@ while(<>) {
 close(GOLD);
 
 if ($opt_m and $opt_v) {
-    printf("%g\t%g\n", m2o(), vm());
+    print STDERR join("\t", vm(), m2o())."\n";
 } elsif ($opt_v) {
-    printf("%g\n", vm());
+    print STDERR join("\t", vm())."\n";
 } else {
-    printf("%g\n", m2o());
+    print STDERR m2o()."\n";
 }
 
 sub m2o {
@@ -85,5 +85,6 @@ sub vm {
     }    
     my $h = 1 - $H_ga / $H_g;
     my $c = 1 - $H_ag / $H_a;
-    return (2*$h*$c / ($h+$c));
+    my $v = (2*$h*$c / ($h+$c));
+    return ($h, $c, $v);
 }
