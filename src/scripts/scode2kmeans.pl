@@ -14,8 +14,8 @@ $opt_t = "zcat $opt_t |" if $opt_t =~ /\.gz$/;
 
 # Read scode input
 my %scode;
-<>;				# first line header
 while(<>) {
+    next unless s/^0://;
     my ($word, $weight, $coor) = /^(\S+)\s+(\S+)\s+(.+)/;
     $scode{$word} = $coor;
 }
@@ -23,7 +23,7 @@ while(<>) {
 open(FP, $opt_t) or die $!;
 while(<FP>) {
     for my $w (split) {
-	die unless defined $scode{$w};
+	die "Word [$w] not found.\n" unless defined $scode{$w};
 	print "$scode{$w}\n";
     }
 }
