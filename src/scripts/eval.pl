@@ -22,13 +22,17 @@ while(<>) {
 }
 close(GOLD);
 
+my @ans;
 if ($opt_m and $opt_v) {
-    print STDERR join("\t", m2o(), vm())."\n";
+    push @ans, m2o();
+    push @ans, vm();
 } elsif ($opt_v) {
-    print STDERR join("\t", vm())."\n";
+    push @ans, vm();
 } else {
-    print STDERR m2o()."\n";
+    push @ans, m2o();
 }
+$_ = sprintf("%f", $_) for @ans;
+print STDERR join("\t", @ans)."\n";
 
 sub m2o {
     my $total = 0;
