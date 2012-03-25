@@ -1,0 +1,12 @@
+Please read run/Makefile to see how to use these programs.
+
+bin	- directory for binaries, please put this in your PATH
+data	- training and test data
+run	- directory for running experiments
+run/Makefile	- explains everything
+src/srilm	- SRILM 1.6.0 for building language models
+src/fastsubs	- code to find most likely substitutes
+src/dists	- code to find knn for substitute vectors
+src/scode	- code to find a low dimensional embedding
+src/kmeans	- kmeans clustering algorithm
+src/perl	- various utility scripts
