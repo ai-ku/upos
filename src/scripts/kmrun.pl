@@ -19,16 +19,16 @@ my $ev_err = "$tmp/eval";
 
 my $ntest = 1173766;
 my $K = 45;
-my $word = 'wsj.words.gz';
+my $test = 'wsj.words.gz';
 my $gold = 'wsj.pos.gz';
 
 my ($input, $kmeans, $score);
 if ($weights) {
-    $input = "zcat $file | grep ^0: | cut -f2-";
-    $kmeans = "wkmeans -k $K -r $nstart -s $seed -w";
-    $score = "wkmeans2eval.pl -i $file -t $word | eval.pl -m -v -g $gold";
+    $input = "zcat $file | perl -ne 'print if s/^0://'";
+    $kmeans = "wkmeans -k $K -r $nstart -s $seed -w -l";
+    $score = "wkmeans2eval.pl -t $test | eval.pl -m -v -g $gold";
 } else {
-    $input = "zcat $file | scode2kmeans.pl -t $word";
+    $input = "zcat $file | scode2kmeans.pl -t $test";
     $kmeans = "wkmeans -k $K -r $nstart -s $seed";
     $score = "eval.pl -m -v -g $gold";
 }
