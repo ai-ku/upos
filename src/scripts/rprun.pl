@@ -19,8 +19,8 @@ my $ev_err = "$tmp/eval";
 
 my $ntest = 1173766;
 my $sc_restart = 1;
-my $sc_niter = 5; # 50;
-my $km_restart = 5; # 128;
+my $sc_niter = 50;
+my $km_restart = 128;
 my $K = 45;
 my $test = 'wsj.words.gz';
 my $gold = 'wsj.pos.gz';
