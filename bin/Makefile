@@ -1,4 +1,4 @@
-all: eval.pl fastsubs dists scode kmeans 
+all: eval.pl fastsubs dists scode wkmeans 
 
 
 eval.pl: check
