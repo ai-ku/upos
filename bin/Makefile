@@ -16,12 +16,12 @@ scode: check
 	cd ../src/scode; make
 	test -e $@ || ln -s ../src/scode/scode .
 
-kmeans: check
-	cd ../src/kmeans; make
-	test -e $@ || ln -s ../src/kmeans/kmeans .
+wkmeans: check
+	cd ../src/wkmeans; make
+	test -e $@ || ln -s ../src/wkmeans/wkmeans .
 
 check:
 	true
 
 clean:
-	-rm *.pl *.py fastsubs dists scode kmeans
+	-rm *.pl *.py fastsubs dists scode wkmeans
