@@ -93,19 +93,17 @@ SC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED}
 
 
 ### KMEANS options:
-# --input=<file>  Input file: space or tab separated vectors, default stdin
-# --output=<file> Ouput file: cluster id per line, default stdout
-# --labels        Read labels in input file
-# --weights=<>    Read weights in input file
-# --init random|kpp|randff
-# --k=<N>         Number of clusters, default 45
-# --seed=<N>      Fixed seed, default time(NULL)
-# --restarts=<N>  Number of restarts, default 0
-# --verbose
-KM_OPTIONS=--k=45 --restarts=10 --init randff --verbose=1 --seed=${SEED}
+# -k number of clusters (default 2)
+# -r number of restarts (default 0)
+# -s random seed
+# -l input file contains labels
+# -w input file contains instance weights
+# -v verbose output
+
+KM_OPTIONS=-k 45 -r 16 -l -w -v -s ${SEED}
 
 %.kmeans.gz: %.scode.gz
-	zcat $< | scode2kmeans.pl -t ${TEST} | kmeans ${KM_OPTIONS} | gzip > $@
+	zcat $< | perl -ne 'print if s/^0://' | wkmeans ${KM_OPTIONS} | gzip > $@
 
 ## With options --k=45 --restarts=10 --init kpp
 ## rpart.kmeans.gz: time=3m32s wc=1173766 1173766 3155470
@@ -121,7 +119,7 @@ wsj.pos.gz: ${GOLD}  ## time=1s, wc=1173766 1173766 3793947
 	zcat $< | perl -lane 'print $$F[1] if /\S/' | gzip > $@
 
 %.eval: %.kmeans.gz wsj.pos.gz ## time=1s
-	zcat $< | eval.pl -m -v -g wsj.pos.gz
+	zcat $< | wkmeans2eval.pl -t ${TEST} | eval.pl -m -v -g wsj.pos.gz
 
 
 ### RPART experiments:
@@ -144,11 +142,12 @@ bigram.pairs.gz: ${TEST}
 	zcat $< | perl -lne 'for $$w (split) {print "$$p\t$$w" if defined $$p; $$p=$$w;}' | gzip > $@
 
 bigram.scode.gz: bigram.pairs.gz
-	zcat $< | scode -m ${SC_OPTIONS} | gzip > $@
+	zcat $< | scode -m ${SC_OPTIONS} | perl -pe 's/^/0:/' | gzip > $@
 
 
 
-.PRECIOUS: wsj.lm.gz wsj.sub.gz wsj.knn.gz wsj.vocab.gz wsj.words.gz wsj.pos.gz
+.PRECIOUS: wsj.lm.gz wsj.sub.gz wsj.knn.gz wsj.vocab.gz wsj.words.gz wsj.pos.gz \
+           %.pairs.gz %.scode.gz %.kmeans.gz
 
 
 clean:
