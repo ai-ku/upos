@@ -1,24 +1,27 @@
-links: eval.pl ngram-count fastsubs dists kmeans scode
+all: eval.pl fastsubs dists scode kmeans 
 
 
-eval.pl:
-	ln -s ../src/perl/*.pl .
+eval.pl: check
+	test -e $@ || ln -s ../src/perl/*.pl .
 
-ngram-count:
-	ln -s ../src/srilm/bin/i686-m64/ngram-count .
+fastsubs: check
+	cd ../src/fastsubs; make
+	test -e $@ || ln -s ../src/fastsubs/fastsubs .
 
-fastsubs:
-	ln -s ../src/fastsubs/fastsubs .
+dists: check
+	cd ../src/dists; make
+	test -e $@ || ln -s ../src/dists/{dists,preinput.py} .
 
-dists:
-	ln -s ../src/dists/dists .
-	ln -s ../src/dists/preinput.py .
+scode: check
+	cd ../src/scode; make
+	test -e $@ || ln -s ../src/scode/scode .
 
-kmeans:
-	ln -s ../src/kmeans/kmeans .
+kmeans: check
+	cd ../src/kmeans; make
+	test -e $@ || ln -s ../src/kmeans/kmeans .
 
-scode:
-	ln -s ../src/scode/scode .
+check:
+	true
 
 clean:
-	-rm *.pl ngram-count fastsubs dists preinput.py kmeans scode
+	-rm *.pl *.py fastsubs dists scode kmeans

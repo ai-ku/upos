@@ -1,12 +1,58 @@
-Please read run/Makefile to see how to use these programs.
+INSTRUCTIONS FOR UPOS                   (c) Deniz Yuret, 25-Mar-2012
 
-bin	- directory for binaries, please put this in your PATH
+
+TERMS:
+
+Please feel free to use this code for any purpose at your own risk.
+Here is the relevant paper:
+
+Mehmet Ali Yatbaz, Enis Sert, and Deniz Yuret.  2012.  Learning
+Syntactic Categories Using Paradigmatic Representations.  EMNLP 2012.
+
+
+DIRECTORY STRUCTURE:
+
 data	- training and test data
+bin	- directory for binaries, please put this in your PATH
 run	- directory for running experiments
 run/Makefile	- explains everything
-src/srilm	- SRILM 1.6.0 for building language models
 src/fastsubs	- code to find most likely substitutes
 src/dists	- code to find knn for substitute vectors
 src/scode	- code to find a low dimensional embedding
 src/kmeans	- kmeans clustering algorithm
 src/perl	- various utility scripts
+
+
+INSTALLATION:
+
+1. Untar the src, run, data archives.
+2. These should create a top level directory called upos.
+3. Add upos/bin to your PATH.
+4. cd upos/run; make bin - compiles and fills the bin directory.
+
+This code was tested on a Debian 6.0.1 64-bit Linux machine with the
+following installed, but most other configurations should work:
+
+srilm (1.6.0), gcc (4.4.5), perl (5.10.1), python (2.6.6), 
+libc6 (2.11.2), libglib2.0-dev (2.24.2), libgsl0-dev (1.14)
+
+
+RUNNING:
+
+Here is how to use run/Makefile to run some experiments.  Timings are
+from a fairly standard 2012 workstation.  You can run through the
+whole sequence by saying "make rpart.eval".  But I would at least
+babysit the wsj.knn.gz production which takes the biggest bulk of the
+time.  See the file run/Makefile for details and more options.
+
+cd upos/run; make bin	# compiles and puts symlinks in bin directory
+make wsj.vocab.gz	# time=1m16s - prepares the LM vocabulary
+make wsj.lm.gz		# time=6m10s - creates a 4-gram LM
+make wsj.sub.gz		# time=4h47m - finds most likely substitutes
+make wsj.knn.gz		# time=21h40m (on 24 cores) - 1000 nearest neighbors
+make wsj.words.gz	# time=1s - words in the test set
+make wsj.pos.gz		# time=1s - gold pos in the test set
+make rpart.pairs.gz	# time=2m55s - output word + random-partition
+make rpart.scode.gz	# time=53s - runs scode on rpart.pairs
+make rpart.kmeans.gz	# time=3m32s - runs kmeans on rpart.scode
+make rpart.eval		# time=1s - compares results with wsj.pos

@@ -1,4 +1,6 @@
-all:
+### INSTALLATION:
+bin:
+	cd ../bin; make
 
 ### GENERAL setup:
 export PATH := ../bin:${PATH} # Binaries in the bin directory
@@ -24,9 +26,6 @@ LM_NGRAM=4  # n-gram order
 LM_VOCAB=20 # words seen less than this in GETTRAIN will be replaced with <unk>
 LM_MTYPE=i686-m64 # architecture for compiling srilm
 
-../bin/ngram-count: check
-	cd ../src/srilm; make MACHINE_TYPE=${LM_MTYPE} World
-
 wsj.vocab.gz: ${TRAIN}  ## LM_VOCAB=20: time=1m16s, wc=78498   78498  672284
 	${GETTRAIN} | ngram-count -write-order 1 -text - -write - | \
 	perl -lane 'print $$F[0] if $$F[1] >= ${LM_VOCAB}' | gzip > $@
@@ -40,10 +39,7 @@ FS_NSUB=100 # go until you have this many substitutes
 FS_PSUB=1.0 # or this much cumulative probability
 FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
 
-../bin/fastsubs: check
-	cd ../src/fastsubs; make
-
-wsj.sub.gz: ${TEST} wsj.lm.gz ../bin/fastsubs ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125
+wsj.sub.gz: ${TEST} wsj.lm.gz  ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125
 	zcat $< | fastsubs ${FS_OPTIONS} wsj.lm.gz | gzip > $@
 
 
@@ -52,10 +48,7 @@ KNN=1000 # number of nearest neighbors to compute
 KNN_METRIC=1 # 0=euclid, 1=cosine
 KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU}
 
-../bin/dists: check
-	cd ../src/dists; make
-
-wsj.knn.gz: wsj.sub.gz ../bin/dists ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
+wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
 	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
 
 
@@ -91,10 +84,7 @@ wordsub.pairs.gz: wsj.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -v: verbose messages (default false)
 SC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED}
 
-../bin/scode: check
-	cd ../src/scode; make
-
-%.scode.gz: %.pairs.gz ../bin/scode
+%.scode.gz: %.pairs.gz
 	zcat $< | scode ${SC_OPTIONS} | gzip > $@
 
 ## With options -r1 -i20 -d25:
@@ -114,10 +104,7 @@ SC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED}
 # --verbose
 KM_OPTIONS=--k=45 --restarts=10 --init randff --verbose=1 --seed=${SEED}
 
-../bin/kmeans: check
-	cd ../src/kmeans; make
-
-%.kmeans.gz: %.scode.gz ../bin/kmeans
+%.kmeans.gz: %.scode.gz
 	zcat $< | scode2kmeans.pl -t ${TEST} | kmeans ${KM_OPTIONS} | gzip > $@
 
 ## With options --k=45 --restarts=10 --init kpp
@@ -156,17 +143,17 @@ wsrun.out:
 bigram.pairs.gz: ${TEST}
 	zcat $< | perl -lne 'for $$w (split) {print "$$p\t$$w" if defined $$p; $$p=$$w;}' | gzip > $@
 
-bigram.scode.gz: bigram.pairs.gz scode
+bigram.scode.gz: bigram.pairs.gz
 	zcat $< | scode -m ${SC_OPTIONS} | gzip > $@
 
 
-check:
-	cd ../bin; make
-	true
+
+.PRECIOUS: wsj.lm.gz wsj.sub.gz wsj.knn.gz wsj.vocab.gz wsj.words.gz wsj.pos.gz
+
 
 clean:
+	-rm -i wsj.lm.gz wsj.sub.gz wsj.knn.gz rprun.out wsrun.out
+	-rm wsj.vocab.gz wsj.words.gz wsj.pos.gz
+	-rm *.pairs.gz *.scode.gz *.kmeans.gz
 	cd ../bin; make clean
-	cd ../src/dists; make clean
-	cd ../src/fastsubs; make clean
-	cd ../src/scode; make clean
-	cd ../src/srilm; make MACHINE_TYPE=${LM_MTYPE} clean
+	cd ../src; make clean
