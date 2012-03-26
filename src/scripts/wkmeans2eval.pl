@@ -15,6 +15,7 @@ $opt_t = "zcat $opt_t |" if $opt_t =~ /\.gz$/;
 my %clus;
 while (<>) {
     my ($w, $c) = split;
+    die "Duplicate word: $w" if defined $clus{$w};
     $clus{$w} = $c;
 }
 
