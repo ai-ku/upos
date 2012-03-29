@@ -6,12 +6,28 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{graphicx}
-\usepackage[usenames,dvipsnames]{pstricks}
-\usepackage{epsfig}
+% \usepackage[usenames,dvipsnames]{pstricks}
+% \usepackage{epsfig}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \setlength\titlebox{6.5cm}    % Expanding the titlebox
 
-\title{Learning Syntactic Categories Using Paradigmatic Representations}
+%%% DY: Some consistency macros:
+
+% many-to-one abbreviation
+% 429 uses MTO
+% Lamar uses M-to-1
+% Maron uses MTO
+% Lamar uses MTO
+% Let us go with MTO
+\newcommand{\mto}{\mbox{MTO }}
+
+% Let us go with VM for V-measure
+\newcommand{\vm}{\mbox{VM }}
+
+% Adopt the .7654 convention rather than percentages like 76.54%.
+
+\title{Learning Syntactic Categories Using Paradigmatic
+  Representations of\\ Word Context}
 
 \author{First Author \\
   Affiliation / Address line 1 \\
@@ -34,15 +50,17 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We introduce a paradigmatic representation of word context and
-demonstrate its utility in learning syntactic categories.  Unlike the
-typical syntagmatic representations of word context which consist of
-properties of neighboring words, our paradigmatic representation
-consists of substitute vectors: possible substitutes of the target
-word and their probabilities.  When word contexts are clustered based
-on their substitute vectors they reveal a grouping that largely match
-the traditional part of speech boundaries with a many-to-one accuracy
-of \collapseResult\% on a 45-tag 24K word test corpus.
+
+We investigate paradigmatic representations of word context in the
+domain of unsupervised syntactic category acquisition.  Paradigmatic
+representations of word context are based on potential substitutes of
+a word in contrast to syntagmatic representations based on properties
+of neighboring words.  We compare a bigram based baseline model with
+several paradigmatic models and demonstrate significant gains in
+accuracy.  Our best model based on Euclidean co-occurence embedding
+combines paradigmatic features with morphological and orthographic
+features and achieves close to 80\% many-to-one accuracy on a 45-tag
+million-word test corpus.
 \end{abstract}
 
 \section{Introduction}
@@ -54,6 +72,8 @@ syntactic categories (also known as lexical or part-of-speech
 categories) is one of the fundamental problems in language
 acquisition.
 
+Syntactic categories represent groups of words that can be substituted
+for one another without altering the grammaticality of a sentence.
 Linguists identify syntactic categories based on semantic, syntactic,
 and morphological properties of words.  There is also evidence that
 children use prosodic and phonological features to bootstrap syntactic
@@ -63,17 +83,13 @@ performance.  Thus identifying the best set of features and best
 learning algorithms for syntactic category acquisition is still an
 open problem.
 
-Computational models of syntactic category acquisition in the
-literature mainly rely on distributional analysis: Items that share
-the same distribution (i.e. that occur in the same context) are
-grouped into the same category.  The definition of ``the same
-context'' vary across studies.  Algorithms based on the Hidden Markov
-Model use class based n-grams to specify context
-\cite{Brown:1992:CNG:176313.176316}, others use a frame of neighboring
-words around the target word \cite{Schutze:1995:DPT:976973.976994}.
-Our main contribution in this study is to introduce paradigmatic
-features, i.e. features based on potential substitutes of the target
-word, to represent word context.
+\begin{figure}[b] \centering
+\includegraphics[width=50mm]{paradigmatic.png}
+% \input{paradigmatic.tex}
+\caption{Syntagmatic vs. paradigmatic axes for words in a simple
+  sentence \cite{chandler2007semiotics}.}
+\label{fig:paradigmatic}
+\end{figure}
 
 Relationships between linguistic units can be classified into two
 types: syntagmatic (concerning positioning), and paradigmatic
@@ -82,64 +98,104 @@ units can combine to create larger groups and paradigmatic relations
 determine which units can be substituted for one another.
 Figure~\ref{fig:paradigmatic} illustrates the paradigmatic vs
 syntagmatic axes for words in a simple sentence and their possible
-substitutes.
+substitutes.  
 
-\begin{figure}[h] \centering
-\input{paradigmatic.tex}
-\caption{Syntagmatic vs. paradigmatic axes for words in a simple
-  sentence \cite{chandler2007semiotics}.}
-\label{fig:paradigmatic}
-\end{figure}
+In this study, we represent the paradigmatic axis directly by building
+{\em substitute vectors} for each word position in the text.  The
+dimensions of a substitute vector represent words in the vocabulary,
+and the magnitudes represent the probability of occurence in the given
+position.  Note that the substitute vector for a word position (e.g.
+the second word in Fig.~\ref{fig:paradigmatic}) is a function of the
+context only (i.e. ``the \_\_\_ cried''), and does not depend on the
+word that does actually appear there (i.e. ``man'').  Thus substitute
+vectors represent {\em individual word contexts}, not word types.  We
+refer to the use of features based on substitute vectors as 
+{\em paradigmatic representations of word context}.
 
-Both syntagmatic and paradigmatic relations of a word can be used to
-represent its context.  In the syntagmatic case the context is
-represented by a selection of neighboring words, in the paradigmatic
-case it is represented by a set of possible substitutes.  In previous
-studies of syntactic category learning the context representation has
-been primarily syntagmatic, either implicit in the class based n-grams
-of the standard Hidden Markov Model, or explicit in the construction
-and clustering of left and right neighbors.
-
-In this study we explore a paradigmatic representation of the context
-of a word in syntactic category acquisition.  Specifically, the
-context of a word is represented by a list of its possible substitutes
-and their probabilities, which we call the {\em substitute vector}.
-Note that the substitute vector is a function of the context only, not
-the target word.  Thus in effect we are clustering contexts, not
-words.  When word contexts are clustered based on their substitute
-vectors they reveal a grouping that largely match the traditional part
-of speech boundaries (\collapseResult\% many-to-one score using a
-45-tag 24K word test corpus).
-% standard HMM-EM gives 42\% on the same data.
+To learn syntactic categories, paradigmatic representations of word
+context are combined with features of co-occuring words within the
+co-occurence data embedding (CODE) framework of
+\cite{globerson2007euclidean,maron2010sphere}.  We obtain many-to-one
+accuracies up to .7662 using only distributional information and .7974
+using morphological and orthographic features of words improving the
+state-of-the-art in unsupervised part-of-speech tagging performance.
 
 Section~\ref{sec:related} gives a detailed review of related work.
-The construction of the substitute vectors is described in
-Section~\ref{sec:lm}.  To find out how to best make use of this new
-paradigmatic representation, we explore different distance metrics
-(Section~\ref{sec:dist}), dimensionality reduction methods
-(Section~\ref{sec:dimreduce}), and clustering algorithms
-(Section~\ref{sec:clustering}) for substitute vectors.  We note that
-close to 95\% of the word occurrences in human labeled data are tagged
-with their most frequent part of speech
-\cite{Lee:2010:STU:1870658.1870741}, making one-tag-per-word a fairly
-good first approximation.  Even ambicategory words generally have
-fairly skewed part of speech distributions.
-Section~\ref{sec:sparsity} looks at ways to increase the sparsity of
-our solutions and demonstrates significant improvements using the
-one-tag-per-word assumption and similarity metrics that introduce
-sparsity.  Section~\ref{sec:discussion} discusses the results and
-Section~\ref{sec:contrib} summarizes our contributions.
+Section~\ref{sec:lm} desribes the dataset and the construction of the
+substitute vectors.  Section~\ref{sec:code} describes co-occurence
+data embedding, the learning algorithm used in our experiments.
+Section~\ref{sec:exp} describes our experiments and compares our
+results with previous work.  Section~\ref{sec:discuss} gives a brief
+error analysis and Section~\ref{sec:contrib} summarizes our
+contributions.  All the data and the code to replicate the results
+given in this paper is available from the authors' website at
+\url{http://xxx.xxx.xxx}.
+
+
+%% Computational models of syntactic category acquisition rely mainly on
+%% distributional analysis: Words that share the same distribution
+%% (i.e. that occur in the same context) are grouped into the same
+%% category.  The definition of ``the same context'' vary across studies.
+%% Algorithms based on the Hidden Markov Model use class based n-grams to
+%% specify context \cite{Brown:1992:CNG:176313.176316}, others use a
+%% frame of neighboring words around the target word
+%% \cite{Schutze:1995:DPT:976973.976994}.
+
+%% Our hypothesis is that potential substitutes of a word are directly
+%% indicative of its syntactic category and should be useful in acquiring
+%% syntactic categories in general.  
+
+%% Our main contribution in this study
+%% is to introduce paradigmatic features, i.e. features based on
+%% potential substitutes of the target word, to represent word context.
+
+%% Both syntagmatic and paradigmatic relations of a word can be used to
+%% represent its context.  In the syntagmatic case the context is
+%% represented by a selection of neighboring words, in the paradigmatic
+%% case it is represented by a set of possible substitutes.  In previous
+%% studies of syntactic category learning the context representation has
+%% been primarily syntagmatic, either implicit in the class based n-grams
+%% of the standard Hidden Markov Model, or explicit in the construction
+%% and clustering of left and right neighbors.
+
+%% In this study we explore a paradigmatic representation of the context
+%% of a word in syntactic category acquisition.  Specifically, the
+%% context of a word is represented by a list of its possible substitutes
+%% and their probabilities, which we call the {\em substitute vector}.
+%% Note that the substitute vector is a function of the context only, not
+%% the target word.  Thus in effect we are clustering contexts, not
+%% words.  When word contexts are clustered based on their substitute
+%% vectors they reveal a grouping that largely match the traditional part
+%% of speech boundaries (\bestResult many-to-one score using a
+%% 45-tag 24K word test corpus).
+%% % standard HMM-EM gives 42\% on the same data.
+
+%% Section~\ref{sec:related} gives a detailed review of related work.
+%% The construction of the substitute vectors is described in
+%% Section~\ref{sec:lm}.  To find out how to best make use of this new
+%% paradigmatic representation, we explore different distance metrics
+%% (Section~\ref{sec:dist}), dimensionality reduction methods
+%% (Section~\ref{sec:dimreduce}), and clustering algorithms
+%% (Section~\ref{sec:clustering}) for substitute vectors.  We note that
+%% close to 95\% of the word occurrences in human labeled data are tagged
+%% with their most frequent part of speech
+%% \cite{Lee:2010:STU:1870658.1870741}, making one-tag-per-word a fairly
+%% good first approximation.  Even ambicategory words generally have
+%% fairly skewed part of speech distributions.
+%% Section~\ref{sec:sparsity} looks at ways to increase the sparsity of
+%% our solutions and demonstrates significant improvements using the
+%% one-tag-per-word assumption and similarity metrics that introduce
+%% sparsity.  Section~\ref{sec:discussion} discusses the results and
+%% Section~\ref{sec:contrib} summarizes our contributions.
 
 
 \section{Related Work}
 \label{sec:related}
-
+%%% This part looks fine
 There are several good reviews of algorithms for unsupervised
 part-of-speech induction
 \cite{Christodoulopoulos:2010:TDU:1870658.1870714,Gao:2008:CBE:1613715.1613761}
 and models of syntactic category acquisition \cite{ambridge2011child}.
-In this review we focus on (i) the information captured by the inputs,
-and (ii) the constraints applied to the outputs of the algorithms.
 
 This work is to be distinguished from supervised part-of-speech
 disambiguation systems, which use labeled training data
@@ -153,18 +209,32 @@ corpora and high quality dictionaries.  It is also essential in
 modeling child language acquisition because every child manages to
 induce syntactic categories without access to labeled sentences,
 labeled prototypes, or dictionary constraints.
+%%%%
+%\paragraph{Distributional vs. Feature Based}
+% \subsection{Distributional vs. Feature Based}
 
-\paragraph{Clustering vs. HMMs:}
-Models of unsupervised induction of part-of-speech categories fall
-into two broad groups.  The first group uses algorithms that cluster
-word types based on their context statistics
-\cite{Schutze:1995:DPT:976973.976994}.  Work in modeling child
-syntactic category acquisition has generally followed this clustering
-approach \cite{redington1998distributional,mintz2003frequent}.  The
-second group consists of probabilistic models based on the Hidden
-Markov Model (HMM) framework \cite{Brown:1992:CNG:176313.176316}.
+Models of unsupervised part-of-speech induction fall into two broad
+groups based on the information they utilize.  Distributional models
+only use word types and their context statistics.  Word-feature models
+incorporate additional morphological and orthographic features.
 
-\paragraph{Clustering and data sparsity:}
+\subsection{Distributional models}
+
+Algorithms under this category can be further categorized into three
+subgroups based on the learning algorithm.  The first subgroup
+represents each word type with its context vector and clusters these
+vectors accordingly \cite{Schutze:1995:DPT:976973.976994}.  Work in
+modeling child syntactic category acquisition has generally followed
+this clustering approach
+\cite{redington1998distributional,mintz2003frequent}.  The second
+subgroup consists of probabilistic models based on the Hidden Markov
+Model (HMM) framework \cite{Brown:1992:CNG:176313.176316}.  A third
+group of algorithms constructs a low dimensional representation of the
+data that represents the empirical co-occurrence statistics of word
+types \cite{globerson2007euclidean}, which is covered in more detail
+in Section~\ref{sec:code}.
+
+\paragraph{Clustering:}
 Clustering based methods represent context using neighboring words,
 typically a single word on the left and a single word on the right
 called a ``frame'' (e.g., {\em {\bf the} dog {\bf is}; {\bf the} cat
@@ -174,7 +244,7 @@ from the beginning (with the exception of some methods in
 \cite{Schutze:1995:DPT:976973.976994}).  They may suffer from data
 sparsity caused by infrequent words and infrequent contexts.  The
 solutions suggested either restrict the set of words and set of
-contexts to be clustered to the most frequently observed or use
+contexts to be clustered to the most frequently observed, or use
 dimensionality reduction.  \cite{redington1998distributional} defines
 context similarity based on the number of common frames bypassing the
 data sparsity problem but achieves mediocre results.
@@ -187,11 +257,10 @@ contexts.  \cite{Lamar:2010:LCU:1870658.1870736} represents each
 context by the currently assigned left and right tag (which eliminates
 data sparsity) and clusters word types using a soft k-means style
 iterative algorithm.  They report the best clustering result to date
-of 70.8\% many-to-one accuracy on a 45-tag 1M word corpus.
-
+of .708 many-to-one accuracy on a 45-tag 1M word corpus.
 % all except schutze cluster word types
 
-\paragraph{HMMs and distribution sparsity:}
+\paragraph{HMMs:}
 The prototypical bitag HMM model maximizes the likelihood of the
 corpus $w_1 \ldots w_n$ expressed as $P(w_1|c_1)\prod_{i=2}^n
 P(w_i|c_i) P(c_i|c_{i-1})$ where $w_i$ are the word tokens and $c_i$
@@ -208,79 +277,132 @@ or use posterior regularization
 \cite{Ganchev:2010:PRS:1859890.1859918}.  Each of these techniques
 provide significant improvements over the standard HMM model: for
 example \cite{Gao:2008:CBE:1613715.1613761} shows that sparse priors
-can gain from 4\% (62\% to 66\% with a 1M word corpus) to 30\% (28\%
-to 58\% with a 24K word corpus) in cross-validated many-to-one
-accuracy.  However \cite{Christodoulopoulos:2010:TDU:1870658.1870714}
-shows that the older one-tag-per-word models such as
+can gain from 4\% (.62 to .66 with a 1M word corpus) in
+cross-validated many-to-one accuracy.  However
+\cite{Christodoulopoulos:2010:TDU:1870658.1870714} shows that the
+older one-tag-per-word models such as
 \cite{Brown:1992:CNG:176313.176316} outperform the more sophisticated
 sparse prior and posterior regularization methods both in speed and
-accuracy (the Brown model gets 68\% many-to-one accuracy with a 1M
+accuracy (the Brown model gets .68 many-to-one accuracy with a 1M
 word corpus).  Given that close to 95\% of the word occurrences in
 human labeled data are tagged with their most frequent part of speech
 \cite{Lee:2010:STU:1870658.1870741}, this is probably not surprising;
 one-tag-per-word is a fairly good first approximation for induction.
 
-\paragraph{Poverty of features:}
-Another problem with the plain HMM model is the poverty of its input
-features.  Of the syntactic, semantic, and morphological information
-linguists claim underlie syntactic categories, bitag HMMs only
-represent limited syntactic information in their class based n-grams.
+%% \paragraph{Co-occurrence embedding:}
+%% Embedding algorithms maps the original data to a lower dimensional
+%% space that preserves certain similarity structure defined between the
+%% objects in the data.  However in real life problems such as POS
+%% induction the similarity between contexts and word types can not be
+%% trivially constructed given that only the co-occurrence information
+%% exists between word types and their contexts.
+%% S-Code\cite{NIPS2010_1196} which is a spherical extension of
+%% \cite{Globerson:2007:EEC:1314498.1314572} algorithm maps the
+%% word-types and their contexts on to a low dimensional Euclidean sphere
+%% while preserving the co-occurrence statistics between them and then
+%% clusters the low dimensional data with k-means algorithm.  They report
+%% .688 many-to-one accuracy on a 45-tag 1M word corpus.
+
+\subsection{Word-feature models}
+One problem with the algorithms in the previous section is the poverty
+of their input features.  Of the syntactic, semantic, and
+morphological information linguists claim underlie syntactic
+categories, context vectors or bitag HMMs only represent limited
+syntactic information in their input.  Experiments incorporating
+morphological and orthographic features into HMM based models
+demonstrate significant improvements.
 \cite{Clark:2003:CDM:1067807.1067817,bergkirkpatrick-klein:2010:ACL,blunsom-cohn:2011:ACL-HLT2011}
 incorporate similar orthographic features and report improvements of
 3, 7, and 10\% respectively over the baseline Brown model.
 \cite{Christodoulopoulos:2010:TDU:1870658.1870714} use prototype based
 features as described in \cite{Haghighi:2006:PLS:1220835.1220876} with
 automatically induced prototypes and report an 8\% improvement over
-the baseline Brown model.  Semantic information is incorporated to
-some extent by some clustering based models and our paradigmatic
-model.  To our knowledge, nobody has yet tried to incorporate
-phonological or prosodic features in a computational model for
-syntactic category acquisition.
+the baseline Brown model.
+\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP} defines a
+type-based Bayesian multinomial mixture model in which each word
+instance is generated from the corresponding word type mixture
+component and word contexts are represented as features.  They achieve
+a .728 \mto score by extending their model with additional
+morphological and alignment features gathered from parallel corpora.
+To our knowledge, nobody has yet tried to incorporate phonological or
+prosodic features in a computational model for syntactic category
+acquisition.
 
-\paragraph{Evaluation:}
-It is natural to question the merit of evaluating unsupervised results
-by comparing them to gold standard tags.  For example
-\cite{freudenthal2005resolution} argue that a verb category (such as
-{\sc vb} in Penn Treebank) that contains verbs that can and cannot be
-used in certain constructions (e.g. the imperative) and verbs that can
-be used as both auxiliaries and main verbs (e.g., {\em do, have}) does
-not in fact constitute a set of items that could be substituted for
-one another in particular sentences.  Such a category fails the
-standard linguistic definition of a syntactic category and children do
-not seem to make errors of substituting such words in utterances
-(e.g. {\em''What do you want?''} vs. {\em *''What put you want?''}).
-They suggest evaluating models by incorporating a production component
-that allows the model's output to be compared to speech produced by
-children exposed to the same input.  \cite{frank2009evaluating},
-motivated by the lack of gold standards for many novel languages,
-suggest comparing a system's clusters to a set of clusters created
-from {\em substitutable frames}.  They create frames using two words
-appearing in the corpus with exactly one word between and calculate
-precision, recall, and F-score of the system's clustering.
-Statistical parsers or factored machine learning systems could also be
-sources of extrinsic evaluation for induced syntactic categories.  We
-hope such extrinsic evaluation will be more widespread in the future
-but nevertheless use the 45-tag Penn Treebank gold standard to
-evaluate the current work.
+\subsection{Paradigmatic representations of context}
 
-\paragraph{Our work:}
-Our work is more closely related to clustering based methods with two
-important differences: (i) we represent word contexts not by an ad-hoc
-selection of syntagmatic features based on a single word neighborhood
-but by substitute vectors defined by a statistical language model
-representing paradigmatic features of a larger window, (ii) we cluster
-word tokens (or rather their contexts) instead of word types, which
-means not being constrained by the one-tag-per-word assumption from
-the beginning.  The features in our model incorporate semantic as well
-as syntactic information from the context as illustrated by the
-examples in Section~\ref{sec:lm}.  Our best results on the 45-tag 24K
-corpus given in Section~\ref{sec:sparsity} (\collapseResult\% many-to-one)
-compare favorably with best previously reported results on the same
-corpus (58.2\% in \cite{Gao:2008:CBE:1613715.1613761}).  This
-significant improvement is due to the additional information obtained
-from the statistical language model which also comes at a great
-computational cost.  Developing faster algorithms to find high
-probability substitutes is in our current research agenda.
+The paradigmatic context representation in our work is closely related
+to the first and second order co-occurrence methods in
+\cite{Schutze:1995:DPT:976973.976994}.  \cite{sahlgren2006word} gives
+a detailed analysis of paradigmatic and syntagmatic relations in the
+context of word-space models used to represent word meaning.  He finds
+that in word-spaces built by paradigmatic uses of context, more
+nearest neighbors share the same part-of-speech.  Our work is
+different in that we represent word contexts, not word types using
+paradigmatic features and we use a statistical language model to
+compute accurate substitute probabilities rather than relying on an
+ad-hoc selection of neighbors.
+
+\subsection{Evaluation}
+%% It is natural to question the merit of evaluating unsupervised results
+%% by comparing them to gold standard tags.  For example
+%% \cite{freudenthal2005resolution} argue that a verb category (such as
+%% {\sc vb} in Penn Treebank) that contains verbs that can and cannot be
+%% used in certain constructions (e.g. the imperative) and verbs that can
+%% be used as both auxiliaries and main verbs (e.g., {\em do, have}) does
+%% not in fact constitute a set of items that could be substituted for
+%% one another in particular sentences.  Such a category fails the
+%% standard linguistic definition of a syntactic category and children do
+%% not seem to make errors of substituting such words in utterances
+%% (e.g. {\em''What do you want?''} vs. {\em *''What put you want?''}).
+%% They suggest evaluating models by incorporating a production component
+%% that allows the model's output to be compared to speech produced by
+%% children exposed to the same input.  \cite{frank2009evaluating},
+%% motivated by the lack of gold standards for many novel languages,
+%% suggest comparing a system's clusters to a set of clusters created
+%% from {\em substitutable frames}.  They create frames using two words
+%% appearing in the corpus with exactly one word between and calculate
+%% precision, recall, and F-score of the system's clustering.
+%% Statistical parsers or factored machine learning systems could also be
+%% sources of extrinsic evaluation for induced syntactic categories.  We
+%% hope such extrinsic evaluation will be more widespread in the future
+%% but nevertheless use many-to-one (\mto) and V-measure (\vm) metric on
+%% the 45-tag Penn Treebank gold standard to evaluate the current work.
+
+We report many-to-one and V-measure scores for our experiments as
+suggested in \cite{Christodoulopoulos:2010:TDU:1870658.1870714}.  The
+many-to-one (MTO) evaluation maps each cluster to its most frequent
+gold tag and reports the percentage of correctly tagged instances.
+The \mto score naturally gets higher with increasing number of
+clusters but it is an intuitive metric when comparing results with the
+same number of clusters.  The V-measure (VM) \cite{rosenberg2007v} is
+an information theoretic metric that reports the harmonic mean of
+homogeneity (each cluster should contain only instances of a single
+class) and completeness (all instances of a class should be members of
+the same cluster).  In Section~\ref{sec:discuss} we argue that
+homogeneity is perhaps more important in part-of-speech induction and
+suggest \mto with a fixed number of clusters as a more intuitive
+metric.
+
+%% \paragraph{Many-to-one (MTO)} metric measures the cluster purity 
+%% therefore each cluster is mapped to the most frequent gold tag of the
+%% words observed in that cluster.  \mto metric is the most intuitive
+%% measure, however it has a bias towards to the increasing number of
+%% clusters thus it should be used when the number of clusters is fixed
+%% \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
+%% \paragraph{V-measure (VM)} is an entropy based metric that calculates
+%% weighted average of cluster homogeneity and completeness in a similar
+%% fashion with F-measure recall and precision, respectively.  The
+%% cluster homogeneity is an analogy of the cluster purity in \mto.
+%% Although \vm is more robust to variable number of clusters, it is less
+%% intuitive than \mto
+%% \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.  Moreover it
+%% punishes the clustering when words with same gold tag distributed over
+%% different clusters which contradicts with the idea of POS induction
+%% since the aim is to cluster words according to the underlying natural
+%% grouping.
+
+%%% DY: where is the original paper that introduced V-measure?
+%%% DY: are you sure Chris2011 is the right citation, shouldn't it be Chris2010?
 
 \section{Substitute Vectors}
 \label{sec:lm}
@@ -353,27 +475,18 @@ used in the rest of this study.
 
 % example substitute vectors (both syntactic and semantic)
 The high probability substitutes reflect both semantic and syntactic
-features of the context as seen in the examples given in
-Table~\ref{tab:subs}.  Top substitutes for the word ``the'' consist of
-words that can act as determiners.  Top substitutes for ``board'' are
-not only nouns, but specifically nouns compatible with the semantic
-context.
+features of the context as seen in the examples given in the example
+below.  Top substitutes for the word ``the'' consist of words that can
+act as determiners.  Top substitutes for ``board'' are not only nouns,
+but specifically nouns compatible with the semantic context.
 
-\begin{table}[h]\centering
-\begin{tabular}{|l|ll|} \hline
-% \multicolumn{3}{|l|}
-\emph{word} & \emph{substitute} & \emph{probability} \\ \hline
-the	& its & .9011 \\
-	& the & .0981 \\
-	& a & .0006 \\ \hline
-board	& board & .4288 \\
-	& company & .2584 \\
-	& firm & .2024 \\
-	& bank & .0731 \\ \hline
-\end{tabular}
-\caption{Example substitutes for ``the'' and ``board'' in the sentence {\em ``Pierre Vinken, 61 years old, will join the  board as a nonexecutive director Nov. 29.''}}
-\label{tab:subs}
-\end{table}
+\begin{quotation}
+\noindent {\em ``Pierre Vinken, 61 years old, will join the  board as a
+  nonexecutive director Nov.~29.''}\\
+{\bf the:} its (.9011), the (.0981), a (.0006), $\ldots$\\
+{\bf board:} board (.4288), company (.2584), firm (.2024), bank
+(.0731), $\ldots$
+\end{quotation}
 
 These examples illustrate two concerns inherent in all distributional
 methods: (i) words that are generally substitutable like ``the'' and
@@ -387,6 +500,7 @@ in this study we follow previous work and evaluate our results by
 comparing them to gold standard part-of-speech tags.
 
 \section{Co-occurence Data Embedding}
+\label{sec:code}
 
 In this section we briefly review the Co-occurence Data Embedding
 (CODE) method \cite{globerson2007euclidean} and its spherical
@@ -448,6 +562,49 @@ rate.
 \section{Experiments}
 \label{sec:exp}
 
+\begin{table*}[t] \footnotesize
+\label{tab:results}
+
+\begin{tabular}{|l|l|l|}
+\hline
+Distributional Models & \mto & \vm \\
+\hline
+\cite{Lamar:2010:LCU:1870658.1870736} & .708 & -\\ %algorithm name LDC
+\cite{Brown:1992:CNG:176313.176316}* & .678 & .630\\
+%kcls(Och,1999) & .737 & .656\\
+%\cite{goldwater-griffiths:2007:ACLMain} & .632 & .562\\
+(Goldwater et al., 2007) & .632 & .562\\
+\cite{Ganchev:2010:PRS:1859890.1859918}* & .625 & .548\\
+\cite{maron2010sphere} & .688 (.0016)&-\\
+Bigrams (Sec.~\ref{sec:bigram}) & .7344 (.0091) & .6566 (.0049) \\
+Partitions (Sec.~\ref{sec:rpart}) & .7594 (.0085) & .6716 (.0052) \\
+Substitutes (Sec.~\ref{sec:wordsub}) & .7662 (.0066) & .6811 (.0044) \\
+\hline
+\end{tabular}
+\begin{tabular}{|l|l|l|}
+\hline
+Models with Additional Features & \mto & \vm \\
+\hline
+\cite{Clark:2003:CDM:1067807.1067817}* & .712 & .655 \\
+\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP} & .728 & .661\\
+\cite{bergkirkpatrick-klein:2010:ACL} & .755 & -\\ % Intresting in  christo paper:73.9/67.7
+\cite{Christodoulopoulos:2010:TDU:1870658.1870714} & .761 & .688\\
+\cite{blunsom-cohn:2011:ACL-HLT2011} & .775 & .697\\
+Substitutes and Features (Sec.~\ref{sec:feat}) & .7974 (.0073) & .7212 (.0052) \\
+& & \\
+& & \\
+\hline
+\end{tabular}
+
+\caption{Summary of results in terms of the \mto and \vm scores.
+  Standard errors are given in parentheses when available.  Starred
+  entries have been reported in the review paper
+  \cite{Christodoulopoulos:2010:TDU:1870658.1870714}.  Distributional
+  models use only the identity of the target word and its context.
+  The models on the right incorporate orthographic and
+  morphological features.}
+\end{table*}
+
 In this section we present experiments that evaluate substitute
 vectors as representations of word context within the S-CODE
 framework.  Section~\ref{sec:bigram} replicates the bigram based
@@ -468,13 +625,12 @@ better determiners of syntactic category compared to left and right
 neighbors.  Section~\ref{sec:feat} explores morphologic and
 orthographic features as additional sources of information and its
 results improve the state-of-the-art in the field of unsupervised
-syntactic category acquisition.  Section~\ref{sec:comparison}
-summarizes our results and compares them with previously published
-work.
+syntactic category acquisition.
 
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
-bars in graphs.
+bars in graphs.  Table~\ref{tab:results} summarizes all the results
+reported in this paper and the ones we cite from the literature.
 
 \subsection{Bigram model}\label{sec:bigram}
 
@@ -497,14 +653,14 @@ about .62.
 
 To make a meaningful comparison we re-ran the bigram experiments using
 our default settings and obtained a many-to-one score of .7344 (.0091)
-for 45 clusters.  The following default settings were used: (i) each
-word was kept with its original capitalization, (ii) the learning rate
-parameters were adjusted to $\varphi_0=50$, $\eta_0=0.2$ for faster
-convergence in log likelihood, (iii) the number of s-code iterations
-were increased from 12 to 50 million, (iv) k-means initialization was
-improved using \cite{arthur2007k}, and (v) the number of k-means
-restarts were increased to 128 to improve clustering and reduce
-variance.
+and the V-measure is .6566 (.0049)  for 45 clusters.  The following
+default settings were used: (i) each word was kept with its original
+capitalization, (ii) the learning rate parameters were adjusted to
+$\varphi_0=50$, $\eta_0=0.2$ for faster convergence in log likelihood,
+(iii) the number of s-code iterations were increased from 12 to 50
+million, (iv) k-means initialization was improved using
+\cite{arthur2007k}, and (v) the number of k-means restarts were
+increased to 128 to improve clustering and reduce variance.
 
 \subsection{Random partitions}\label{sec:rpart}
 
@@ -521,7 +677,8 @@ S-CODE as input.  The algorithm cycles through the data until we get
 approximately 50 million updates.  The resulting $\phi_x$ vectors are
 clustered using the k-means algorithm (no vector concatenation is
 necessary).  Using default settings (64K random partitions, 25 s-code
-dimensions, $Z=0.166$) the many-to-one accuracy is .7594 (.0085).
+dimensions, $Z=0.166$) the many-to-one accuracy is .7594 (.0085) and
+the V-measure is .6716 (.0052).
 
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
@@ -529,7 +686,9 @@ varied over a range of values.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=\linewidth]{plot-p.pdf}
-\caption{Number of random partitions vs. m2o.}
+\caption{\mto is not sensitive to the number of partitions used to
+  discretize the substitute vector space within our experimental
+  range.}
 \label{plot-p}
 \end{figure}
 
@@ -539,7 +698,8 @@ fairly stable across two orders of magnitude.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=\linewidth]{plot-d.pdf}
-\caption{Number of s-code dimensions vs. m2o.}
+\caption{\mto falls sharply for less than 10 S-CODE dimensions, but
+  more than 25 do not help.}
 \label{plot-d}
 \end{figure}
 
@@ -549,7 +709,8 @@ significant gain from using more than 25 dimensions.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=\linewidth]{plot-z.pdf}
-\caption{S-code Z approximation vs. m2o.}
+\caption{\mto is fairly stable as long as the $\tilde{Z}$ constant is
+  within an order of magnitude of the real $Z$ value.}
 \label{plot-z}
 \end{figure}
 
@@ -580,49 +741,153 @@ substitute vectors (see Section~\ref{sec:lm}).  We ran the
 random-substitutes algorithm to generate 50 million word ($X$) --
 random-substitute ($Y$) pairs as input to S-CODE.  Clustering the
 resulting $\phi_x$ vectors yields a many-to-one score of .7662
-(.0066).
+(.0066) and a V-measure of .6811 (.0044).
 
 This result is close to the previous result by the random-partition
 algorithm (.7594) demonstrating that two very different discrete
 representations of context based on paradigmatic features give
 consistent results.  Both results are significantly above the bigram
 baseline.  Figure~\ref{plot-s} illustrates that the random-substitute
-result is fairly robust after a couple of million word-substitute
-samples.
+result is fairly robust as long as the training algorithm can observe
+more than a few random substitutes per word.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=\linewidth]{plot-s.pdf}
-\caption{Number of word-substitute samples vs. m2o.}
+\caption{\mto is not sensitive to the number of random substitutes
+  sampled per word token.}
 \label{plot-s}
 \end{figure}
 
-\subsection{Adding features}\label{sec:feat}
+\subsection{Morphological and orthographic features}\label{sec:feat}
 
-\subsection{Comparison}\label{sec:comparison}
+\cite{Clark:2003:CDM:1067807.1067817} demonstrates that using
+morphological and orthographic features significantly improves
+part-of-speech induction with an HMM based model.
+Section~\ref{sec:related} describes a number other approaches that
+show similar improvements.  This section describes one way to
+integrate additional features to the random-substitute model.
 
-\section{Error Analsis}
+In order to accomodate multiple feature types the CODE model needs to
+be extended to handle more than two variables.
+\cite{globerson2007euclidean} suggest the following likelihood
+function:
+
+\begin{eqnarray}
+&\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multicode}\\
+&&\sum_k w_k \sum_{x,y^{(k)}} \bar{p}(x,y^{(k)}) \log p(x,y^{(k)}) \nonumber
+\end{eqnarray}
+
+\noindent where $Y^{(1)}, \ldots, Y^{(K)}$ are $K$ different variables
+whose empirical joint distributions with $X$,
+$\bar{p}(x,y^{(1)})\ldots\bar{p}(x,y^{(K)})$, are known.
+Eq.~\ref{eq:multicode} then represents a set of CODE models
+$p(x,y^{(k)})$ where each $Y^{(k)}$ has an embedding $\psi_y^{(k)}$
+but all models share the same $\phi_x$ embedding.  The weights $w_k$
+reflect the relative importance of each $Y^{(k)}$.
+
+We adopt this likelihood function, set all $w_k=1$, let $X$
+represent a word, $Y^{(1)}$ represent a random substitute and
+$Y^{(2)}, \ldots, Y^{(K)}$ stand for various morphological and
+orthographic features of the word.  With this setup, the training
+procedure needs to change little: each time a word --
+random-substitute pair is sampled, the relevant word -- feature pairs
+are also generated and input to the gradient ascent algorithm.
+
+The orthographic features we used are similar to the ones in
+\cite{bergkirkpatrick-EtAl:2010:NAACLHLT} with small modifications:
+
+\begin{itemize}
+\item Initial-Capital: this feature is generated for capitalized words
+  with the exception of sentence initial words.
+\item Number: this feature is generated when the token starts with a
+  digit.
+\item Contains-Hyphen: this feature is generated for lowercase words
+  with an internal hyphen.
+\item Initial-Apostrophe: this feature is generated for tokens that
+  start with an apostrophe.
+\end{itemize}
+
+%%% dy: which wsj?  1M?  why not 156M??
+We generated morphological features using the unsupervised algorithm
+Morfessor \cite{creutz05}.  Morfessor was trained on the WSJ section
+of the Penn Treebank using default settings, and the suggested $b$
+value of 200.  The program induced 7 suffix types that are present in
+a total of 11,917 word types.  These suffixes were input to S-CODE as
+morphological features whenever the associated word types were
+sampled.
+
+Using similar training settings as the previous section, the addition
+of morphological and orthographic features increased the many-to-one
+score of the random-substitute model to .7974 (.0073) and V-measure to
+.7212 (.0052).  Both these results improve the state-of-the-art in
+part-of-speech induction significantly as seen in
+Table~\ref{tab:results}.
+
+\begin{figure*}[ht] \centering
+\vspace*{-25mm}
+\includegraphics[width=\textwidth]{hinton.png}
+\vspace*{-30mm}
+\caption{Hinton diagram}
+\label{plot-hinton}
+\end{figure*}
+
+\section{Error Analysis}
+\label{sec:discuss}
+
+Figure~\ref{plot-hinton} is the Hinton diagram showing the
+relationship between the most frequent tags and clusters from the
+experiment in Section~\ref{sec:feat}.  In general the errors seem to
+be the lack of completeness (multiple large entries in a row), rather
+than homogeneity (multiple large entries in a column).  The algorithm
+tends to split large word classes into several clusters.  Some
+examples are:
+\begin{itemize}
+\item Titles like Mr., Mrs., and Dr. are split from the rest of the
+  proper nouns in cluster (39).
+\item Auxiliary verbs (10) and the verb ``say'' (22) have been split
+  from the general verb clusters (12) and (7).
+\item Determiners ``the'' (40), ``a'' (15), and capitalized
+  ``The'', ``A'' (6) have been split into their own clusters.
+\item Prepositions ``of'' (19), and ``by'', ``at'' (17) have been
+  split from the general preposition cluster (8).
+\end{itemize}
+Nevertheless there are some homogeneity errors as well:
+\begin{itemize} 
+\item The adjective cluster (5) also has some noun members probably
+  due to the difficulty of separating noun-noun compounds from
+  adjective modification.
+\item Cluster (6) contains capitalized words that span a number of
+  categories.
+\end{itemize}
+
+Most closed-class items are cleanly separated into their own clusters
+as seen in the lower right hand corner of the diagram.  The
+completeness errors are not surprising given that the words that have
+been split are not generally substitutable with the other members of
+the Penn Treebank category they belong to.  Thus it can be argued that
+metrics that emphasize homogeneity such as \mto are more appropriate
+in this context than metrics that average homogeneity and completeness
+such as \vm as long as the number of clusters is controlled.
 
 \section{Contributions}
 \label{sec:contrib}
 
-We introduced a paradigmatic representation for word context which
-contains possible substitutes for the target word and their
-probabilities.  The substitute probabilities were estimated using a
-standard 4-gram language model with Kneser-Ney smoothing.  We
-investigated distance metrics, dimensionality reduction techniques and
-clustering algorithms appropriate for substitute probability vectors
-and evaluated them using a supervised k-nearest-neighbor baseline and
-many-to-one accuracy relative to a 45-tag 24K word test corpus.  We
-found that the KL2 distance metric (a symmetric version of
-Kullback-Leibler divergence), dimensionality reduction using Laplacian
-eigenmaps, and spectral clustering work well with substitute vectors.
-Spectral clustering of substitute vectors reveal a grouping that
-largely match traditional part of speech boundaries (\spectralResult\%
-many-to-one accuracy) which further improve when the one-tag-per-word
-constraint is imposed (\collapseResult\% many-to-one accuracy).  These
-results compare favorably to previous results published for the 45-tag
-24K word test corpus we have used.  
-%% We are investigating ways to speed up the algorithm so it can be tested on larger corpora.
+Our main contributions can be summarized as follows:
+\begin{itemize}
+\item We introduced substitute vectors as paradigmatic representations
+  of word context and demonstrated their use in syntactic category
+  acquisition.
+\item We demonstrated that paradigmatic representations give superior
+  results when compared to bigram based representations using the
+  S-CODE learning framework.
+\item We extended the S-CODE framework to incorporate morphological
+  and orthographic features and improved the state-of-the-art in
+  unsupervised part-of-speech induction to 80\% many-to-one accuracy.
+\item All our code and data, including the substitute vectors for the
+  one million word Penn Treebank Wall Street Journal dataset, are
+  available at the authors' website at \url{http://xxx.xxx.xxx}.
+\end{itemize}
+
 
 \bibliographystyle{acl2012}
 \bibliography{posind2012}
