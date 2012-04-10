@@ -6,13 +6,13 @@ unset ylabel
 unset title
 set terminal pdf mono size 3,2
 
-set xlabel "number of word-substitute pairs"
-set xrange [8e5:1.5e8]
+set xlabel "number of random substitutes per word"
+set xrange [0.9:100]
 set yrange [0.7:0.8]
 set ytics 0.01
 set key top right
 set output "plot-s.pdf"
-plot "plot-s.dat" using (1173766*$1):2:3 title "m2o"
+plot "plot-s.dat" title "m2o"
 
 set xlabel "number of random partitions"
 set xrange [3000:400000]
