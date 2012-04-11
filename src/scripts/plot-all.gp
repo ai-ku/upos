@@ -1,3 +1,5 @@
+#!/usr/bin/gnuplot
+
 set style data errorlines
 set logscale x
 set grid xtics mxtics ytics
@@ -37,6 +39,3 @@ set ytics 0.01
 set key top right
 set output "plot-z.pdf"
 plot "plot-z.dat" title "m2o"
-
-set terminal x11
-
