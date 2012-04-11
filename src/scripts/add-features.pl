@@ -28,7 +28,7 @@ while(<>) {
     print;
     if (defined $feat{$w}) {
 	for my $f (keys %{$feat{$w}}) {
-	    if (($f eq '/INITCAP1/') and
+	    if (($f eq '/IC/') and
 		((not defined $prev) or
 		 ($prev =~ /^[.`'?!:;]+$/) or
 		 ($prev =~ /^-[LR][RC]B-$/))) {
