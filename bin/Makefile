@@ -10,7 +10,6 @@ fastsubs: check
 dists: check
 	cd ../src/dists; make
 	test -e dists || ln -s ../src/dists/dists .
-	test -e preinput.py || ln -s ../src/dists/preinput.py .
 
 scode: check
 	cd ../src/scode; make
