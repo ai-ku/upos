@@ -1,8 +1,7 @@
-all: eval.pl fastsubs dists scode wkmeans 
-
+all: eval.pl fastsubs dists scode wkmeans wordsub
 
 eval.pl: check
-	test -e $@ || ln -s ../src/perl/*.pl .
+	test -e $@ || ln -s ../src/scripts/*.* .
 
 fastsubs: check
 	cd ../src/fastsubs; make
@@ -10,7 +9,8 @@ fastsubs: check
 
 dists: check
 	cd ../src/dists; make
-	test -e $@ || ln -s ../src/dists/{dists,preinput.py} .
+	test -e dists || ln -s ../src/dists/dists .
+	test -e preinput.py || ln -s ../src/dists/preinput.py .
 
 scode: check
 	cd ../src/scode; make
@@ -20,8 +20,12 @@ wkmeans: check
 	cd ../src/wkmeans; make
 	test -e $@ || ln -s ../src/wkmeans/wkmeans .
 
+wordsub: check
+	cd ../src/wordsub; make
+	test -e $@ || ln -s ../src/wordsub/wordsub .
+
 check:
 	true
 
 clean:
-	-rm *.pl *.py fastsubs dists scode wkmeans
+	-rm *.pl *.py fastsubs dists scode wkmeans wordsub
