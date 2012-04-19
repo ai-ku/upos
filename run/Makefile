@@ -70,7 +70,7 @@ wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=117376
 # -p for ppl threshold
 MORFESSOR=../src/morfessor
 PPLTHRESH=200
-wsj.segmentation.gz: wsj.words.gz
+wsj.segmentation.gz: wsj.words.gz # time=32m56s wc=50069  182579 1059157
 	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
 
 
@@ -78,7 +78,7 @@ wsj.segmentation.gz: wsj.words.gz
 # creates the feature table
 # -s segmentation file from morfessor
 # -w tokens from wsj.test1M.gz
-wsj.features.gz: wsj.segmentation.gz
+wsj.features.gz: wsj.segmentation.gz  # time=2s wc=33065   70599  525357
 	feature-table.pl -s $< -w wsj.words.gz | gzip > $@
 
 
@@ -108,7 +108,7 @@ bigram.pairs.gz: ${TEST} # time=1s wc=1173765 2347530 12824887
 
 ### 3.1.4 WORDSUB+FEATURES options:
 
-ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz
+ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz  # time=6s wc=4493184 8986368 51780422
 	zcat $< | add-features.pl -f wsj.features.gz | gzip > $@
 
 
@@ -134,8 +134,8 @@ wordsub.scode.gz: wordsub.pairs.gz # -i 10: time=1m11s wc=49207 1328589 12175067
 bigram.scode.gz: bigram.pairs.gz # -i 50: time=1m50s wc=49206 2558712 23888740
 	zcat $< | scode -m -i 50 ${SC_OPTIONS} | gzip > $@
 
-ws+f.scode.gz: ws+f.pairs.gz
-	zcat $< | scode -i 1 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
+ws+f.scode.gz: ws+f.pairs.gz # -i 10: time=2m16s wc=49206 1328562 12262302
+	zcat $< | scode -i 10 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
 
 ### 3.3 KMEANS options:
@@ -155,7 +155,7 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 ## rpart.kmeans.gz: time=1m38s wc=49206   98412  568371
 ## wordsub.kmeans.gz: time=1m35s wc=49207   98414  570547
 ## bigram.kmeans.gz: time=2m33s wc=49206   98412  569875
-
+## ws+f.kmeans.gz: time=1m21s wc=49206   98412  564204
 
 ### 3.4 EVAL options:
 # -m prints many-to-one (default)
@@ -169,6 +169,7 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 ## bigram.eval: 	0.714360	0.716074	0.581000	0.641504
 ## rpart.eval:	 	0.750440	0.737837	0.606456	0.665727
 ## wordsub.eval: 	0.769208	0.751384	0.616089	0.677044
+## ws+f.eval:		0.795216	0.789246	0.662644	0.720425
 
 
 ### 4. EXPERIMENTAL RESULTS REPORTED IN (Yatbaz et.al. 2012)
