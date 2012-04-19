@@ -64,9 +64,29 @@ wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=117376
 	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
 
 
+### 2.5 MORFESSOR:
+# creates the segmentation file with morfessor
+# -m for path to morfessor
+# -p for ppl threshold
+MORFESSOR=../src/morfessor
+PPLTHRESH=200
+wsj.segmentation.gz: wsj.words.gz
+	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
+
+
+### 2.6 FEATURE-TABLE:
+# creates the feature table
+# -s segmentation file from morfessor
+# -w tokens from wsj.test1M.gz
+wsj.features.gz: wsj.segmentation.gz
+	feature-table.pl -s $< -w wsj.words.gz | gzip > $@
+
+
 ### 3. EXPERIMENTS WITH DEFAULT PARAMETERS
 
-### 3.1 RPART options:
+### 3.1 PREPARE INPUT FOR SCODE:
+
+### 3.1.1 RPART options:
 RPART=65536 # Number of random partitions
 RP_OPTIONS=-n ${NTEST} -p ${RPART} -s ${SEED}
 
@@ -74,19 +94,25 @@ rpart.pairs.gz: wsj.knn.gz wsj.words.gz ## RPART=65536: time=2m56s wc=1173766 23
 	zcat $< | rpart.pl ${RP_OPTIONS} | join.pl wsj.words.gz - | gzip > $@
 
 
-### 3.2 WORDSUB options:
+### 3.1.2 WORDSUB options:
 WORDSUB=3 # Number of random substitutes per word token
 
 wordsub.pairs.gz: wsj.sub.gz	## WORDSUB=3: time=1m55s wc=3668922 7337844 39398746
 	perl -le 'print "$<" for 1..${WORDSUB}' | xargs zcat | wordsub -s ${SEED} | gzip > $@
 
-### 3.3 BIGRAM options (needs scode -m): (Maron et.al. 2010)
+### 3.1.3 BIGRAM options (needs scode -m): (Maron et.al. 2010)
 
 bigram.pairs.gz: ${TEST} # time=1s wc=1173765 2347530 12824887
 	zcat $< | perl -lne 'for $$w (split) {print "$$p\t$$w" if defined $$p; $$p=$$w;}' | gzip > $@
 
 
-### 3.4 SCODE options:
+### 3.1.4 WORDSUB+FEATURES options:
+
+ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz
+	zcat $< | add-features.pl -f wsj.features.gz | gzip > $@
+
+
+### 3.2 SCODE options:
 # -r RESTART: number of restarts (default 1)                    
 # -i NITER: number of iterations over data (default 50)         
 # -d NDIM: number of dimensions (default 25)                    
@@ -108,8 +134,11 @@ wordsub.scode.gz: wordsub.pairs.gz # -i 10: time=1m11s wc=49207 1328589 12175067
 bigram.scode.gz: bigram.pairs.gz # -i 50: time=1m50s wc=49206 2558712 23888740
 	zcat $< | scode -m -i 50 ${SC_OPTIONS} | gzip > $@
 
+ws+f.scode.gz: ws+f.pairs.gz
+	zcat $< | scode -i 1 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
-### 3.5 KMEANS options:
+
+### 3.3 KMEANS options:
 # -k number of clusters (default 2)
 # -r number of restarts (default 0)
 # -s random seed
@@ -128,7 +157,7 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 ## bigram.kmeans.gz: time=2m33s wc=49206   98412  569875
 
 
-### 3.6 EVAL options:
+### 3.4 EVAL options:
 # -m prints many-to-one (default)
 # -v prints v-measure
 # -g file with gold answers
@@ -174,14 +203,21 @@ plot-s.dat: wsrun.out
 	cat $< | plotdata.pl 1=x 4=y > $@
 
 
-### 4.3 BIGRAM experiments:
+### 4.3 WORDSUB+FEATURES experiments:
+WSFRUN_NARGS=2 # seed, nsub => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
+
+ws+f-run.out:
+	ws+f-args.pl | xargs -n ${WSFRUN_NARGS} -P${NCPU} ws+f-run.pl > $@
+
+
+### 4.4 BIGRAM experiments:
 BGRUN_NARGS=1 # seed => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
 
 bgrun.out:
 	bgrun-args.pl | xargs -n${BGRUN_NARGS} -P${NCPU} bgrun.pl > $@
 
 
-### 4.4 WKMEANS experiments:
+### 4.5 WKMEANS experiments:
 KMRUN_NARGS=4 # seed, file, weights, nstart => wkmeans-rms, m2o, homo, comp, vm, time
 
 kmrun.out:
