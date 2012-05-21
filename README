@@ -1,4 +1,4 @@
-INSTRUCTIONS FOR UPOS                   (c) Deniz Yuret, 25-Mar-2012
+INSTRUCTIONS FOR UPOS               (c) Deniz Yuret, 25-Mar-2012
 
 
 TERMS:
@@ -7,7 +7,8 @@ Please feel free to use this code for any purpose at your own risk.
 Here is the relevant paper:
 
 Mehmet Ali Yatbaz, Enis Sert, and Deniz Yuret.  2012.  Learning
-Syntactic Categories Using Paradigmatic Representations.  EMNLP 2012.
+Syntactic Categories Using Paradigmatic Representations of Word
+Context.  EMNLP 2012.
 
 
 DIRECTORY STRUCTURE:
