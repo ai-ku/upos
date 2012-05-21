@@ -27,4 +27,4 @@ check:
 	true
 
 clean:
-	-rm *.pl *.py fastsubs dists scode wkmeans wordsub
+	-rm *.pl *.py *.gp fastsubs dists scode wkmeans wordsub

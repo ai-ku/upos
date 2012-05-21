@@ -24,8 +24,8 @@ my $sc_err = "$tmp/scode";
 my $km_err = "$tmp/kmeans";
 my $ev_err = "$tmp/eval";
 
-my $input = 'zcat wsj.sub.gz';
-my $wordsub = "wordsub.pl -n $nsub -s $seed";
+my $input = qq{perl -le 'print "wsj.sub.gz" for 1..$nsub' | xargs zcat | grep -v '^</s>'};
+my $wordsub = "wordsub -s $seed";
 my $scode = "scode -r $sc_restart -i $sc_niter -d $ndim -z $Z -s $seed";
 my $scode2kmeans = "perl -ne 'print if s/^0://'";
 my $kmeans = "wkmeans -k $K -r $km_restart -l -w -s $seed";

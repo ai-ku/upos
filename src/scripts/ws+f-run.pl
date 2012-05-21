@@ -2,7 +2,7 @@
 use strict;
 use File::Temp qw/tempdir/;
 
-my $usage = q{Usage: run-fexp.pl seed nsub feature-table
+my $usage = q{Usage: ws+f-run.pl seed nsub feature-table
 Prints out inputs, output, number of seconds
 };
 

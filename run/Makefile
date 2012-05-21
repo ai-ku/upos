@@ -69,8 +69,8 @@ wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=117376
 # -m for path to morfessor
 # -p for ppl threshold
 MORFESSOR=../src/morfessor
-PPLTHRESH=200
-wsj.segmentation.gz: wsj.words.gz # time=32m56s wc=50069  182579 1059157
+PPLTHRESH=300
+wsj.segmentation.gz: wsj.words.gz # time=33m45s wc=49212  175140 1004242
 	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
 
 
@@ -78,7 +78,7 @@ wsj.segmentation.gz: wsj.words.gz # time=32m56s wc=50069  182579 1059157
 # creates the feature table
 # -s segmentation file from morfessor
 # -w tokens from wsj.test1M.gz
-wsj.features.gz: wsj.segmentation.gz  # time=2s wc=33065   70599  525357
+wsj.features.gz: wsj.segmentation.gz  # time=2s wc=32075   67894  500312
 	feature-table.pl -s $< -w wsj.words.gz | gzip > $@
 
 
@@ -95,9 +95,9 @@ rpart.pairs.gz: wsj.knn.gz wsj.words.gz ## RPART=65536: time=2m56s wc=1173766 23
 
 
 ### 3.1.2 WORDSUB options:
-WORDSUB=3 # Number of random substitutes per word token
+WORDSUB=10 # Number of random substitutes per word token
 
-wordsub.pairs.gz: wsj.sub.gz	## WORDSUB=3: time=2m22s wc=3521298 7042596 37936005
+wordsub.pairs.gz: wsj.sub.gz	## WORDSUB=10: time=6m33s wc=11737660 23475320 126457505
 	perl -le 'print "$<" for 1..${WORDSUB}' | xargs zcat | grep -v '^</s>' | wordsub -s ${SEED} | gzip > $@
 
 ### 3.1.3 BIGRAM options (needs scode -m): (Maron et.al. 2010)
@@ -108,7 +108,7 @@ bigram.pairs.gz: ${TEST} # time=1s wc=1173765 2347530 12824887
 
 ### 3.1.4 WORDSUB+FEATURES options:
 
-ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz  # time=7s wc=4493184 8986368 51775335
+ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz  # time=33s wc=14747310 29494620 168507615
 	zcat $< | add-features.pl -f wsj.features.gz | gzip > $@
 
 
@@ -128,13 +128,13 @@ SC_OPTIONS=-r 1 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 rpart.scode.gz: rpart.pairs.gz	# -i 50: time=2m23s wc=49206 1328562 12237114
 	zcat $< | scode -i 50 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
-wordsub.scode.gz: wordsub.pairs.gz # -i 10: time=1m52s wc=49206 1328562 12259098
+wordsub.scode.gz: wordsub.pairs.gz # -i 10: time=5m56s wc=49206 1328562 12272834
 	zcat $< | scode -i 10 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
 bigram.scode.gz: bigram.pairs.gz # -i 50: time=1m50s wc=49206 2558712 23888740
 	zcat $< | scode -m -i 50 ${SC_OPTIONS} | gzip > $@
 
-ws+f.scode.gz: ws+f.pairs.gz # -i 10: time=2m22s wc=49206 1328562 12222826
+ws+f.scode.gz: ws+f.pairs.gz # -i 10: time=7m54s wc=49206 1328562 12273672
 	zcat $< | scode -i 10 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
 
@@ -152,10 +152,10 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 	zcat $< | wkmeans ${KM_OPTIONS} | gzip > $@
 
 ## With options -k 45 -r 128 -l -w -v -s ${SEED}
-## rpart.kmeans.gz: time=1m38s wc=49206   98412  568371
-## wordsub.kmeans.gz: time=1m42s wc=49206   98412  570516
-## bigram.kmeans.gz: time=2m33s wc=49206   98412  569875
-## ws+f.kmeans.gz: time=1m20s wc=49206   98412  559231
+## bigram.kmeans.gz: time=2m33s wc=49206   98412  563966
+## rpart.kmeans.gz: time=1m39s wc=49206   98412  567283
+## wordsub.kmeans.gz: time=1m41s wc=49206   98412  566038
+## ws+f.kmeans.gz: time=1m18s wc=49206   98412  563485
 
 ### 3.4 EVAL options:
 # -m prints many-to-one (default)
@@ -168,8 +168,8 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 ## Eval output columns: m2o homo comp vm
 ## bigram.eval: 	0.714360	0.716074	0.581000	0.641504
 ## rpart.eval:	 	0.750440	0.737837	0.606456	0.665727
-## wordsub.eval: 	0.747801	0.742209	0.606804	0.667711
-## ws+f.eval:		0.779497	0.780193	0.653954	0.711517
+## wordsub.eval: 	0.759323	0.749126	0.620533	0.678793
+## ws+f.eval:		0.806663	0.793497	0.655128	0.717705
 
 
 ### 4. EXPERIMENTAL RESULTS REPORTED IN (Yatbaz et.al. 2012)
@@ -238,3 +238,6 @@ clean:
 	-rm *.pairs.gz *.scode.gz *.kmeans.gz
 	cd ../bin; make clean
 	cd ../src; make clean
+
+tgz:
+	cd ../..; tar cvzf upos.data.tgz upos/data
