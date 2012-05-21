@@ -239,5 +239,8 @@ clean:
 	cd ../bin; make clean
 	cd ../src; make clean
 
+SRC=upos/LICENSE upos/README upos/bin/Makefile upos/run/Makefile upos/src
+
 tgz:
+	cd ../..; tar --exclude=RCS --exclude=*.o --exclude=upos/src/srilm -cvzf upos.src.tgz ${SRC}
 	cd ../..; tar cvzf upos.data.tgz upos/data
