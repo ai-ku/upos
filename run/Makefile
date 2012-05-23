@@ -70,7 +70,7 @@ wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=117376
 # -p for ppl threshold
 MORFESSOR=../src/morfessor
 PPLTHRESH=300
-wsj.segmentation.gz: wsj.words.gz # time=33m45s wc=49212  175140 1004242
+wsj.segmentation.gz: wsj.words.gz # time=33m45s wc=49212  175140 1004242 / 1004252 ???
 	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
 
 
@@ -125,13 +125,13 @@ ws+f.pairs.gz: wordsub.pairs.gz wsj.features.gz  # time=33s wc=14747310 29494620
 # -v: verbose messages (default false)
 SC_OPTIONS=-r 1 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 
-rpart.scode.gz: rpart.pairs.gz	# -i 50: time=2m23s wc=49206 1328562 12237114
+rpart.scode.gz: rpart.pairs.gz	# -i 50: time=2m23s wc=49206 1328562 12218421
 	zcat $< | scode -i 50 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
 wordsub.scode.gz: wordsub.pairs.gz # -i 10: time=5m56s wc=49206 1328562 12272834
 	zcat $< | scode -i 10 ${SC_OPTIONS} | perl -ne 'print if s/^0://' | gzip > $@
 
-bigram.scode.gz: bigram.pairs.gz # -i 50: time=1m50s wc=49206 2558712 23888740
+bigram.scode.gz: bigram.pairs.gz # -i 50: time=1m50s wc=49206 2558712 23934400
 	zcat $< | scode -m -i 50 ${SC_OPTIONS} | gzip > $@
 
 ws+f.scode.gz: ws+f.pairs.gz # -i 10: time=7m54s wc=49206 1328562 12273672
@@ -152,8 +152,8 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 	zcat $< | wkmeans ${KM_OPTIONS} | gzip > $@
 
 ## With options -k 45 -r 128 -l -w -v -s ${SEED}
-## bigram.kmeans.gz: time=2m33s wc=49206   98412  563966
-## rpart.kmeans.gz: time=1m39s wc=49206   98412  567283
+## bigram.kmeans.gz: time=2m33s wc=49206   98412  569430
+## rpart.kmeans.gz: time=1m39s wc=49206   98412  571430
 ## wordsub.kmeans.gz: time=1m41s wc=49206   98412  566038
 ## ws+f.kmeans.gz: time=1m18s wc=49206   98412  563485
 
@@ -166,8 +166,8 @@ KM_OPTIONS=-k 45 -r 128 -l -w -v -s ${SEED}
 	zcat $< | wkmeans2eval.pl -t ${TEST} | eval.pl -m -v -g wsj.pos.gz
 
 ## Eval output columns: m2o homo comp vm
-## bigram.eval: 	0.714360	0.716074	0.581000	0.641504
-## rpart.eval:	 	0.750440	0.737837	0.606456	0.665727
+## bigram.eval: 	0.740107	0.732572	0.594198	0.656169
+## rpart.eval:	 	0.763245	0.746699	0.612820	0.673168
 ## wordsub.eval: 	0.759323	0.749126	0.620533	0.678793
 ## ws+f.eval:		0.806663	0.793497	0.655128	0.717705
 
@@ -181,7 +181,7 @@ plot-%.pdf: plot-%.dat
 ### 4.1 RPART experiments:
 RPRUN_NARGS=4 # seed, npart, ndim, z => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
 
-rprun.out: ${TEST} wsj.knn.gz wsj.words.gz wsj.pos.gz # NCPU=20 xargs=270: time=3h49m
+rprun.out: ${TEST} wsj.knn.gz wsj.words.gz wsj.pos.gz # NCPU=16 xargs=450: time=14h58m
 	rprun-args.pl | xargs -n${RPRUN_NARGS} -P${NCPU} rprun.pl > $@
 
 plot-p.dat: rprun.out
@@ -197,7 +197,7 @@ plot-z.dat: rprun.out
 ### 4.2 WORDSUB experiments:
 WSRUN_NARGS=2 # seed, nsub => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
 
-wsrun.out:
+wsrun.out: wsj.sub.gz wsj.pos.gz  # NCPU=16 xargs=170 time=11h27m
 	wsrun-args.pl | xargs -n${WSRUN_NARGS} -P${NCPU} wsrun.pl > $@
 
 plot-s.dat: wsrun.out
@@ -207,14 +207,14 @@ plot-s.dat: wsrun.out
 ### 4.3 WORDSUB+FEATURES experiments:
 WSFRUN_NARGS=2 # seed, nsub => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
 
-ws+f-run.out:
+ws+f-run.out: wsj.sub.gz wsj.features.gz wsj.pos.gz  # NCPU=16 xargs=10 time=1h11m mean=.7977 std=.0075
 	ws+f-args.pl | xargs -n ${WSFRUN_NARGS} -P${NCPU} ws+f-run.pl > $@
 
 
 ### 4.4 BIGRAM experiments:
 BGRUN_NARGS=1 # seed => scode-logl, wkmeans-rms, m2o, homo, comp, vm, time
 
-bgrun.out:
+bgrun.out: bigram.pairs.gz wsj.pos.gz  # NCPU=16 xargs=20 time=22m mean=.7314 std=.0096
 	bgrun-args.pl | xargs -n${BGRUN_NARGS} -P${NCPU} bgrun.pl > $@
 
 
