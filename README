@@ -1,10 +1,8 @@
-INSTRUCTIONS FOR UPOS               (c) Deniz Yuret, 25-Mar-2012
-
+INSTRUCTIONS FOR UPOS               (c) Deniz Yuret, 21-May-2012
 
 TERMS:
 
-Please feel free to use this code for any purpose at your own risk.
-Here is the relevant paper:
+Please see the file LICENSE for terms of use.  The relevant paper:
 
 Mehmet Ali Yatbaz, Enis Sert, and Deniz Yuret.  2012.  Learning
 Syntactic Categories Using Paradigmatic Representations of Word
@@ -19,7 +17,7 @@ run	- directory for running experiments
 run/Makefile	- explains everything
 src/fastsubs	- code to find most likely substitutes
 src/dists	- code to find knn for substitute vectors
-src/scode	- code to find a low dimensional embedding
+src/scode	- code to find a low dimensional co-occurence embedding
 src/wkmeans	- instance weighted kmeans clustering algorithm
 src/wordsub	- code to sample word-substitute pairs
 src/scripts	- various utility scripts
@@ -52,7 +50,7 @@ run/Makefile for details and more options.
 
 cd upos/run; make bin	# compiles and puts symlinks in bin directory
 
-make bigram.pairs.gz	# time=1s output left word - right word pairs
+make bigram.pairs.gz	# time=1s - output left word - right word pairs
 make bigram.scode.gz	# time=1m50s - runs scode on bigram.pairs
 make bigram.kmeans.gz	# time=2m33s - runs wkmeans on bigram.scode
 make wsj.pos.gz		# time=1s - gold pos in the test set
@@ -72,3 +70,25 @@ make rpart.pairs.gz	# time=2m56s - output word + partition-id pairs
 make rpart.scode.gz	# time=2m23s - runs scode on rpart.pairs
 make rpart.kmeans.gz	# time=1m38s - runs wkmeans on rpart.scode
 make rpart.eval		# time=1s - compares clusters with wsj.pos
+
+make wsj.segmentation.gz # time=33m45s - runs Morfessor on wsj.words.gz
+make wsj.features.gz    # time=2s - combines morpho and ortho features
+make ws+f.pairs.gz      # time=33s - combines wordsub.pairs with features
+make ws+f.scode.gz      # time=7m54s - runs scode on ws+f.pairs
+make ws+f.kmeans.gz     # time=1m18s - runs wkmeans on ws+f.scode
+make ws+f.eval          # time=1s - compares clusters with wsj.pos
+
+Other Makefile targets are for running bulk experiments to generate
+the tables and graphs in the paper.  Each setting is run 10 times with
+different random seeds to generate the error bars.
+
+rprun.out		# rpart exp for changing seed, npart, ndim, z
+wsrun.out		# wordsub exp for changing seed, nsub
+ws+f-run.out		# ws+f exp for changing seed, nsub
+bgrun.out		# bigram experiments for changing seed
+
+plot-p.dat		# number of partitions vs. m2o
+plot-d.dat		# number of dimensions vs. m2o
+plot-z.dat		# Z estimate vs. m2o
+plot-s.dat		# number of substitutes vs. m2o
+plot-*.pdf		# Gnuplot output of the above
