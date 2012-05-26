@@ -71,7 +71,7 @@ wsj.knn.gz: wsj.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=117376
 MORFESSOR=../src/morfessor
 PPLTHRESH=300
 wsj.segmentation.gz: wsj.words.gz # time=33m45s wc=49212  175140 1004242
-	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
+	zcat $< | LC_ALL=C run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH} | gzip > $@
 
 
 ### 2.6 FEATURE-TABLE:
