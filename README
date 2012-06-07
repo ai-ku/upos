@@ -15,17 +15,20 @@ data	- training and test data
 bin	- directory for binaries, please put this in your PATH
 run	- directory for running experiments
 run/Makefile	- explains everything
+src/dist	- code to find knn for substitute vectors
 src/fastsubs	- code to find most likely substitutes
-src/dists	- code to find knn for substitute vectors
+src/morfessor	- unsupervised morphology code by Creutz et al.
 src/scode	- code to find a low dimensional co-occurence embedding
-src/wkmeans	- instance weighted kmeans clustering algorithm
-src/wordsub	- code to sample word-substitute pairs
 src/scripts	- various utility scripts
+src/wkmeans	- instance weighted kmeans clustering algorithm
 
+Some of the src subdirectories need to be cloned from github.  The
+data directory is available as a separate downloadable named
+upos.data.tgz.
 
 INSTALLATION:
 
-1. Untar the src and data archives.
+1. Untar the src and data archives (or clone them from github).
 2. These should create a top level directory called upos.
 3. Add upos/bin to your PATH.
 4. cd upos/run; make bin - compiles and fills the bin directory.
