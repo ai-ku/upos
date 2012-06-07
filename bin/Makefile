@@ -1,15 +1,16 @@
 all: eval.pl fastsubs dists scode wkmeans wordsub
 
 eval.pl: check
-	test -e $@ || ln -s ../src/scripts/*.* .
+	test -e $@ || ln -s ../src/scripts/* .
 
 fastsubs: check
 	cd ../src/fastsubs; make
 	test -e $@ || ln -s ../src/fastsubs/fastsubs .
+	test -e wordsub || ln -s ../src/fastsubs/wordsub .
 
 dists: check
-	cd ../src/dists; make
-	test -e dists || ln -s ../src/dists/dists .
+	cd ../src/dist; make
+	test -e $@ || ln -s ../src/dist/dists .
 
 scode: check
 	cd ../src/scode; make
@@ -18,10 +19,6 @@ scode: check
 wkmeans: check
 	cd ../src/wkmeans; make
 	test -e $@ || ln -s ../src/wkmeans/wkmeans .
-
-wordsub: check
-	cd ../src/wordsub; make
-	test -e $@ || ln -s ../src/wordsub/wordsub .
 
 check:
 	true
