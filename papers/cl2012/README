@@ -1,0 +1,8 @@
+Directory Structure:
+
+To ease the work we decomposed each section of the related papers
+in to the different tex files.  Latest version of papers are used.
+
+acl12	  - directory for decomposed version of upos/papers/acl2012x	
+emnlp12	  - directory for decomposed version of upos/papers/emnlp2012  
+cl2012	  - directory for journal article    [working-directory]
