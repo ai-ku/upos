@@ -1,0 +1,36 @@
+\section{Discussion}
+\label{sec:discussion}
+
+Figure~\ref{fig:hinton} is the Hinton diagram showing the relationship
+between the most frequent tags and clusters found by the collapsed
+algorithm (\collapseResult\% many-to-one accuracy).  In this section
+we present a qualitative comparison of gold standard tags and
+discovered clusters.
+
+\paragraph{Nouns and adjectives:} Most nouns ({\sc nn*}) are split between the
+clusters represented by the first seven columns of the Hinton graph,
+but not in the way Penn Treebank splits them.  For example cluster 27
+brings together titles like {\em Mr.}, {\em Mrs.}, {\em Dr.}
+etc. which does not exist as a separate class in the gold tags.
+Cluster 29 is the largest adjective ({\sc jj}) cluster, however it
+also has noun members probably due to the difficulty of separating
+noun-noun compounds and adjective modification.
+
+\paragraph{Verbs and adverbs:}  Clusters 9 and 33 contain general
+verbs ({\sc vb*}), but the verbs ``be'' (26), ``say'' (21), and
+``have'' (34) have been split into their own clusters indicated in
+parantheses, presumably because they are not generally substitutable
+with the rest.  Adverb ({\sc rb}) is an amorphous class and the
+algorithm seems to have difficulty isolating it in a cluster.
+
+\paragraph{Determiners and prepositions:}  We see a fairly clean
+separation of determiners ({\sc dt}) and prepositions ({\sc in}) from
+other parts of speech, although each has been subdivided into further
+groups by the algorithm.  For example cluster 39 contains general
+prepositions but ``of'' (43), ``in'' (13), and ``for'' (3) are split
+into their own clusters.  Determiners ``the'' (8), ``a'' (12), and
+capitalized ``The''/''A'' (6) are also split into their own clusters.
+
+\paragraph{Closed-class items:}  Most closed-class items are cleanly
+separated into their own clusters as seen in the lower right hand
+corner of the diagram.

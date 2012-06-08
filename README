@@ -12,6 +12,7 @@ Context.  EMNLP 2012.
 DIRECTORY STRUCTURE:
 
 data	- training and test data
+papers	- directory for published/working papers
 bin	- directory for binaries, please put this in your PATH
 run	- directory for running experiments
 run/Makefile	- explains everything

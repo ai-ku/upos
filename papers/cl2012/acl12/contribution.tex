@@ -1,0 +1,22 @@
+\section{Contributions}
+\label{sec:contrib}
+
+We introduced a paradigmatic representation for word context which
+contains possible substitutes for the target word and their
+probabilities.  The substitute probabilities were estimated using a
+standard 4-gram language model with Kneser-Ney smoothing.  We
+investigated distance metrics, dimensionality reduction techniques and
+clustering algorithms appropriate for substitute probability vectors
+and evaluated them using a supervised k-nearest-neighbor baseline and
+many-to-one accuracy relative to a 45-tag 24K word test corpus.  We
+found that the KL2 distance metric (a symmetric version of
+Kullback-Leibler divergence), dimensionality reduction using Laplacian
+eigenmaps, and spectral clustering work well with substitute vectors.
+Spectral clustering of substitute vectors reveal a grouping that
+largely match traditional part of speech boundaries (\spectralResult\%
+many-to-one accuracy) which further improve when the one-tag-per-word
+constraint is imposed (\collapseResult\% many-to-one accuracy).  These
+results compare favorably to previous results published for the 45-tag
+24K word test corpus we have used.  
+%% We are investigating ways to speed up the algorithm so it can be tested on larger corpora.
+

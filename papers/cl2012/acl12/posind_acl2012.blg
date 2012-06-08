@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: posind_acl2012.aux
+The style file: acl2012.bst
+Database file #1: posind2012.bib
+You've used 33 entries,
+            2490 wiz_defined-function locations,
+            770 strings with 11373 characters,
+and the built_in function-call counts, 15175 in all, are:
+= -- 1691
+> -- 485
+< -- 18
++ -- 164
+- -- 158
+* -- 1079
+:= -- 2302
+add.period$ -- 146
+call.type$ -- 33
+change.case$ -- 207
+chr.to.int$ -- 32
+cite$ -- 33
+duplicate$ -- 685
+empty$ -- 1189
+format.name$ -- 200
+if$ -- 3324
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 35
+newline$ -- 199
+num.names$ -- 99
+pop$ -- 223
+preamble$ -- 1
+purify$ -- 244
+quote$ -- 0
+skip$ -- 549
+stack$ -- 0
+substring$ -- 925
+swap$ -- 213
+text.length$ -- 18
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 248
+warning$ -- 0
+while$ -- 133
+width$ -- 36
+write$ -- 504

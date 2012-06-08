@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage{acl2012}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{graphicx}
+% \usepackage[usenames,dvipsnames]{pstricks}
+% \usepackage{epsfig}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\setlength\titlebox{6.5cm}    % Expanding the titlebox
+
+%%% DY: Some consistency macros:
+
+% many-to-one abbreviation
+% 429 uses MTO
+% Lamar uses M-to-1
+% Maron uses MTO
+% Lamar uses MTO
+% Let us go with MTO
+\newcommand{\mto}{\mbox{MTO }}
+
+% Let us go with VM for V-measure
+\newcommand{\vm}{\mbox{VM }}
+
+% Adopt the .7654 convention rather than percentages like 76.54%.
+% Define the results here for consistency
+\newcommand{\bgmto}{.7314 (.0096)}
+\newcommand{\bgvm}{.6558 (.0052)}
+\newcommand{\rpmto}{.7554 (.0055)}
+\newcommand{\rpvm}{.6703 (.0037)}
+\newcommand{\wsmto}{.7680 (.0038)}
+\newcommand{\wsvm}{.6822 (.0029)}
+\newcommand{\ftmto}{.8023 (.0070)}
+\newcommand{\ftvm}{.7207 (.0041)}
+
+\title{Learning Syntactic Categories Using Paradigmatic
+  Representations of\\ Word Context}
+
+\author{
+Mehmet Ali Yatbaz \hspace*{10mm} Enis Sert \hspace*{10mm} Deniz Yuret \\
+Artificial Intelligence Laboratory \\
+Ko\c{c} University, \.Istanbul, Turkey \\
+\{myatbaz,esert,dyuret\}@ku.edu.tr
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+\input{abstract.tex}
+\input{introduction.tex}
+\input{related.tex}
+\input{substitute.tex}
+\input{scode.tex}
+\input{experiments}
+\input{discussion.tex}
+\input{contribution.tex}
+
+\bibliographystyle{acl2012}
+\bibliography{posind2012}
+
+\end{document}

@@ -1,0 +1,101 @@
+\section{Distance Metric}
+\label{sec:dist}
+
+We represent each context with a high dimensional probability vector
+called the substitute vector as described in the previous section.  In
+this section we compare various distance metrics in this high
+dimensional space with the goal of discovering one that will judge
+vectors that belong to the same syntactic category similar and vectors
+that belong to different syntactic categories distant.  The distance
+metrics we have considered are listed in Table~\ref{tab:metrics}.
+
+\begin{table}[ht] \centering
+\small
+\begin{tabular}{|lll|}
+\hline
+Cosine($\mathbf{p}, \mathbf{q}$) & = & $<\mathbf{p},\mathbf{q}> / (\|\mathbf{p}\|_{2} \|\mathbf{q}\|_{2})$ \\
+Euclid($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{2}$ \\
+Manhattan($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{1}$ \\
+Maximum($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{\infty}$ \\
+KL2($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/q_i) + q_iln(q_i/p_i) $\\
+JS($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/m_i) + q_iln(q_i/m_i) $\\
+& & where $m_i = (p_i + q_i) / 2$\\
+\hline
+\end{tabular}
+\caption{Similarity metrics.  JS is the Jensen-Shannon divergence and
+  KL2 is a symmetric implementation of Kullback-Leibler divergence.}
+\label{tab:metrics}
+\end{table}
+
+To judge the merit of each distance metric we obtained supervised
+baseline scores using leave-one-out cross validation and the weighted
+k-nearest-neighbor algorithm\footnote{Neighbors were weighted using
+  1/distance, $k=30$ was chosen empirically.} on the gold tags of the
+test corpus.  The results are listed in Table~\ref{tab:distscores}
+sorted by score.  
+
+\begin{table}[ht] \centering
+\begin{tabular}{|l|c|}
+\hline
+Metric & Accuracy(\%) \\
+\hline
+KL2 & 0.6889 \\
+Manhattan & 0.6865 \\
+Jensen & 0.6801 \\
+Cosine & 0.6706 \\
+Maximum & 0.6663 \\
+Euclid & 0.6255 \\
+lg2-Maximum & 0.5361 \\
+lg2-Cosine & 0.4847 \\
+lg2-Euclid & 0.4038 \\
+lg2-Manhattan & 0.3729 \\
+\hline
+\end{tabular}
+\caption{Supervised baseline scores with different distance metrics.
+  Log-metric indicates that metric applied to the log of the
+  probability vectors.}
+\label{tab:distscores}
+\end{table}
+
+% K=30
+% KL2 0.688884263114072
+% Manhattan 0.686511240632806
+% Jensen 0.680099916736053
+% Cosine 0.670566194837635
+% Maximum 0.666278101582015
+% Euclid 0.625478767693589
+% lg2-Maximum 0.536136552872606
+% lg2-Cosine 0.484721065778518
+% lg2-Euclid 0.403788509575354
+% lg2-Manhattan 0.37285595337219
+
+% K=20
+% KL2 & 68.95\\
+% Manhattan & 68.75\\
+% Jensen & 68.43\\
+% Cosine & 67.45\\
+% Maximum	& 66.55\\
+% Euclid & 63.33\\
+% log-Maximum & 54.20\\
+% log-Cosine & 49.33\\
+% log-Euclid & 41.21\\
+% log-Manhattan & 37.59\\
+
+The entries with the log- prefix indicate a metric applied to the log
+of the probability vectors.  Distance metrics on log probability
+vectors performed poorly compared to their regular counterparts
+indicating differences in low probability words are relatively
+unimportant and high probability substitutes determine syntactic
+category.  The surprisingly good result achieved by the simple Maximum
+metric (which identifies the dimension with the largest difference
+between two vectors) also support this conclusion.  The maximum score
+of 69\% can be taken as a rough upper bound for an unsupervised
+learner using this space on the 45-tag 24K test corpus because 31\% of
+the instances are assigned to the wrong part of speech by the majority
+of their closest neighbors.  We will discuss ways to push this upper
+bound higher by including other features in
+Section~\ref{sec:sparsity}.
+
+% moreover we are using probability vectors so its more natural to use
+% kl2
+

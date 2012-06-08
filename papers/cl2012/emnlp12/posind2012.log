@@ -1,0 +1,369 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.7)  7 JUN 2012 15:18
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**\nonstopmode\input posind2012.tex
+(./posind2012.tex (/usr/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size11.clo
+File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (./acl2012.sty
+Conference Style for ACL 2005 -- released Octobe 11, 2004
+\titlebox=\skip43
+) (/usr/share/texmf-texlive/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip44
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip45
+\multlinetaggap=\skip46
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf-texlive/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen112
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip11
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen113
+\Gin@req@width=\dimen114
+) (./posind2012.aux)
+\openout1 = `posind2012.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 50.
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count100
+\scratchdimen=\dimen115
+\scratchbox=\box28
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen116
+\MPnumerator=\count104
+\everyMPtoPDFconversion=\toks21
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 51.
+ (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 51.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 51.
+ (./abstract.tex)
+(./introduction.tex <paradigmatic.png, id=1, 528.97626pt x 382.42876pt>
+File: paradigmatic.png Graphic file (type png)
+
+<use paradigmatic.png>
+Underfull \hbox (badness 1297) in paragraph at lines 29--37
+[]\OT1/ptm/m/n/10.95 Relationships be-tween lin-guis-tic units can be
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+
+
+ <./paradigmatic.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 74--75
+
+ []
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 76.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 109.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)) (./related.tex
+Underfull \hbox (badness 2922) in paragraph at lines 4--8
+\OT1/ptm/m/n/10.95 There are sev-eral good re-views of al-go-rithms
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--8
+\OT1/ptm/m/n/10.95 for un-su-per-vised part-of-speech in-duc-tion
+ []
+
+[2]
+Underfull \hbox (badness 3029) in paragraph at lines 75--103
+\OT1/ptm/m/n/10.95 i-mizes the like-li-hood of the cor-pus $\OML/cmm/m/it/10.95
+ w[] [] w[]$
+ []
+
+
+Underfull \hbox (badness 6047) in paragraph at lines 75--103
+\OT1/ptm/m/n/10.95 ex-pressed as $\OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML
+/cmm/m/it/10.95 w[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 c[]\OT1/cmr/m/n/10.
+95 ) [][] \OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 w[]\OMS/
+cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 c[]\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 
+P\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 c[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/
+10.95 c[]\OT1/cmr/m/n/10.95 )$
+ []
+
+[3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+)
+(./substitute.tex
+
+LaTeX Warning: Citation `csr3text' on page 4 undefined on input line 23.
+
+
+LaTeX Warning: Citation `Stolcke2002' on page 4 undefined on input line 26.
+
+[4]
+Underfull \hbox (badness 5847) in paragraph at lines 50--59
+\OT1/ptm/m/n/10.95 where $\OML/cmm/m/it/10.95 w[]$ \OT1/ptm/m/n/10.95 rep-re-se
+nts the se-quence of words
+ []
+
+
+Underfull \hbox (badness 1308) in paragraph at lines 60--64
+[]\OT1/ptm/m/n/10.95 Near the sen-tence bound-aries the ap-pro-pri-ate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--73
+\OT1/ptm/m/n/9 please see [].
+ []
+
+
+Underfull \hbox (badness 2653) in paragraph at lines 65--76
+\OT1/ptm/m/n/10.95 sub-sti-tutes and their un-nor-mal-ized prob-a-bil-i-ties
+ []
+
+) (./scode.tex [5]) (./experiments.tex
+Overfull \hbox (12.87701pt too wide) in paragraph at lines 6--36
+[][] [] 
+ []
+
+[6] <plot-p.pdf, id=36, 216.81pt x 144.54pt>
+File: plot-p.pdf Graphic file (type pdf)
+ <use plot-p.pdf>
+<plot-d.pdf, id=38, 216.81pt x 144.54pt>
+File: plot-d.pdf Graphic file (type pdf)
+ <use plot-d.pdf>
+<plot-z.pdf, id=40, 216.81pt x 144.54pt>
+File: plot-z.pdf Graphic file (type pdf)
+ <use plot-z.pdf> [7 <./plot-p.pdf>]
+<plot-s.pdf, id=54, 216.81pt x 144.54pt>
+File: plot-s.pdf Graphic file (type pdf)
+ <use plot-s.pdf>
+Underfull \hbox (badness 2020) in paragraph at lines 202--208
+\OT1/ptm/m/n/10.95 i-cal and or-tho-graphic fea-tures sig-nif-i-cantly im-
+ []
+
+
+Underfull \hbox (badness 2285) in paragraph at lines 202--208
+\OT1/ptm/m/n/10.95 proves part-of-speech in-duc-tion with an HMM
+ []
+
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 239.
+[8 <./plot-d.pdf> <./plot-z.pdf> <./plot-s.pdf>]
+<hinton.png, id=83, 586.8324pt x 442.2924pt>
+File: hinton.png Graphic file (type png)
+ <use hinton.png>)
+(./discussion.tex) (./contribution.tex
+Underfull \hbox (badness 1931) in paragraph at lines 6--9
+\OT1/ptm/m/n/10.95 matic rep-re-sen-ta-tions of word con-text and
+ []
+
+
+Underfull \hbox (badness 1132) in paragraph at lines 13--16
+\OT1/ptm/m/n/10.95 su-per-vised part-of-speech in-duc-tion to 80%
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 16--19
+[]\OT1/ptm/m/n/10.95 All our code and data, in-clud-ing the sub-
+ []
+
+
+Underfull \hbox (badness 4505) in paragraph at lines 16--19
+\OT1/ptm/m/n/10.95 sti-tute vec-tors for the one mil-lion word
+ []
+
+
+Underfull \hbox (badness 1024) in paragraph at lines 16--19
+\OT1/ptm/m/n/10.95 Penn Tree-bank Wall Street Jour-nal dataset,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+\OT1/ptm/m/n/10.95 is avail-able at the au-thors' web-site at
+ []
+
+) (./posind2012.bbl
+Underfull \hbox (badness 2134) in paragraph at lines 4--8
+\OT1/ptm/m/it/10 Ac-qui-si-tion: Con-trast-ing The-o-ret-i-cal Ap-proaches\OT1/
+ptm/m/n/10 ,
+ []
+
+[9]
+Underfull \hbox (badness 5022) in paragraph at lines 28--36
+[]\OT1/ptm/m/n/10 Taylor Berg-Kirkpatrick, Alexan-dre Bouchard-C[]ot[]e,
+ []
+
+
+Underfull \hbox (badness 1314) in paragraph at lines 73--79
+[]\OT1/ptm/m/n/10 Christos Christodoulopou-los, Sharon Gold-wa-ter, and
+ []
+
+
+Underfull \hbox (badness 1314) in paragraph at lines 82--88
+[]\OT1/ptm/m/n/10 Christos Christodoulopou-los, Sharon Gold-wa-ter, and
+ []
+
+[10 <./hinton.png>]
+Underfull \hbox (badness 2351) in paragraph at lines 202--206
+[]\OT1/ptm/m/n/10 Mitchell P. Mar-cus, Beat-rice San-torini, Mary Ann
+ []
+
+) [11] (./posind2012.aux) ) 
+Here is how much of TeX's memory you used:
+ 1932 strings out of 495061
+ 24114 string characters out of 1182622
+ 88415 words of memory out of 3000000
+ 5041 multiletter control sequences out of 15000+50000
+ 37970 words of font info for 89 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 27i,13n,20p,246b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.en
+c}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/te
+xmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/type1
+/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/urw/courie
+r/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/s
+hare/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/f
+onts/type1/urw/times/utmri8a.pfb>
+Output written on posind2012.pdf (11 pages, 310193 bytes).
+PDF statistics:
+ 143 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,261 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Ambridge and Lieven}2011]{ambridge2011child}
+B.~Ambridge and E.V.M. Lieven, 2011.
+\newblock {\em Child Language Acquisition: Contrasting Theoretical Approaches},
+  chapter 6.1.
+\newblock Cambridge University Press.
+
+\bibitem[\protect\citename{Arthur and Vassilvitskii}2007]{arthur2007k}
+D.~Arthur and S.~Vassilvitskii.
+\newblock 2007.
+\newblock k-means++: The advantages of careful seeding.
+\newblock In {\em Proceedings of the eighteenth annual ACM-SIAM symposium on
+  Discrete algorithms}, pages 1027--1035. Society for Industrial and Applied
+  Mathematics.
+
+\bibitem[\protect\citename{Berg-Kirkpatrick and
+  Klein}2010]{bergkirkpatrick-klein:2010:ACL}
+Taylor Berg-Kirkpatrick and Dan Klein.
+\newblock 2010.
+\newblock Phylogenetic grammar induction.
+\newblock In {\em Proceedings of the 48th Annual Meeting of the Association for
+  Computational Linguistics}, pages 1288--1297, Uppsala, Sweden, July.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Berg-Kirkpatrick \bgroup et al.\egroup
+  }2010]{bergkirkpatrick-EtAl:2010:NAACLHLT}
+Taylor Berg-Kirkpatrick, Alexandre Bouchard-C\^{o}t\'{e}, John DeNero, and Dan
+  Klein.
+\newblock 2010.
+\newblock Painless unsupervised learning with features.
+\newblock In {\em Human Language Technologies: The 2010 Annual Conference of
+  the North American Chapter of the Association for Computational Linguistics},
+  pages 582--590, Los Angeles, California, June. Association for Computational
+  Linguistics.
+
+\bibitem[\protect\citename{Biemann}2006]{biemann2006unsupervised}
+C.~Biemann.
+\newblock 2006.
+\newblock Unsupervised part-of-speech tagging employing efficient graph
+  clustering.
+\newblock In {\em Proceedings of the 21st International Conference on
+  computational Linguistics and 44th Annual Meeting of the Association for
+  Computational Linguistics: Student Research Workshop}, pages 7--12.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Blunsom and
+  Cohn}2011]{blunsom-cohn:2011:ACL-HLT2011}
+Phil Blunsom and Trevor Cohn.
+\newblock 2011.
+\newblock A hierarchical pitman-yor process hmm for unsupervised part of speech
+  induction.
+\newblock In {\em Proceedings of the 49th Annual Meeting of the Association for
+  Computational Linguistics: Human Language Technologies}, pages 865--874,
+  Portland, Oregon, USA, June. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Brown \bgroup et al.\egroup
+  }1992]{Brown:1992:CNG:176313.176316}
+Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
+  and Jenifer~C. Lai.
+\newblock 1992.
+\newblock Class-based n-gram models of natural language.
+\newblock {\em Comput. Linguist.}, 18:467--479, December.
+
+\bibitem[\protect\citename{Chandler}2007]{chandler2007semiotics}
+D.~Chandler.
+\newblock 2007.
+\newblock {\em Semiotics: the basics}.
+\newblock The Basics Series. Routledge.
+
+\bibitem[\protect\citename{Christodoulopoulos \bgroup et al.\egroup
+  }2010]{Christodoulopoulos:2010:TDU:1870658.1870714}
+Christos Christodoulopoulos, Sharon Goldwater, and Mark Steedman.
+\newblock 2010.
+\newblock Two decades of unsupervised pos induction: how far have we come?
+\newblock In {\em Proceedings of the 2010 Conference on Empirical Methods in
+  Natural Language Processing}, EMNLP '10, pages 575--584, Stroudsburg, PA,
+  USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Christodoulopoulos \bgroup et al.\egroup
+  }2011]{christodoulopoulos-goldwater-steedman:2011:EMNLP}
+Christos Christodoulopoulos, Sharon Goldwater, and Mark Steedman.
+\newblock 2011.
+\newblock A bayesian mixture model for pos induction using multiple features.
+\newblock In {\em Proceedings of the 2011 Conference on Empirical Methods in
+  Natural Language Processing}, pages 638--647, Edinburgh, Scotland, UK., July.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Church}1988]{Church:1988:SPP:974235.974260}
+Kenneth~Ward Church.
+\newblock 1988.
+\newblock A stochastic parts program and noun phrase parser for unrestricted
+  text.
+\newblock In {\em Proceedings of the second conference on Applied natural
+  language processing}, ANLC '88, pages 136--143, Stroudsburg, PA, USA.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Clark}2003]{Clark:2003:CDM:1067807.1067817}
+Alexander Clark.
+\newblock 2003.
+\newblock Combining distributional and morphological information for part of
+  speech induction.
+\newblock In {\em Proceedings of the tenth conference on European chapter of
+  the Association for Computational Linguistics - Volume 1}, EACL '03, pages
+  59--66, Stroudsburg, PA, USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Creutz and Lagus}2005]{creutz05}
+Mathias Creutz and Krista Lagus.
+\newblock 2005.
+\newblock Inducing the morphological lexicon of a natural language from
+  unannotated text.
+\newblock In {\em Proceedings of AKRR'05, International and Interdisciplinary
+  Conference on Adaptive Knowledge Representation and Reasoning}, pages
+  106--113, Espoo, Finland, June.
+
+\bibitem[\protect\citename{Freudenthal \bgroup et al.\egroup
+  }2005]{freudenthal2005resolution}
+D.~Freudenthal, J.M. Pine, and F.~Gobet.
+\newblock 2005.
+\newblock On the resolution of ambiguities in the extraction of syntactic
+  categories through chunking.
+\newblock {\em Cognitive Systems Research}, 6(1):17--25.
+
+\bibitem[\protect\citename{Ganchev \bgroup et al.\egroup
+  }2010]{Ganchev:2010:PRS:1859890.1859918}
+Kuzman Ganchev, Jo\~{a}o Gra\c{c}a, Jennifer Gillenwater, and Ben Taskar.
+\newblock 2010.
+\newblock Posterior regularization for structured latent variable models.
+\newblock {\em J. Mach. Learn. Res.}, 99:2001--2049, August.
+
+\bibitem[\protect\citename{Gao and Johnson}2008]{Gao:2008:CBE:1613715.1613761}
+Jianfeng Gao and Mark Johnson.
+\newblock 2008.
+\newblock A comparison of bayesian estimators for unsupervised hidden markov
+  model pos taggers.
+\newblock In {\em Proceedings of the Conference on Empirical Methods in Natural
+  Language Processing}, EMNLP '08, pages 344--352, Stroudsburg, PA, USA.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Globerson \bgroup et al.\egroup
+  }2007]{globerson2007euclidean}
+Amir Globerson, Gal Chechik, Fernando Pereira, and Naftali Tishby.
+\newblock 2007.
+\newblock Euclidean embedding of co-occurrence data.
+\newblock {\em J. Mach. Learn. Res.}, 8:2265--2295, December.
+
+\bibitem[\protect\citename{Goldwater and
+  Griffiths}2007]{goldwater-griffiths:2007:ACLMain}
+Sharon Goldwater and Tom Griffiths.
+\newblock 2007.
+\newblock A fully bayesian approach to unsupervised part-of-speech tagging.
+\newblock In {\em Proceedings of the 45th Annual Meeting of the Association of
+  Computational Linguistics}, pages 744--751, Prague, Czech Republic, June.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Haghighi and
+  Klein}2006]{Haghighi:2006:PLS:1220835.1220876}
+Aria Haghighi and Dan Klein.
+\newblock 2006.
+\newblock Prototype-driven learning for sequence models.
+\newblock In {\em Proceedings of the main conference on Human Language
+  Technology Conference of the North American Chapter of the Association of
+  Computational Linguistics}, HLT-NAACL '06, pages 320--327, Stroudsburg, PA,
+  USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Johnson}2007]{johnson:2007:EMNLP-CoNLL2007}
+Mark Johnson.
+\newblock 2007.
+\newblock Why doesn't {EM} find good {HMM} {POS}-taggers?
+\newblock In {\em Proceedings of the 2007 Joint Conference on Empirical Methods
+  in Natural Language Processing and Computational Natural Language Learning
+  (EMNLP-CoNLL)}, pages 296--305, Prague, Czech Republic, June. Association for
+  Computational Linguistics.
+
+\bibitem[\protect\citename{Lamar \bgroup et al.\egroup
+  }2010a]{Lamar:2010:LCU:1870658.1870736}
+Michael Lamar, Yariv Maron, and Elie Bienenstock.
+\newblock 2010a.
+\newblock Latent-descriptor clustering for unsupervised pos induction.
+\newblock In {\em Proceedings of the 2010 Conference on Empirical Methods in
+  Natural Language Processing}, EMNLP '10, pages 799--809, Stroudsburg, PA,
+  USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Lamar \bgroup et al.\egroup
+  }2010b]{lamar-EtAl:2010:Short}
+Michael Lamar, Yariv Maron, Mark Johnson, and Elie Bienenstock.
+\newblock 2010b.
+\newblock Svd and clustering for unsupervised pos tagging.
+\newblock In {\em Proceedings of the ACL 2010 Conference Short Papers}, pages
+  215--219, Uppsala, Sweden, July. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Lee \bgroup et al.\egroup
+  }2010]{Lee:2010:STU:1870658.1870741}
+Yoong~Keok Lee, Aria Haghighi, and Regina Barzilay.
+\newblock 2010.
+\newblock Simple type-level unsupervised pos tagging.
+\newblock In {\em Proceedings of the 2010 Conference on Empirical Methods in
+  Natural Language Processing}, EMNLP '10, pages 853--861, Stroudsburg, PA,
+  USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Marcus \bgroup et al.\egroup }1999]{treebank3}
+Mitchell~P. Marcus, Beatrice Santorini, Mary~Ann Marcinkiewicz, and Ann Taylor.
+\newblock 1999.
+\newblock Treebank-3.
+\newblock Linguistic Data Consortium, Philadelphia.
+
+\bibitem[\protect\citename{Maron \bgroup et al.\egroup }2010]{maron2010sphere}
+Yariv Maron, Michael Lamar, and Elie Bienenstock.
+\newblock 2010.
+\newblock Sphere embedding: An application to part-of-speech induction.
+\newblock In J.~Lafferty, C.~K.~I. Williams, J.~Shawe-Taylor, R.S. Zemel, and
+  A.~Culotta, editors, {\em Advances in Neural Information Processing Systems
+  23}, pages 1567--1575.
+
+\bibitem[\protect\citename{Merialdo}1994]{Merialdo:1994:TET:972525.972526}
+Bernard Merialdo.
+\newblock 1994.
+\newblock Tagging english text with a probabilistic model.
+\newblock {\em Comput. Linguist.}, 20:155--171, June.
+
+\bibitem[\protect\citename{Mintz}2003]{mintz2003frequent}
+T.H. Mintz.
+\newblock 2003.
+\newblock Frequent frames as a cue for grammatical categories in child directed
+  speech.
+\newblock {\em Cognition}, 90(1):91--117.
+
+\bibitem[\protect\citename{Redington \bgroup et al.\egroup
+  }1998]{redington1998distributional}
+M.~Redington, N.~Crater, and S.~Finch.
+\newblock 1998.
+\newblock Distributional information: A powerful cue for acquiring syntactic
+  categories.
+\newblock {\em Cognitive Science}, 22(4):425--469.
+
+\bibitem[\protect\citename{Rosenberg and Hirschberg}2007]{rosenberg2007v}
+A.~Rosenberg and J.~Hirschberg.
+\newblock 2007.
+\newblock V-measure: A conditional entropy-based external cluster evaluation
+  measure.
+\newblock In {\em Proceedings of the 2007 Joint Conference on Empirical Methods
+  in Natural Language Processing and Computational Natural Language Learning},
+  pages 410--420.
+
+\bibitem[\protect\citename{Sahlgren}2006]{sahlgren2006word}
+Magnus Sahlgren.
+\newblock 2006.
+\newblock {\em The Word-Space Model: Using distributional analysis to represent
+  syntagmatic and paradigmatic relations between words in high-dimensional
+  vector spaces}.
+\newblock {Ph.D.} thesis, Stockholm University.
+
+\bibitem[\protect\citename{Sch\"{u}tze}1995]{Schutze:1995:DPT:976973.976994}
+Hinrich Sch\"{u}tze.
+\newblock 1995.
+\newblock Distributional part-of-speech tagging.
+\newblock In {\em Proceedings of the seventh conference on European chapter of
+  the Association for Computational Linguistics}, EACL '95, pages 141--148, San
+  Francisco, CA, USA. Morgan Kaufmann Publishers Inc.
+
+\end{thebibliography}
