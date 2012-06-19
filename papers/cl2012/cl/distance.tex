@@ -1,13 +1,17 @@
 \section{Distance Metric}
 \label{sec:dist}
 
-We represent each context with a high dimensional probability vector
-called the substitute vector as described in the previous section.  In
-this section we compare various distance metrics in this high
-dimensional space with the goal of discovering one that will judge
-vectors that belong to the same syntactic category similar and vectors
-that belong to different syntactic categories distant.  The distance
-metrics we have considered are listed in Table~\ref{tab:metrics}.
+We represent each context with a sparse high dimensional probability
+vector called the substitute vector as described in the previous
+section.  In this section we compare various distance metrics in this
+high dimensional space with the goal of discovering one that will
+judge vectors that belong to the same syntactic category similar and
+vectors that belong to different syntactic categories distant.  The
+distance metrics we have considered are listed in
+Table~\ref{tab:metrics}.
+
+% we should remove KL2 metric from here, because we have sparse vectors
+% also update the table caption
 
 \begin{table}[ht] \centering
 \small
@@ -27,6 +31,8 @@ JS($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/m_i) + q_iln(q_i/m_i) $\\
 \label{tab:metrics}
 \end{table}
 
+
+% are we still using k = 30 ? update if necessary
 To judge the merit of each distance metric we obtained supervised
 baseline scores using leave-one-out cross validation and the weighted
 k-nearest-neighbor algorithm\footnote{Neighbors were weighted using
@@ -34,6 +40,8 @@ k-nearest-neighbor algorithm\footnote{Neighbors were weighted using
 1M word WSJ corpus.  The results are listed in
 Table~\ref{tab:distscores} sorted by score.
 
+
+% update scores in this table
 \begin{table}[ht] \centering
 \begin{tabular}{|l|c|}
 \hline
@@ -81,6 +89,8 @@ lg2-Manhattan & ? \\
 % log-Euclid & ?\\
 % log-Manhattan & ?\\
 
+
+% update scores in this paragraph as well
 The entries with the log- prefix indicate a metric applied to the log
 of the probability vectors.  Distance metrics on log probability
 vectors performed poorly compared to their regular counterparts
