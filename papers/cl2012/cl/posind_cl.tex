@@ -1,16 +1,24 @@
-\documentclass[11pt]{article}
-\usepackage{acl2012}
+%\documentclass[11pt]{article}
+\documentclass{clv2}
+\issue{?}{?}{2012}
+
+%Document Head
+\dochead{Draft Paper \date{}}
+
+\runningtitle{Learning Syntactic Categories Using Paradigmatic
+  Representations of Word Context}
+
+\runningauthor{?}
+
+%\usepackage{acl2012}
 \usepackage{times}
 \usepackage{latexsym}
 \usepackage{amsmath}
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{graphicx}
-% \usepackage[usenames,dvipsnames]{pstricks}
-% \usepackage{epsfig}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\setlength\titlebox{6.5cm}    % Expanding the titlebox
-
+%\usepackage{pdflscape} %% Better readable
+\usepackage{lscape}
 %%% DY: Some consistency macros:
 
 % many-to-one abbreviation
@@ -44,21 +52,19 @@
 %Ko\c{c} University, \.Istanbul, Turkey \\
 %\{myatbaz,esert,dyuret\}@ku.edu.tr
 }
-
-\date{}
-
 \begin{document}
 \maketitle
-\input{abstract.tex}
+%% \input{abstract.tex}
 \input{introduction.tex}
 \input{related.tex}
 \input{substitute.tex}
 \input{distance.tex}
-\input{clustering.tex}
 \input{dimension.tex}
-\input{sparsity.tex}
+\input{clustering.tex}
+%\input{sparsity.tex} % omit
 \input{scode.tex}
-\input{experiments}
+%%\input{experiments.tex}
+\input{multi.tex}
 \input{discussion.tex}
 \input{contribution.tex}
 
