@@ -4,23 +4,24 @@
 % what is the test data
 In this section, we expanded our test corpus to the complete Wall
 Street Journal Section of the Penn Treebank \cite{treebank3}
-(1,173,766 tokens, 49,206 types) and reperformed spectral clustering
+(1,173,766 tokens, 49,206 types) and applied spectral clustering
 with 45 clusters.
 %
-Words that were observed less than 20 times in the language model
-training data were replaced by \textsc{unk} tags, which gave us a
-vocabulary size of 78,498.
+New language model is trained with the same settings in
+Section~\ref{sec:lm}, with exception of observation threshold for
+words.  Threshold dropped to 20 and vocabulary size increased to
+78,498.
 %
 The perplexity of the 4-gram language model on the test corpus is 96.
 
-Due to relative unimportance of low probability substitutes, resulted
-in section~\ref{sec:dist}, and computational efficiency concerns only
-the top 100 substitutes and their unnormalized probabilities were
-computed for each of the 1,173,766 positions in the test
-set\footnote{The substitutes with unnormalized log probabilities can
-  be downloaded from \mbox{\url{http://goo.gl/jzKH0}}.  For a
-  description of the {\sc fastsubs} algorithm used to generate the
-  substitutes please see
+Only the top 100 substitutes and their unnormalized probabilities were
+computed for each of the 1,173,766 positions in the test set since low
+probability substitutes are relatively unimportant, as resulted in
+Section~\ref{sec:disct}, and computational efficiency is a serious
+concern with the data\footnote{The substitutes with unnormalized log
+  probabilities can be downloaded from
+  \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
+    fastsubs} algorithm used to generate the substitutes please see
   \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
   accomplishes this task in about 5 hours, a naive algorithm that
   looks at the whole vocabulary would take more than 6 days on a
@@ -28,12 +29,13 @@ set\footnote{The substitutes with unnormalized log probabilities can
 position were normalized to add up to 1.0 giving us the final
 substitute vectors used in the rest of this study.
 
-Supervised baseline scores again computed for distance metrics, with
+Supervised baseline scores recomputed for distance metrics, with
 absence of KL2, which is undefined in the sparse setting, and log
-space distances, which previously performed poorly (REFERANCE TO
+space distances, which previously performed poorly (REFERENCE TO
 APPENDIX HERE). Score ordering found to be in line with results from
-section~\ref{sec:dist} and Manhattan metric is chosen to replace KL2
-metric.
+Section~\ref{sec:dist} and KL2's successor Manhattan metric is chosen
+for further computations.
 
 % here's some comments on results of spectral clustering.
-
+In this paragraph we talk about results of spectral clustering with 45
+clusters. This is placeholder.
