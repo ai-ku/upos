@@ -48,6 +48,7 @@ Table~\ref{tab:distscores} sorted by score.
 \hline
 Metric & Accuracy(\%) \\
 \hline
+%% K=30 24K WSJ
 KL2 & 0.6889 \\
 Manhattan & 0.6865 \\
 Jensen & 0.6801 \\
@@ -58,8 +59,9 @@ lg2-Maximum & 0.5361 \\
 lg2-Cosine & 0.4847 \\
 lg2-Euclid & 0.4038 \\
 lg2-Manhattan & 0.3729 \\
+%% K=30 1M WSJ
 %% KL2 & ? \\
-%% Manhattan & ? \\
+%% Manhattan & .7354\\ %0.735381668919
 %% Jensen & .7317 \\ %0.731718247078
 %% Cosine & .7240 \\ %0.724018245545
 %% Maximum & ? \\
@@ -76,7 +78,7 @@ lg2-Manhattan & 0.3729 \\
 \label{tab:distscores}
 \end{table}
 
-% K=1
+% K=1 1M WSJ
 % KL2 can we define kl2 on sparse vectors
 % Manhattan 
 % Jensen 0.684500999347
@@ -88,7 +90,7 @@ lg2-Manhattan & 0.3729 \\
 % lg2-Euclid 
 % lg2-Manhattan 
 
-% K=20
+% K=20 1M WSJ
 % KL2 & ?\\
 % Manhattan & ?\\
 % Jensen & 0.732678404384\\
