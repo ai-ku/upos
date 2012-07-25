@@ -3,19 +3,21 @@
 
 The general strategy we follow for unsupervised syntactic category
 acquisition is to combine features of the context with the identity
-and features of the target word.  Our preliminary experiments
-indicated that using the context information alone (e.g. clustering
-substitute vectors) without the target word identity and features had
-limited success.\footnote{A 10-nearest-neighbor supervised baseline
-  using cosine distance between substitute vectors gives .7213
-  accuracy.  Clustering substitute vectors using various distance
-  metrics and dimensionality reduction methods give results inferior
-  to this upper bound.} It is the co-occurrence of a target word with a
-particular type of context that best predicts the syntactic category.
-In this section we review the unsupervised methods we used to model
-co-occurrence statistics: the Co-occurrence Data Embedding (CODE)
-method \cite{globerson2007euclidean} and its spherical extension
-(S-CODE) introduced by \cite{maron2010sphere}.
+and features of the target word.  Our preliminary experiments in
+Section~\ref{sec:clustering} indicated that using the context
+information alone (e.g. clustering substitute vectors) without the
+target word identity and features had limited success.\footnote{A
+  10-nearest-neighbor supervised baseline using cosine distance
+  between substitute vectors gives .7213 accuracy.  Clustering
+  substitute vectors using various distance metrics and dimensionality
+  reduction methods give results inferior to this upper bound.} It is
+the co-occurrence of a target word with a particular type of context
+that best predicts the syntactic category.  In this section we review
+the unsupervised methods we used to model co-occurrence statistics:
+the Co-occurrence Data Embedding (CODE) method
+\cite{globerson2007euclidean} and its spherical extension (S-CODE)
+introduced by \cite{maron2010sphere}.  In Section~\ref{sec:scodef} we
+extend the S-CODE to handle more than two variables.
 
 Let $X$ and $Y$ be two categorical variables with finite cardinalities
 $|X|$ and $|Y|$.  We observe a set of pairs $\{x_i, y_i\}_{i=1}^n$
@@ -70,3 +72,21 @@ experiments, we used S-CODE with its sampling based stochastic
 gradient ascent algorithm and smoothly decreasing learning
 rate.
 
+\subsection{S-Code with More than Two Variables}
+
+S-CODE handles two variables, whereas underlying syntactic categories
+can be captured by more than two different types of features such as
+contextual, morphologic and ortographic features.  S-CODE can be
+extented to handle more than two variables similar to the multi
+variable extension of CODE \cite{globerson2007euclidean} except that
+the unit sphere restriction.  The log-likelihood at
+Equation~\ref{eq:likelihood} can be redefined for $n+1$ different
+categorical variables with finite cardinalities $|X_1|,\hdots,|X_i|$
+and $|Y|$, respectively, as:
+\begin{eqnarray}
+&&\ell(\phi_1 \hdots \phi_i, \psi) = \sum_{i=1}^n\sum_{x_i,y} \bar{p}(x_i,y) \log p(x_i,y) \label{eq:multilikelihood} \\
+&&= \sum_{i=1}^n\sum_{x_i,y} \bar{p}(x_i,y) (-\log Z_i + \log \bar{p}(x_i)\bar{p}(y) - d^2_{x_i,y}) \nonumber \\
+&&=-\sum_{i=1}^n(\log Z_i + \mathit{const}_i - \sum_{x_i,y} \bar{p}(x_i,y) d^2_{x_i,y}) \nonumber
+\end{eqnarray}
+where $\phi_i$ is the embedding of $x_i \in X_i$ and $Z_i$ is the
+normalization constant term of $p(x_i,y)$.
