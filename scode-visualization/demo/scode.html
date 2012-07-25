@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <style>
+      body {
+      background:#ffffff;
+      padding:0;
+      margin:0;
+      overflow:hidden;
+      }
+      #legend {
+      position:absolute;
+      top:5;
+      right:5;
+      color:#ffffff;
+      font-weight:bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">Loading...</div>
+    <button id="InitialButton" onclick="initial_button()">Initial</button>
+    <button id="StartButton" onclick="start_button()">Start</button>
+    <button id="ShowButton" onclick="show_button()">Show Words</button>
+    <button id="ToggleColors" onclick="toggle_colors()">Toggle Colors</button>
+    <button id="ToggleClusters" onclick="toggle_clusters()">Gold</button>
+    <script src="Three.js"></script>
+    <script src="helvetiker_regular.typeface.js"></script>
+    <div id="legend"></div>
+    <div id="container"></div>
+    <script src="vertex.js"></script>
+    <script src="sv.js"></script>
+    <script type="text/javascript">
+      document.getElementById("loading").innerHTML = "";
+    </script>
+  </body>
+</html>
