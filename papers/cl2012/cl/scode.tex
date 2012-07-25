@@ -94,9 +94,11 @@ jointly learn the embeddings when the pairwise co-occurence statistics,
 $\bar{p}(x,y_i)$, are available for all $i$.
 
 One problem with these setting is, not every $(x,y_i)$ pair is
-observed in the data.  For example, the stem word ``car'' doesn't have
-any morphological features, thus its morphological feature is
-represented by the null value ``X''.  However setting the unobserved
+observed in the data.  For example, the stem word ``\textbf{car}''
+doesn't have any morphological feature, thus its morphological feature
+is represented by a null value, ``X''.  However setting the unobserved
 features to ``X'' leads to pulling the words with unobserved features
-together while pushing the ones with feature value other than ``X''
-apart.  [Look the code]
+together while pushing the ones with observed features apart.  To
+solve this, during the gradient search we don't perform any pull or
+push update on embeddings if the value of $y_i$ is set to null. [check the
+  the code rewrite]
