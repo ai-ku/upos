@@ -1,0 +1,68 @@
+\section{Multiple Languages}
+%\begin{landscape}
+%%Multiple laguage section
+\begin{table}[h]
+%% Table notation info
+%% PYP is *
+%% BMMM is \start
+%% Clark is \dagger
+%% kmeans is ^k
+%% 
+%  \tiny
+  \small
+  \begin{flushleft}
+%  \begin{tabular}{|l|l|l|l|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+  \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+        \hline
+        & Language   & Types   & Tags & Best Published            & Bigram &uPos           & uPos+L            & uPos+L+M     \\ \hline % Multext data
+        \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
+        & English    & 49,190  & 45 & .775 / .697$^*$  &.7314 / .6558 & .7680 / .6822 & ? / ? & \textbf{.8004 / .7160}           \\
+        & & & & & & & &\\ \hline
+        \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}} & 
+        Bulgarian    & 16,352  & 12+1 & .665 / .556$^\star$    & .6732 / .4119 & .6883 / .5291 & \textbf{.7039 / .5496}     & .6754 / .5246 \\
+        & Czech      & 19,115  & 12+1 & .642 / .539$^\star$    & .6269 / .4586 & .6781 / .4829 & .6742 / .4854     & \textbf{.6977 / .5042} \\
+        & English    & 9,773   & 12+1 & .733 / .633$^\star$    & .7690 /. 6131 & .8229 / .6610 & .8282 / .6719     & \textbf{.8343 / .6787} \\
+        & Estonian   & 17,845  & 12+1 & .644 / .533$^\star$    & .6089 / .4119 & .6555 / .4437 & \textbf{.6634 / .4606}     & .6526 / .4418 \\
+        & Hungarian  & 20,321  & 11+1 & .682 / .548$^\star$    & .6181 / .4514 & .6914 / .5046 & .7052 / .5244     & \textbf{.7287 / .5444} \\
+        & Romanian   & 15,189  & 12+1 & .611 / .523$^\star$    & .6565 / .5202 & .6469 / .5012 & \textbf{.6675 / .5269}     & .6488 / .5251 \\
+        & Slovene    & 17,871  & 12+1 & .679 / \textbf{.567$^\star$}    & .6772 / .5044 & .6873 / .4845 & \textbf{.6892} / .4901     & .6833 / .4941 \\
+        & Serbian    & 18,095  & 12+1 & .641 / .510$\dagger$        & .6267 / .4510 & .6240 / .4479 & .6181 / .4421     & \textbf{.6336 / .4566} \\
+        \hline % Conll06 data
+        \multirow{10}{*}{\begin{sideways}\textbf{CoNLL06 Shared Task}\end{sideways}}
+%        & Arabic     & 12,915  & 20 & -   & & - & -               & -  \\
+        & Bulgarian  & 32,439  & 54   & .704 / .596$\dagger$        & .6972 / .5532 & \textbf{.7399} / .5824  & .7391 / \textbf{.5856}     & .7207 / .5673 \\
+%        & Chinese    & 40,562  & 15 & -   & & & - & -           \\
+        & Czech      & 130,208 & 12   & .701$^*$ / .484$^\star$           & .6944 / .5036 & .6764 / .4867  & \textbf{.7149 / .5330}     & .6903 / .5227 \\
+        & Danish     & 18,356  & 25   & \textbf{.761}$^*$ / .591$^\star$           & .6757 / .5290 & .7214 / .5559  & .7520 / .5927     & .7482 / \textbf{.5958} \\
+        & Dutch      & 28,393  & 13   & .711$^*$ / .547$^\start$ & .6703 / .5205 & .7014 / .5405  & \textbf{.7393 / .5980}     & .7228 / .5925 \\
+        & German     & 72,326  & 54   & .744$^\star$ / .630$\dagger$& .7525 / .6285 & .7637 / .6314  & \textbf{.7735 / .6554}     & .7529 / .6403 \\
+%        & Japanese   & 3,231   & 80 & -   & - & - & -               & -           \\
+        & Portuguese & 28,931  & 22   & .785$^*$ / .639$^\star$           & .7031 / .5617 & .7381 / .5770  & .7907 / .6317     & \textbf{.7948 / .6405} \\
+        & Slovene    & 7,128   & 29   & .642$^k$ / \textbf{.539}$\dagger$    & .6384 / .4976 & .6503 / .4925  & .6555 / .5036     & \textbf{.6572} / .5023 \\
+        & Spanish    & 16,458  & 47   & \textbf{.788}$^*$ / .632$^\star$          & .7086 / .5844 & .7492 / .6083  & .7718 / \textbf{.6372}     & .7627 / .6331 \\
+        & Swedish    & 20,057  & 41   & .682 / \textbf{.589}$\dagger$        & .6721 / .5558 & .6931 / .5654  & \textbf{.6946} / .5721     & .6649 / .5613 \\
+        & Turkish    & 17,563  & 30   & .628 / .408$^k$        & .6069 / .3551 & .6228 / .3804  & .6348 / .4109     & \textbf{.6500 / .4246} \\ \hline % extra data from cristo2011 paper
+%        & French     & 49,964  & 23 & - & & - & -               & -        \\
+%        & A.Greek    & 15,194  & 15 & - & & - & -               & -        \\ \hline
+    \end{tabular}
+  \end{flushleft}
+\end{table}
+%\end{landscape}
+
+Following \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP} we
+evaluate our model on languages of the MULTEXT-East\cite{Multext}
+multilingual corpora and the CoNLL-X\cite{conll} shared task.  The
+test set consists of 8 languages from Multext-East(Bulgarian, Czech,
+English, Estonian, Hungarian, Romanian, Slovene and Serbian) and 10
+languages the CoNLL-X shared task(Bulgarian, Czech, Danish, Duch,
+German, Portuguese, Slovene, Spanish, Swedish and Turkish).  During
+testing we only use the training section of each language
+\cite{Lee:2010:STU:1870658.1870741} and the Penn Treebank WSJ English
+corpus is used as the development set.
+
+\subsection{Substitute Vectors}
+[Wikipedia data]
+\subsection{Features}
+\subsection{Results}
+
+

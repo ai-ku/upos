@@ -72,33 +72,59 @@ experiments, we used S-CODE with its sampling based stochastic
 gradient ascent algorithm and smoothly decreasing learning
 rate.
 
-\subsection{S-Code with More than Two Variables}
+%% \subsection{S-Code with More than Two Variables}
 
-S-CODE handles two variables, whereas underlying syntactic categories
-can be captured by more than two different variables such as
-contextual, morphologic and ortographic features.  S-CODE can be
-extented to handle more than two variables in a way similar to the
-multi variable extension of CODE \cite{globerson2007euclidean} except
-that the unit sphere restriction.  The log-likelihood at
-Equation~\ref{eq:likelihood} can be redefined for $n+1$ different
-categorical variables $X$, $Y_i$, $\hdots$ and $Y_n$ with finite
-cardinalities $|X|$, $|Y_1|$, $\hdots$ and $|Y_n|$, respectively, as:
-\begin{eqnarray}
-&&\ell(\phi, \psi_1,\hdots,\psi_n) = \sum_{i=1}^n\sum_{x,y_i} \bar{p}(x,y_i) \log p(x,y_i) \label{eq:multilikelihood} \\
-&&= \sum_{i=1}^n\sum_{x,y_i} \bar{p}(x,y_i) (-\log Z_i + \log \bar{p}(x)\bar{p}(y_i) - d^2_{x,y_i}) \nonumber \\
-&&=-\sum_{i=1}^n(\log Z_i + \mathit{const}_i - \sum_{x,y_i} \bar{p}(x,y_i) d^2_{x,y_i}) \nonumber
-\end{eqnarray}
-where $\psi_i$ is the embedding of $y_i \in Y_i$ and $Z_i$ is the
-normalization term of $p(x,y_i)$.  Thus the model is able to
-jointly learn the embeddings when the pairwise co-occurence statistics,
-$\bar{p}(x,y_i)$, are available for all $i$.
+%% In order to accommodate multiple feature types the CODE model needs to
+%% be extended to handle more than two variables.
+%% \cite{globerson2007euclidean} suggest the following likelihood
+%% function:
 
-One problem with these setting is, not every $(x,y_i)$ pair is
-observed in the data.  For example, the stem word ``\textbf{car}''
-doesn't have any morphological feature, thus its morphological feature
-is represented by a null value, ``X''.  However setting the unobserved
-features to ``X'' leads to pulling the words with unobserved features
-together while pushing the ones with observed features apart.  To
-solve this, during the gradient search we don't perform any pull or
-push update on embeddings if the value of $y_i$ is set to null. [check the
-  the code rewrite]
+%% \begin{eqnarray}
+%% &\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multicode}\\
+%% &&\sum_k w_k \sum_{x,y^{(k)}} \bar{p}(x,y^{(k)}) \log p(x,y^{(k)}) \nonumber
+%% \end{eqnarray}
+
+%% \noindent where $Y^{(1)}, \ldots, Y^{(K)}$ are $K$ different variables
+%% whose empirical joint distributions with $X$,
+%% $\bar{p}(x,y^{(1)})\ldots\bar{p}(x,y^{(K)})$, are known.
+%% Eq.~\ref{eq:multicode} then represents a set of CODE models
+%% $p(x,y^{(k)})$ where each $Y^{(k)}$ has an embedding $\psi_y^{(k)}$
+%% but all models share the same $\phi_x$ embedding.  The weights $w_k$
+%% reflect the relative importance of each $Y^{(k)}$.
+
+%% We adopt this likelihood function, set all $w_k=1$, let $X$
+%% represent a word, $Y^{(1)}$ represent a random substitute and
+%% $Y^{(2)}, \ldots, Y^{(K)}$ stand for various morphological and
+%% orthographic features of the word.  With this setup, the training
+%% procedure needs to change little: each time a word --
+%% random-substitute pair is sampled, the relevant word -- feature pairs
+%% are also generated and input to the gradient ascent algorithm.
+
+%% S-CODE handles two variables, whereas underlying syntactic categories
+%% can be captured by more than two different variables such as
+%% contextual, morphologic and ortographic features.  S-CODE can be
+%% extented to handle more than two variables in a way similar to the
+%% multi variable extension of CODE \cite{globerson2007euclidean} with
+%% the unit sphere restriction.  The log-likelihood at
+%% Equation~\ref{eq:likelihood} can be redefined for $n+1$ different
+%% categorical variables $X$, $Y_i$, $\hdots$ and $Y_n$ with finite
+%% cardinalities $|X|$, $|Y_1|$, $\hdots$ and $|Y_n|$, respectively, as:
+%% \begin{eqnarray}
+%% &&\ell(\phi, \psi_1,\hdots,\psi_n) = \sum_{i=1}^n\sum_{x,y_i} \bar{p}(x,y_i) \log p(x,y_i) \label{eq:multiscode} \\
+%% &&= \sum_{i=1}^n\sum_{x,y_i} \bar{p}(x,y_i) (-\log Z_i + \log \bar{p}(x)\bar{p}(y_i) - d^2_{x,y_i}) \nonumber \\
+%% &&=-\sum_{i=1}^n(\log Z_i + \mathit{const}_i - \sum_{x,y_i} \bar{p}(x,y_i) d^2_{x,y_i}) \nonumber
+%% \end{eqnarray}
+%% where $\psi_i$ is the embedding of $y_i \in Y_i$ and $Z_i$ is the
+%% normalization term of $p(x,y_i)$.  Thus the model is able to jointly
+%% learn the embeddings when the pairwise co-occurence statistics,
+%% $\bar{p}(x,y_i)$, are available for all $i$.
+
+%% One problem with these setting is, not every $(x,y_i)$ pair is
+%% observed in the data.  For example, the stem word ``\textbf{car}''
+%% doesn't have any morphological feature, thus its morphological feature
+%% is represented by a null value, ``X''.  However setting the unobserved
+%% features to ``X'' leads to pulling the words with unobserved features
+%% together even they are from different clusters or pushing the ones
+%% with observed features apart even they are from same clusters.  To
+%% solve this, during the gradient search we don't perform any pull or
+%% push updates on embeddings if the value of $y_i$ is set to null.
