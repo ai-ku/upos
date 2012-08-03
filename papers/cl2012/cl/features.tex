@@ -63,12 +63,13 @@ The orthographic features we used are similar to the ones in
 We generated morphological features using the unsupervised algorithm
 Morfessor \cite{creutz05}.  Morfessor was trained on the WSJ section
 of the Penn Treebank using default settings, and a perplexity
-threshold of 1.  Morphology feature of a word type consists of two
-parts: a stem and a suffix part.  We then extracted the stem part by
-concatinating the splits until including the first ``STM'' labeled
-split and the suffix part by concatinating rest of the
-splits\footnote{The program induced 5575 suffix types that are present
-  in a total of 19223 word types.}.
+threshold of 1.  In our model, a word type consists of two parts: a
+stem and a suffix part.  The suffix parts are used as the
+morphological feature thus each word type has only one morphological
+feature.  We extracted the stem part by concatinating the splits until
+including the first ``STM'' labeled split and the suffix part by
+concatinating rest of the splits\footnote{The program induced 5575
+  suffix types that are present in a total of 19223 word types.}.
 
 %% These suffixes were input to S-CODE as morphological features whenever
 %% the associated word types were sampled.  In order to incorporate
@@ -88,7 +89,7 @@ Both these results improve the state-of-the-art in part-of-speech
 induction significantly as seen in Table~\ref{tab:results}.
 
 \begin{figure*}[ht] \centering
-\vspace*{-10mm}
+%\vspace*{-10mm}
 \includegraphics[width=\textwidth]{hinton.png}
 %\vspace*{-30mm}
 \caption{Hinton diagram comparing most frequent tags and clusters.}

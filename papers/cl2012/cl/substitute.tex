@@ -65,12 +65,13 @@ beyond the end-of-sentence token were dropped.
 For computational efficiency only the top 100 substitutes and their
 unnormalized probabilities were computed for each of the 1,173,766
 positions in the test set\footnote{The substitutes with unnormalized
-  log probabilities can be downloaded from \mbox{\url{http://goo.gl/jzKH0}}.
-  For a description of the {\sc fastsubs} algorithm used to generate
-  the substitutes please see \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.
-  {\sc fastsubs} accomplishes this task in about 5 hours, a naive
-  algorithm that looks at the whole vocabulary would take more than 6
-  days on a typical 2012 workstation.}.  The probability vectors for
-each position were normalized to add up to 1.0 giving us the final
+  log probabilities can be downloaded from
+  \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
+    fastsubs} algorithm used to generate the substitutes please see
+  \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
+  accomplishes this task in about 5 hours, a naive algorithm that
+  looks at the whole vocabulary would take more than 6 days on a
+  typical 2012 workstation.}.  The probability vectors for each
+position were normalized to add up to 1.0 giving us the final
 substitute vectors used in the rest of this study.
 
