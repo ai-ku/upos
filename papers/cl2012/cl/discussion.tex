@@ -1,12 +1,12 @@
-\section{Error Analysis}
+\section{Discussion}
 \label{sec:discuss}
 
-Figure~\ref{plot-hinton} is the Hinton diagram showing the
-relationship between the most frequent tags and clusters from the
-experiment in Section~\ref{sec:feat}.  In general the errors seem to
-be the lack of completeness (multiple large entries in a row), rather
-than lack of homogeneity (multiple large entries in a column).  The
-algorithm tends to split large word classes into several clusters.
+Figure~\ref{plot-hinton} is the Hinton diagram of Penn Treebank WSJ
+showing the relationship between the most frequent tags and clusters
+from the experiment in Section~\ref{sec:feat}.  In general the errors
+seem to be the lack of completeness (multiple large entries in a row),
+rather than lack of homogeneity (multiple large entries in a column).
+The algorithm tends to split large word classes into several clusters.
 Some examples are:
 \begin{itemize}
 \item Titles like Mr., Mrs., and Dr. are split from the rest of the
@@ -26,13 +26,26 @@ Nevertheless there are some homogeneity errors as well:
 \item Cluster (6) contains capitalized words that span a number of
   categories.
 \end{itemize}
-
+%% A comparison of morphological structures might be helpful.
+%% 
 Most closed-class items are cleanly separated into their own clusters
-as seen in the lower right hand corner of the diagram.  The
-completeness errors are not surprising given that the words that have
-been split are not generally substitutable with the other members of
-their Penn Treebank category.  Thus it can be argued that metrics that
-emphasize homogeneity such as \mto are more appropriate in this
+as seen in the lower right hand corner of the diagram. 
+
+The completeness errors become more noticable on languages with coarse
+tagset thus our models perform worse than the best published models on
+6 of MULTEXT-East languages in terms of \vm scores while achieving the
+state-of-the-art \mto scores on same languages as shown on
+Table~\ref{multiresults}.  On CONLL-X languages the effect of
+completeness errors is less noticable since all languages except Czech
+and Dutch have fine grained tagsets.
+
+As the tagset of languages becomes fine grained the effect of
+completeness errors decreases as it is the case
+
+The completeness errors are not surprising given that the words that
+have been split are not generally substitutable with the other members
+of their gold-tag set category.  Thus it can be argued that metrics
+that emphasize homogeneity such as \mto are more appropriate in this
 context than metrics that average homogeneity and completeness such as
 \vm as long as the number of clusters is controlled.
 

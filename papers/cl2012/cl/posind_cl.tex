@@ -43,6 +43,8 @@
 \newcommand{\wsvm}{.6822 (.0029)}
 \newcommand{\ftmto}{.8004 (.0075)}
 \newcommand{\ftvm}{.7160 (.0044)}
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
 \title{Learning Syntactic Categories Using Paradigmatic
   Representations of\\ Word Context}
@@ -68,8 +70,10 @@
 \input{experiments.tex}
 \input{features.tex}
 \input{discussion.tex}
-\input{multibest.tex}
 \input{contribution.tex}
+\input{multibest.tex}
+\newpage
+\input{appendix.tex}
 
 \bibliographystyle{colin}
 \bibliography{posind2012}
