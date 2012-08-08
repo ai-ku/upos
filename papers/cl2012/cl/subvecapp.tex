@@ -1,0 +1,25 @@
+%%substitute vector applications
+\section{Substitute Vector Applications}
+[WRITE A BRIEF INTRO]
+% what is the test data
+The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
+was used as the test corpus (1,173,766 tokens, 49,206 types).
+% what is the tag set
+The treebank uses 45 part-of-speech tags which is the set we used as
+the gold standard for comparison in our experiments.
+% what is the LM training data
+%Train => 5181717 126019973 690121813
+To compute substitute probabilities we trained a language model using
+approximately 126 million tokens of Wall Street Journal data
+(1987-1994) extracted from CSR-III Text \cite{csr3text} (we excluded
+the test corpus).
+% how is the language model trained
+We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
+Kneser-Ney discounting.
+% what is the vocabulary
+Words that were observed less than 20 times in the language model
+training data were replaced by \textsc{unk} tags, which gave us a
+vocabulary size of 78,498.
+% perplexity
+The perplexity of the 4-gram language model on the test corpus is 96.
+

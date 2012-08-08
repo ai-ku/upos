@@ -1,4 +1,5 @@
-\section{Substitute Vectors}
+\section{Substitute Theory}
+%\section{Substitute Vectors} % Old title
 \label{sec:lm}
 
 In this study, we predict the part of speech of a word in a given
@@ -10,27 +11,27 @@ function of the context only and is indifferent to the target word.
 This section details the choice of the data set, the vocabulary and
 the estimation of substitute vector probabilities.
 
-% what is the test data
-The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
-was used as the test corpus (1,173,766 tokens, 49,206 types).
-% what is the tag set
-The treebank uses 45 part-of-speech tags which is the set we used as
-the gold standard for comparison in our experiments.
-% what is the LM training data
-%Train => 5181717 126019973 690121813
-To compute substitute probabilities we trained a language model using
-approximately 126 million tokens of Wall Street Journal data
-(1987-1994) extracted from CSR-III Text \cite{csr3text} (we excluded
-the test corpus).
-% how is the language model trained
-We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
-Kneser-Ney discounting.
-% what is the vocabulary
-Words that were observed less than 20 times in the language model
-training data were replaced by \textsc{unk} tags, which gave us a
-vocabulary size of 78,498.
-% perplexity
-The perplexity of the 4-gram language model on the test corpus is 96.
+%% % what is the test data
+%% The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
+%% was used as the test corpus (1,173,766 tokens, 49,206 types).
+%% % what is the tag set
+%% The treebank uses 45 part-of-speech tags which is the set we used as
+%% the gold standard for comparison in our experiments.
+%% % what is the LM training data
+%% %Train => 5181717 126019973 690121813
+%% To compute substitute probabilities we trained a language model using
+%% approximately 126 million tokens of Wall Street Journal data
+%% (1987-1994) extracted from CSR-III Text \cite{csr3text} (we excluded
+%% the test corpus).
+%% % how is the language model trained
+%% We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
+%% Kneser-Ney discounting.
+%% % what is the vocabulary
+%% Words that were observed less than 20 times in the language model
+%% training data were replaced by \textsc{unk} tags, which gave us a
+%% vocabulary size of 78,498.
+%% % perplexity
+%% The perplexity of the 4-gram language model on the test corpus is 96.
 
 % how are the substitutes computed
 It is best to use both left and right context when estimating the
@@ -62,16 +63,16 @@ Equation \ref{eq:lm3}.  Specifically, at the beginning of the sentence
 shorter n-gram contexts were used and at the end of the sentence terms
 beyond the end-of-sentence token were dropped.
 
-For computational efficiency only the top 100 substitutes and their
-unnormalized probabilities were computed for each of the 1,173,766
-positions in the test set\footnote{The substitutes with unnormalized
-  log probabilities can be downloaded from
-  \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
-    fastsubs} algorithm used to generate the substitutes please see
-  \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
-  accomplishes this task in about 5 hours, a naive algorithm that
-  looks at the whole vocabulary would take more than 6 days on a
-  typical 2012 workstation.}.  The probability vectors for each
-position were normalized to add up to 1.0 giving us the final
-substitute vectors used in the rest of this study.
+%% For computational efficiency only the top 100 substitutes and their
+%% unnormalized probabilities were computed for each of the 1,173,766
+%% positions in the test set\footnote{The substitutes with unnormalized
+%%   log probabilities can be downloaded from
+%%   \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
+%%     fastsubs} algorithm used to generate the substitutes please see
+%%   \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
+%%   accomplishes this task in about 5 hours, a naive algorithm that
+%%   looks at the whole vocabulary would take more than 6 days on a
+%%   typical 2012 workstation.}.  The probability vectors for each
+%% position were normalized to add up to 1.0 giving us the final
+%% substitute vectors used in the rest of this study.
 
