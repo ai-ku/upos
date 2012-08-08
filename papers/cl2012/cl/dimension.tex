@@ -1,10 +1,9 @@
 \subsection{Dimensionality Reduction}
 \label{sec:dimreduce}
 
-% are we able to do Isomap for large dimensions ?
-Even with sparsity using high dimensional vectors is problematic with
-many learning algorithms because of computational cost and the curse
-of dimensionality.  In this section we investigate if there is a low
+Using high dimensional vectors is problematic with many learning
+algorithms because of computational cost and the curse of
+dimensionality.  In this section we investigate if there is a low
 dimensional representation of the substitute vectors which still
 preserve the neighborhood information necessary to learn syntactic
 categories.  We first briefly describe then report experimental
@@ -12,6 +11,7 @@ results on principal components analysis (PCA), Isomap
 \cite{tenenbaum2000global}, locally linear embedding (LLE)
 \cite{roweis2000nonlinear}, and Laplacian eigenmaps
 \cite{belkin2003laplacian}.
+
 
 Each dimensionality reduction algorithm tries to preserve certain
 aspects of the original vectors.  PCA is a linear method that
