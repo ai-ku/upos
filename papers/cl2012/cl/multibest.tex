@@ -1,15 +1,16 @@
 \section{Multiple Languages}
 \input{multitable.tex} 
 
-Following \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP} we
-continue to evaluate our model on the languages of
-MULTEXT-East\cite{Multext} multilingual corpora and the
-CoNLL-X\cite{conll} shared task.  The test set consists of 8 languages
-from Multext-East(Bulgarian, Czech, English, Estonian, Hungarian,
-Romanian, Slovene and Serbian) and 10 languages from the CoNLL-X
-shared task(Bulgarian, Czech, Danish, Duch, German, Portuguese,
-Slovene, Spanish, Swedish and Turkish).  During testing we only use
-the training section of each language data sets
+Following Christodoulopoulos et
+al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP} we
+continue to evaluate our model on the languages of MULTEXT-East
+\cite{citeulike:5820223} multilingual corpora and the
+CoNLL-X \cite{Buchholz:2006:CST:1596276.1596305} shared task.  The test
+set consists of 8 languages from Multext-East(Bulgarian, Czech,
+English, Estonian, Hungarian, Romanian, Slovene and Serbian) and 10
+languages from the CoNLL-X shared task(Bulgarian, Czech, Danish, Duch,
+German, Portuguese, Slovene, Spanish, Swedish and Turkish).  During
+testing we only use the training section of each language data sets
 \cite{Lee:2010:STU:1870658.1870741}.[parameter setting?? dont say
   development]
 
@@ -20,14 +21,15 @@ summarized in Table~\ref{tab:multiresults}.
 
 \subsection{Substitute Vectors}
 To calculate substitute probabilities, we trained language models
-using the Wikipedia dump files of the target languages\cite{wikipedia}
-as it is detailed in Section~\ref{sec:lm}.  The word count of
-Wikipedia dump files vary across the languages, in order to reduce the
-unknow word ratio of resource poor languages and standartize the
-process we set the unknown word threshold to 2 for all languages.  As
-a result we only replaced the words that are observed less than 2
-times in the language model training data(language model statistics
-are detailed in Appendix~\ref{app-datax}).
+using the Wikipedia dump files of the target languages\footnote{See
+  Appendix~\ref{app:lm}for further details.}  as it is detailed in
+Section~\ref{sec:lm}.  The word count of Wikipedia dump files vary
+across the languages, in order to reduce the unknow word ratio of
+resource poor languages and standartize the process we set the unknown
+word threshold to 2 for all languages.  As a result we only replaced
+the words that are observed less than 2 times in the language model
+training data(language model statistics are detailed in
+Appendix~\ref{app-datax}).
 
 \subsection{Features}
 We use the same set of ortographic features described in
@@ -53,7 +55,7 @@ Section~\ref{sec:exp}\footnote{In Section~\ref{sec:wordsub} the best
   result is achieved on a 25 dimensional sphere with 64 substitutes.}.
 As a baseline model we chose the bigram version of S-Code described in
 Section~\ref{sec:bigram} which is a very strong baseline compared to
-the ones used in \cite{christodoulopoulos-goldwater-steedman}.
+the ones used in \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
 Table~\ref{tab:multiresults} summarizes the \mto and \vm scores of the
 bigram model and our models together with the best published score on
 each language.

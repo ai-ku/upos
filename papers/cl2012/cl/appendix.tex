@@ -65,6 +65,32 @@ English.  English has relatively low unknown word therefore we set the
 threshold to 20 instead of 2.[double check for multext east.]
 
 \section{Appendix B}
+\label{app:dist1M}
+\begin{table}[ht] \centering
+\begin{tabular}{|l|c|}
+\hline
+Metric & Accuracy(\%) \\
+\hline
+%% K=30 1M WSJ
+KL2 & - \\
+Manhattan & .7353\\ %0.735381668919
+Jensen & .7317 \\ %0.731718247078
+Cosine & .7240 \\ %0.724018245545
+Maximum & ? \\
+Euclid & .6109 \\ %0.610962491672
+%% lg2-Maximum & ? \\
+%% lg2-Cosine & ? \\
+%% lg2-Euclid & ? \\
+%% lg2-Manhattan & ? \\
+\hline
+\end{tabular}
+\caption{Supervised baseline scores with different 
+distance metrics on 1M word WSJ Penn Treebank corpus.}
+\label{tab:distscores1M}
+\end{table}
+
+
+\section{Appendix C}
 \label{app:tags}
 Test2 Appendix~\ref{app:tags} This might require lots of spaces since
 some languages has 80 tags.
