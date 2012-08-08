@@ -54,3 +54,18 @@ for the region of interest (between 16 to 2000 clusters) spectral
 clustering is clearly superior with \spectralResult\% many-to-one
 accuracy at 45 clusters.
 
+In accord with results on 24K word data set, we apply the spectral
+clustering to 1M word Penn Treebank data set.  Section~\ref{sec:dist}
+reveals that substitutes with low probabilities are relatively
+unimportant compared to the top ones.  Thus instead of extracting all
+substitutes we extract only top 100 substitutes of each target word
+using the language model described in Section~\cite{sec:lm}.  Using
+the top 100 substitutes results in sparse substitute vectors on which
+KL2 is undefined.  However score ordering found to be in line with
+results from Section~\ref{sec:dist} on 1M word data and KL2's
+successor Manhattan metric is chosen for spectral cluster computation.
+
+Spectral clustering on 1M word data set scored ??\mto accuracy.  To
+enforce one-tag-per-word assumption we assigned each word to its most
+observed cluster which increased the \mto accuracy to ??.
+

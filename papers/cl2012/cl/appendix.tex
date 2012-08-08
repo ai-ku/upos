@@ -19,7 +19,7 @@
     &Hungarian & Wikipedia &3,250,267& 66,069,788 & 6,768 & 98,426 & 742.676 & .0449\\
     &Romanian & Wikipedia &3,250,267&66,069,788  & 6,520 & 118,328 & 666.855 & .1074\\
     &Slovene & Wikipedia & 899,329&18,969,846 & 6,689 & 112,278 & 658.711 & .0389\\
-    &Serbian & Wikipedia & 1,350,410 & 34,081,357 & 6,677 & 108,809 & 1,131.89 & .0989\\
+    &Serbian & Wikipedia & 1,350,410 & 34,081,357 & 6,677 & 108,809 & 804.962 & .0580\\
     \hline % Conll06 data
     \multirow{10}{*}{\begin{sideways}\textbf{CoNLL06 Shared Task}\end{sideways}}
     &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 12,823 & 190,217 & 538.972 & .0043\\
@@ -41,20 +41,28 @@
 
 \noindent Table~\ref{tab:lmstatistics} presents statistics related to the
 language model training and test corpora.  For all languages except
-English and Turkish, we train the language models using the
+Serbian, English and Turkish, we trained the language models using the
 corresponding wikipedia dump files\footnote{Latest Wikipedia dump
 files are freely available at \url{http://dumps.wikimedia.org/} and
-the text in the dumpfiles can be extracted using WP2TXT
-(\url{http://wp2txt.rubyforge.org/})}[Should we talk about tokenizer].
+the text in the dump files can be extracted using WP2TXT
+(\url{http://wp2txt.rubyforge.org/})}[Should we talk about tokenizer?].
 
-To train statistical language model of English, we use Wall Street
+Serbian shares common basis with Croation and Bosnian thus we trained
+3 different language models using Wikipedia dump files of Serbian
+together with these two languages and measured the perplexities on
+Serbian test corpus.  We chose the language model that uses Croation
+dump file since it achieved the lowest perplexity score and unknown
+word ratio on Serbian test corpus.
+
+To train statistical language model of English, we used Wall Street
 Journal data (1987-1994) extracted from CSR-III Text \cite{csr3text}
 (we excluded the test corpus) and for the Turkish language modelling
-we use the web corpus that is collected from Turkish news and blog
-sites\cite{sak2008turkish}.  We set the unknown word threshold to 2
-for all languages except English.  English has relatively low unknown
-word therefore we set the threshold to 20 instead of 2.[double check
-for multext east.]
+we used the web corpus that was collected from Turkish news and blog
+sites\cite{sak2008turkish}.  
+
+We set the unknown word threshold to 2 for all languages except
+English.  English has relatively low unknown word therefore we set the
+threshold to 20 instead of 2.[double check for multext east.]
 
 \section{Appendix B}
 \label{app:tags}
