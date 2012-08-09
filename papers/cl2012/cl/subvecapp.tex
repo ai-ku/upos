@@ -1,11 +1,11 @@
 %%substitute vector applications
 \section{Substitute Vector Applications}
 \label{sec:subapp}
-In this section, we explored upperbounds of substitute vectors and
-clustering performance for part-of-speech induction problem. Rest of
-the subsection details the choice of the data set, the vocabulary and
-the estimation of substitute probabilities for substitue vector
-application in part-of-speech induction problem.
+In this section, we explored the limits and potential of using solely
+substitute vectors (without using the correponding target word
+identities) on the part-of-speech induction problem.  Rest of this
+section details the choice of the data set, the vocabulary and the
+estimation of substitute probabilities.  
 
 % what is the LM training data
 %Train => 5181717 126019973 690121813
@@ -24,7 +24,7 @@ were replaced by \textsc{unk} tags, which gave us a vocabulary size of
 The first 24,020 tokens of the Penn Treebank \cite{treebank3} Wall
 Street Journal Section 00 was used as the test corpus to be induced.
 Corpus size kept small in order to efficiently compute full distance
-matrices.  Substituion probabilities for 12,672 vocabulary words were
+matrices.  Substitution probabilities for 12,672 vocabulary words were
 computed at each of the 24,020 positions, as described in
 Section~\ref{sec:subthr}.
 % perplexity
@@ -34,3 +34,11 @@ vocabulary and in-domain data.
 % what is the tag set
 The treebank uses 45 part-of-speech tags which is the set we used as
 the gold standard for comparison in our experiments.
+
+Section~\ref{sec:dist} gives a detailed comparison of similarity
+metrics in high dimensional substitute vector space.
+Section~\ref{sec:dimreduce} analyzes application of possible
+dimensionality reduction algorithms to our problem.
+Section~\ref{sec:clustering} gives comparison of various clustering
+techniques and finally Section~\ref{sec:wsj} applies the findings of
+the previous sections to the 1M word Penn Treebank corpus.

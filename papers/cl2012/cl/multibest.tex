@@ -2,7 +2,7 @@
 \label{sec:multilang}
 \input{multitable.tex} 
 
-Following Christodoulopoulos et
+\noindent Following Christodoulopoulos et
 al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP}, we
 evaluate our model on the Penn Treebank 1M word WSJ English corpus
 together with 8 languages from MULTEXT-East (Bulgarian, Czech,
@@ -35,12 +35,12 @@ English, we set the unknown word threshold to 20.
 We use the same set of orthographic features described in
 Section~\ref{sec:feat} except we add an extra ``Only-Punctuation''
 feature to the languages of MULTEXT-East corpora.  The
-``Only-Punctuation'' is generated when a token contains only
-punctuations.  
+``Only-Punctuation'' feature is generated when a token consists of
+punctuations.
 
 Morphological features of each language is extracted by the method
-described in Section~\ref{sec:feat}.  The number of suffix types are
-summarized in Appendix~\ref{morpho}.
+described in Section~\ref{sec:feat}.  Language specific morphological
+feature statistics are summarized in Appendix~\ref{app:morpho}.
 
 \subsection{Results}
 We perform experiments with a range of languages and three different
@@ -48,7 +48,7 @@ feature setups to establish both the robustness of our model across
 languages and to observe the effects of different features.  For each
 language we report results: (1) without features (uPos), (2) with
 orthographic features (uPos+O) and (3) with both orthographic and
-morphological features (uPos+O+M).  In accord with
+morphological features (uPos+O+M).  In accord with the results of
 Section~\ref{sec:wordsub}, we use the 25 dimensional sphere with 64
 substitutes for all languages.  As a baseline model we chose the
 bi-gram version of S-Code described in Section~\ref{sec:bigram} which

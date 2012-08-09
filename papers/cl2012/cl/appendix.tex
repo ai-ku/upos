@@ -9,7 +9,7 @@
     & & \multicolumn{3}{c|}{Language Model} & \multicolumn{4}{c|}{Test set}\\    \cline{2-9}
     & Language & Source & \specialcell{Sentence\\Count} & \specialcell{Word\\Count} & \specialcell{Sentence\\Count} & \specialcell{Word\\Count} & \specialcell{Perplexity\\(ppl)} & \specialcell{Unknown\\Word} \\ \cline{1-9}
     \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
-    &English & News & 5,187,874 & 126,170,376 & 49,208 & 1,173,766 & ?? & ??\\
+    &English & News & 5,187,874 & 126,170,376 & 49,208 & 1,173,766 & 79.926 & 0.012\\
     & & & & && & &\\\hline
     \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}}
     &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 6,682 & 101,173 & 655.202 & .0565\\
@@ -22,7 +22,7 @@
     &Serbian & Wikipedia & 782,278 & 17,129,679 & 6,677 & 108,809 & 804.962 & .0580\\
     \hline % Conll06 data
     \multirow{10}{*}{\begin{sideways}\textbf{CoNLL-X Shared Task}\end{sideways}}
-    &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 12,823 & 190,217 & 538.972 & .0043\\
+    &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 12,823 & 190,217 & 538.972 & .0430\\
     &Czech & Wikipedia &3,059,678 & 59,698,049 & 72,703 & 1,249,408 & 1,233.95 &.0250\\
     &Danish & Wikipedia &1,672,003 & 35,863,945 & 5,190 & 94,386 & 351.24 & .0393\\
     &Dutch & Wikipedia &8,266,922 & 159,978,524 & 13,349 & 195,069 & 390.818 & .0476\\
@@ -92,8 +92,38 @@ distance metrics on 1M word WSJ Penn Treebank corpus.}
 
 
 \section{Appendix C}
-\label{app:tags}
-Appendix~\ref{app:tags}.
-\begin{itemize}
+\label{app:morpho}
+\begin{table}[h]
+\begin{tabular}{|l|l|c|c|}
+        \hline
+        & Language & \specialcell{Word types} & \specialcell{Suffix Parts}\\
+        \hline
+        \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
+        & English & 19223 & 5575\\
+        & & &\\\hline
+        \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}}
+        & Bulgarian & 4209 & 609\\
+        & Czech & 12848 & 2787\\
+        & English & 4783 & 1251\\
+        & Estonian & 13638 & 4448\\
+        & Hungarian & 15995 & 5423\\
+        & Romanian & 9445 & 2064\\
+        & Slovene & 11834 & 2093\\
+        & Serbian & 12476 & 2722\\
+        \hline % Conll06 data
+        \multirow{10}{*}{\begin{sideways}\textbf{CoNLL-X Shared Task}\end{sideways}}
+        & Bulgarian & 8225&926\\
+        & Czech & 85673 & 12443\\
+        & Danish & 10897 & 3708\\
+        & Dutch & 13407 & 5250\\
+        & German & 45414 & 15219\\
+        & Portuguese & 15721 & 5033\\
+        & Slovene & 4781 & 1257\\
+        & Spanish & 9316 & 2648\\
+        & Swedish & 12725 & 3897\\
+        & Turkish & 14227 & 5651\\
+\end{tabular}
 
-\end{itemize}
+\caption{Number of induced suffix parts and word types with these suffix parts after the morfological feature extraction.}
+
+\end{table}
