@@ -17,7 +17,7 @@ The perplexity of the 4-gram language model on the test corpus is 96.
 Only the top 100 substitutes and their unnormalized probabilities were
 computed for each of the 1,173,766 positions in the test set since low
 probability substitutes are relatively unimportant, as resulted in
-Section~\ref{sec:disct}, and computational efficiency is a serious
+Section~\ref{sec:dist}, and computational efficiency is a serious
 concern with the data\footnote{The substitutes with unnormalized log
   probabilities can be downloaded from
   \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
@@ -31,10 +31,10 @@ substitute vectors used in the rest of this study.
 
 Supervised baseline scores recomputed for distance metrics, with
 absence of KL2, which is undefined in the sparse setting, and log
-space distances, which previously performed poorly (REFERENCE TO
-APPENDIX HERE). Score ordering found to be in line with results from
-Section~\ref{sec:dist} and KL2's successor Manhattan metric is chosen
-for further computations.
+space distances, which previously performed poorly
+(see Appendix~\ref{app:dist1M}). Score ordering found to be in line with
+results from Section~\ref{sec:dist} and KL2's successor Manhattan
+metric is chosen for further computations.
 
 % here's some comments on results of spectral clustering.
 

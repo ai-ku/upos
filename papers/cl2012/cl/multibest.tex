@@ -1,41 +1,41 @@
-\section{Multiple Languages}
+\section{Experiments}
+\label{sec:multilang}
 \input{multitable.tex} 
 
 Following Christodoulopoulos et
-al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP} we
-continue to evaluate our model on the languages of MULTEXT-East
-\cite{citeulike:5820223} multilingual corpora and the
-CoNLL-X \cite{Buchholz:2006:CST:1596276.1596305} shared task.  The test
-set consists of 8 languages from Multext-East(Bulgarian, Czech,
-English, Estonian, Hungarian, Romanian, Slovene and Serbian) and 10
-languages from the CoNLL-X shared task(Bulgarian, Czech, Danish, Duch,
-German, Portuguese, Slovene, Spanish, Swedish and Turkish).  During
-testing we only use the training section of each language data sets
-\cite{Lee:2010:STU:1870658.1870741}.[parameter setting?? dont say
-  development]
+al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP}, we
+evaluate our model on the Penn Treebank 1M word WSJ English corpus
+together with 8 languages from MULTEXT-East (Bulgarian, Czech,
+English, Estonian, Hungarian, Romanian, Slovene and Serbian)
+\cite{citeulike:5820223} and 10 languages from the CoNLL-X shared task
+(Bulgarian, Czech, Danish, Dutch, German, Portuguese, Slovene,
+Spanish, Swedish and Turkish)
+\cite{Buchholz:2006:CST:1596276.1596305}.  During the testing we only
+use the training section of MULTEXT-East and CONLL-X languages
+\cite{Lee:2010:STU:1870658.1870741}.
 
-Languages of Multext-East corpora do not tag the punctuation marks,
-thus we add an extra tag for punctuation to the tagset of these
+Languages of MULTEXT-East corpora do not tag the punctuation marks,
+thus we add an extra tag for punctuation to the tag-set of these
 languages.  The number of word types and clusters of each language are
 summarized in Table~\ref{tab:multiresults}.
 
 \subsection{Substitute Vectors}
-To calculate substitute probabilities, we trained language models
-using the Wikipedia dump files of the target languages\footnote{See
-  Appendix~\ref{app:lm}for further details.}  as it is detailed in
-Section~\ref{sec:lm}.  The word count of Wikipedia dump files vary
-across the languages, in order to reduce the unknow word ratio of
-resource poor languages and standartize the process we set the unknown
-word threshold to 2 for all languages.  As a result we only replaced
-the words that are observed less than 2 times in the language model
-training data(language model statistics are detailed in
-Appendix~\ref{app-datax}).
+To calculate top 100 substitutes of each position, we trained a 4-gram
+language model with the corresponding training corpora of each
+language\footnote{See Appendix~\ref{app:lm} for the further details on
+  the statistics of language model.}  as described in
+Section~\ref{sec:subthr}.  The word count of Wikipedia dump files vary
+across the languages, in order to reduce the unknown word ratio of
+resource poor languages and to standardize the process we set the
+unknown word threshold to 2 for all languages except English.  For
+English, we set the unknown word threshold to 20.
+%%Language model statistics are detailed in Appendix~\ref{app:lm}.
 
 \subsection{Features}
-We use the same set of ortographic features described in
+We use the same set of orthographic features described in
 Section~\ref{sec:feat} except we add an extra ``Only-Punctuation''
-feature to the languages of MULTEXT-EAST corpora.  The
-``Only-Punctuaion'' is generated when a token contains only
+feature to the languages of MULTEXT-East corpora.  The
+``Only-Punctuation'' is generated when a token contains only
 punctuations.  
 
 Morphological features of each language is extracted by the method
@@ -43,32 +43,32 @@ described in Section~\ref{sec:feat}.  The number of suffix types are
 summarized in Appendix~\ref{morpho}.
 
 \subsection{Results}
-
 We perform experiments with a range of languages and three different
 feature setups to establish both the robustness of our model across
 languages and to observe the effects of different features.  For each
-language we report results: (1) without features(uPos), (2) with
-ortographic features(uPos+O) and (3) with ortographic and
-morphological features together(uPos+O+M).  In accord with our
-development set, we use the best performing setup of
-Section~\ref{sec:exp}\footnote{In Section~\ref{sec:wordsub} the best
-  result is achieved on a 25 dimensional sphere with 64 substitutes.}.
-As a baseline model we chose the bigram version of S-Code described in
-Section~\ref{sec:bigram} which is a very strong baseline compared to
-the ones used in \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
-Table~\ref{tab:multiresults} summarizes the \mto and \vm scores of the
-bigram model and our models together with the best published score on
-each language.
+language we report results: (1) without features (uPos), (2) with
+orthographic features (uPos+O) and (3) with both orthographic and
+morphological features (uPos+O+M).  In accord with
+Section~\ref{sec:wordsub}, we use the 25 dimensional sphere with 64
+substitutes for all languages.  As a baseline model we chose the
+bi-gram version of S-Code described in Section~\ref{sec:bigram} which
+is a very strong baseline compared to the ones used in
+\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
+Table~\ref{tab:multiresults} summarizes the \mto and \vm scores of our
+models together with the bi-gram baseline and the best published
+accuracies on each language corpus.
 
-uPos significantly outperformed the bigram baseline in both \mto and
-\vm scores on 14 languages while bigram model performed better on
-Romanian and Serbian.  uPos+O and uPos+O+M achieved the highest \mto
-scores on all languages of MULTEXT-EAST corpora however they scored
-the highest \vm scores only on English and Romanian.  On the CoNLL-X
-languages Pos+O and uPos+M models perform better than the best
-published \mto score on 7 languages (Czech, Dutch, German, Portuguese,
-Slovene, Swedish and Turkish).  Similarly, both models achieved the
-top \vm scores on 7 languages (Czech, Danish, Dutch, German,
-Portuguese, Spanish and Turkish).  uPos achieves a best \mto score on
-Bulgarian.
+uPos significantly outperformed the bi-gram baseline in both \mto and
+\vm scores on 14 languages while bi-gram model performed better on
+Romanian, Serbian and Czech (CONLL-X).  uPos+O+M has the
+state-of-the-art \mto and \vm accuracy on WSJ English corpus.  uPos+O
+and uPos+O+M achieved the highest \mto scores on all languages of
+MULTEXT-East corpora while scoring the highest \vm accuracies on
+English and Romanian.  On the CoNLL-X languages Pos+O and uPos+M
+models perform better than the best published \mto score on 7
+languages (Czech, Dutch, German, Portuguese, Slovene, Swedish and
+Turkish).  Similarly, these models achieved the top \vm scores on 7
+languages (Czech, Danish, Dutch, German, Portuguese, Spanish and
+Turkish).  uPos achieves the best published \mto score on CONLL-X
+Bulgarian corpora.
 

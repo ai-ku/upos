@@ -1,4 +1,4 @@
-\section{Experiments}
+\section{S-Code and Substitute Vector Application}
 \label{sec:exp}
 
 \begin{table*}[t] \footnotesize
@@ -38,20 +38,20 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 \caption{Summary of results in terms of the \mto and \vm scores.
   Standard errors are given in parentheses when available.  Starred
   entries have been reported in the review paper
-  \protect\cite{Christodoulopoulos:2010:TDU:1870658.1870714}.  Distributional
-  models use only the identity of the target word and its context.
-  The models on the right incorporate orthographic and
+  \protect\cite{Christodoulopoulos:2010:TDU:1870658.1870714}.
+  Distributional models use only the identity of the target word and
+  its context.  The models on the right incorporate orthographic and
   morphological features.}
 \label{tab:results}
 \end{table*}
 
-In this section we present experiments that evaluate substitute
-vectors as representations of word context within the S-CODE
-framework.  Section~\ref{sec:bigram} replicates the bigram based
-S-CODE results from \cite{maron2010sphere} as a baseline.  The S-CODE
-algorithm works with discrete inputs.  The substitute vectors as
-described in Section~\ref{sec:lm} are high dimensional and continuous.
-We experimented with two approaches to use substitute vectors in a
+In this section we present applications of substitute vectors as
+representations of word context within the S-CODE framework.
+Section~\ref{sec:bigram} replicates the bigram based S-CODE results
+from \cite{maron2010sphere} as a baseline.  The S-CODE algorithm works
+with discrete inputs.  The substitute vectors as described in
+Section~\ref{sec:subthr} are high dimensional and continuous.  We
+experimented with two approaches to use substitute vectors in a
 discrete setting.  Section~\ref{sec:rpart} presents an algorithm that
 partitions the high dimensional space of substitute vectors into small
 neighborhoods and uses the partition id as a discrete context
@@ -65,7 +65,8 @@ word, are better determiners of syntactic category compared to left
 and right neighbors.  Section~\ref{sec:feat} explores morphologic and
 orthographic features as additional sources of information and its
 results improve the state-of-the-art in the field of unsupervised
-syntactic category acquisition.
+syntactic category acquisition.  Finally, section~\ref{sec:multilang}
+extends best performing setting to 14 languages other than English.
 
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
@@ -177,7 +178,7 @@ Another way to use substitute vectors in a discrete setting is simply
 to sample individual substitute words from them.  The
 random-substitutes algorithm cycles through the test data and pairs
 each word with a random substitute picked from the pre-computed
-substitute vectors (see Section~\ref{sec:lm}).  We ran the
+substitute vectors (see Section~\ref{sec:subthr}).  We ran the
 random-substitutes algorithm to generate 76 million word ($X$) --
 random-substitute ($Y$) pairs (64 substitutes for each token) as input
 to S-CODE.  Clustering the resulting $\phi_x$ vectors yields a

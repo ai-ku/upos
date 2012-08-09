@@ -1,4 +1,4 @@
-\section{Co-occurrence Data Embedding}
+\section{Co-occurrence Data Embedding Theory}
 \label{sec:code}
 
 The general strategy we follow for unsupervised syntactic category
@@ -6,17 +6,19 @@ acquisition is to combine features of the context with the identity
 and features of the target word.  Our preliminary experiments in
 Section~\ref{sec:clustering} indicated that using the context
 information alone (e.g. clustering substitute vectors) without the
-target word identity and features had limited success.\footnote{A
-  10-nearest-neighbor supervised baseline using cosine distance
-  between substitute vectors gives .7213 accuracy.  Clustering
-  substitute vectors using various distance metrics and dimensionality
-  reduction methods give results inferior to this upper bound.} It is
+target word identity and features had limited success.
+%\footnote{A
+%  10-nearest-neighbor supervised baseline using cosine distance
+%  between substitute vectors gives .7213 accuracy.  Clustering
+%  substitute vectors using various distance metrics and dimensionality
+%  reduction methods give results inferior to this upper bound.} 
+It is
 the co-occurrence of a target word with a particular type of context
 that best predicts the syntactic category.  In this section we review
 the unsupervised methods we used to model co-occurrence statistics:
 the Co-occurrence Data Embedding (CODE) method
 \cite{globerson2007euclidean} and its spherical extension (S-CODE)
-introduced by \cite{maron2010sphere}.  In Section~\ref{sec:scodef} we
+introduced by \cite{maron2010sphere}.  In Section~\ref{sec:feat} we
 extend the S-CODE to handle more than two variables.
 
 Let $X$ and $Y$ be two categorical variables with finite cardinalities

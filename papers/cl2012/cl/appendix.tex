@@ -21,7 +21,7 @@
     &Slovene & Wikipedia & 899,329&18,969,846 & 6,689 & 112,278 & 658.711 & .0389\\
     &Serbian & Wikipedia & 782,278 & 17,129,679 & 6,677 & 108,809 & 804.962 & .0580\\
     \hline % Conll06 data
-    \multirow{10}{*}{\begin{sideways}\textbf{CoNLL06 Shared Task}\end{sideways}}
+    \multirow{10}{*}{\begin{sideways}\textbf{CoNLL-X Shared Task}\end{sideways}}
     &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 12,823 & 190,217 & 538.972 & .0043\\
     &Czech & Wikipedia &3,059,678 & 59,698,049 & 72,703 & 1,249,408 & 1,233.95 &.0250\\
     &Danish & Wikipedia &1,672,003 & 35,863,945 & 5,190 & 94,386 & 351.24 & .0393\\
@@ -35,34 +35,35 @@
     \hline
   \end{tabular}
   \caption{Summary of language model training and test corpora
-  realted information for each language in the test set.}
+  statistics for each language in the test set.}
   \label{tab:lmstatistics}
 \end{table}
 
 \noindent Table~\ref{tab:lmstatistics} presents statistics related to the
-language model training and test corpora.  For all languages except
+language model training and testing corpora.  For all languages except
 Serbian, English and Turkish, we trained the language models using the
-corresponding wikipedia dump files\footnote{Latest Wikipedia dump
+corresponding Wikipedia dump files\footnote{Latest Wikipedia dump
 files are freely available at \url{http://dumps.wikimedia.org/} and
 the text in the dump files can be extracted using WP2TXT
-(\url{http://wp2txt.rubyforge.org/})}[Should we talk about tokenizer?].
+(\url{http://wp2txt.rubyforge.org/})}[Should we talk about
+tokenizer?].
 
-Serbian shares common basis with Croation and Bosnian thus we trained
-3 different language models using Wikipedia dump files of Serbian
-together with these two languages and measured the perplexities on
-Serbian test corpus.  We chose the language model that uses Croation
-dump file since it achieved the lowest perplexity score and unknown
-word ratio on Serbian test corpus.
+Serbian shares common basis with Croatian and Bosnian therefore we
+trained 3 different language models using Wikipedia dump files of
+Serbian together with these two languages and measured the
+perplexities on Serbian test corpus.  We chose the Croatian language
+model since it achieved the lowest perplexity score and unknown word
+ratio on Serbian test corpus.
 
 To train statistical language model of English, we used Wall Street
 Journal data (1987-1994) extracted from CSR-III Text \cite{csr3text}
-(we excluded the test corpus) and for the Turkish language modelling
+(we excluded the test corpus) and for the Turkish language modeling
 we used the web corpus that was collected from Turkish news and blog
 sites \cite{sak2008turkish}.  
 
 We set the unknown word threshold to 2 for all languages except
-English.  English has relatively low unknown word therefore we set the
-threshold to 20 instead of 2.[double check for multext east.]
+English.  English has relatively low unknown word ratio therefore we
+set the threshold to 20 instead of 2. [double check for Multext-East.]
 
 \section{Appendix B}
 \label{app:dist1M}
@@ -76,7 +77,7 @@ KL2 & - \\
 Manhattan & .7353\\ %0.735381668919
 Jensen & .7317 \\ %0.731718247078
 Cosine & .7240 \\ %0.724018245545
-Maximum & ? \\
+Maximum & ?? \\
 Euclid & .6109 \\ %0.610962491672
 %% lg2-Maximum & ? \\
 %% lg2-Cosine & ? \\
