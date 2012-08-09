@@ -1,7 +1,9 @@
 %%substitute vector applications
 \section{Substitute Vector Applications}
 \label{sec:subapp}
-This section details the choice of the data set, the vocabulary and
+In this section, we explored upperbounds of substitute vectors and
+clustering performance for part-of-speech induction problem. Rest of
+the subsection details the choice of the data set, the vocabulary and
 the estimation of substitute probabilities for substitue vector
 application in part-of-speech induction problem.
 
@@ -20,7 +22,7 @@ were replaced by \textsc{unk} tags, which gave us a vocabulary size of
 12,672.
 % what is the test data
 The first 24,020 tokens of the Penn Treebank \cite{treebank3} Wall
-Street Journal Section 00 was used as the corpus to be induced.
+Street Journal Section 00 was used as the test corpus to be induced.
 Corpus size kept small in order to efficiently compute full distance
 matrices.  Substituion probabilities for 12,672 vocabulary words were
 computed at each of the 24,020 positions, as described in
@@ -31,4 +33,4 @@ The perplexity of the 4-gram language model on the test corpus was
 vocabulary and in-domain data.
 % what is the tag set
 The treebank uses 45 part-of-speech tags which is the set we used as
-the gold standard for comparison in our experiments.  
+the gold standard for comparison in our experiments.
