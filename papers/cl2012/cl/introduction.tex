@@ -20,7 +20,7 @@ open problem.
 
 \begin{figure}[b] 
   \centering
-  \includegraphics[height=50mm,width=50mm]{paradigmatic.png}
+  \includegraphics[height=40mm,width=50mm]{paradigmatic.png}
   \caption{Syntagmatic vs. paradigmatic axes for words in a simple
     sentence \protect\cite{chandler2007semiotics}.}
   \label{fig:paradigmatic}
@@ -47,35 +47,15 @@ vectors represent {\em individual word contexts}, not word types.  We
 refer to the use of features based on substitute vectors as 
 {\em paradigmatic representations of word context}.
 
-Our preliminary experiments indicated that using context information
-alone without the identity or the features of the target word
-(e.g. using dimensionality reduction and clustering on substitute
-vectors) has limited success and modeling the co-occurrence of word
-and context types is essential for inducing syntactic categories.  In
-the models presented in this paper, we combine paradigmatic
-representations of word context with features of co-occurring words
-within the co-occurrence data embedding (CODE) framework
-\cite{globerson2007euclidean,maron2010sphere}.  The resulting
-embeddings for word types are split into 45 clusters using k-means and
-the clusters are compared to the 45 gold tags in the 1M word Penn
-Treebank Wall Street Journal corpus \cite{treebank3}.  We obtain
-many-to-one accuracies up to .7680 using only distributional
-information (the identity of the word and a representation of its
-context) and .8023 using morphological and orthographic features of
-words improving the state-of-the-art in unsupervised part-of-speech
-tagging performance.
-
 % example substitute vectors (both syntactic and semantic)
 The high probability substitutes reflect both semantic and syntactic
 properties of the context as seen in the example below (the numbers in
 parentheses give substitute probabilities):
-
 \begin{quote}
-\noindent {\em ``Pierre Vinken, 61 years old, will join the board as a nonexecutive director Nov.~29.''}\\
+\noindent {\em ``Pierre Vinken, 61 years old, will join {\bf the board} as a nonexecutive director Nov.~29.''}\\
 \noindent {\bf the:} its (.9011), the (.0981), a (.0006), $\ldots$\\
 {\bf board:} board (.4288), company (.2584), firm (.2024), bank (.0731), $\ldots$
 \end{quote}
-
 Top substitutes for the word ``the'' consist of words that can act as
 determiners.  Top substitutes for ``board'' are not only nouns, but
 specifically nouns compatible with the semantic context.
@@ -94,22 +74,56 @@ Whether gold standard part-of-speech tags or distributional categories
 are better suited to applications like parsing or machine translation
 can be best decided using extrinsic evaluation.  However in this study
 we follow previous work and evaluate our results by comparing them to
-gold standard part-of-speech tags.
+gold standard part-of-speech tags and left the extrinsic evaluation as
+a future work.
 
-Section~\ref{sec:related} gives a detailed review of related work.
+Next example demonstrates the advantage of the paradigmatic
+representation over the syntagmatic representation for the words occur
+in different contexts.
+\begin{quote}
+\noindent {\em ``Blacks and Hispanics currently make up 38 \% of the city 's population and hold only 25 \% of the seats on the {\bf council} .''}\\
+\noindent {\bf council:} board (.6591), company (.0795), firm (.0542), bank (.0154), $\ldots$
+\end{quote}
+\noindent The word ``council'' and the word ``board'' from the
+previous example have completely different contexts except the word
+``the''.  The paradigmatic representation captures the similarity of
+these words by suggesting the same top substitutes for both words
+while the sytagmatic representation fails to capture similarity due to
+the distinction of contexts.
+
+Our preliminary experiments on a subsection of 1M word Penn Treebank
+Wall Street Journal corpus \cite{treebank3} (PTB) indicate that using
+context information alone without the identity or the features of the
+target word (e.g. using dimensionality reduction and clustering on
+substitute vectors) has limited success and modeling the co-occurrence
+of word and context types is essential for inducing syntactic
+categories.  In order to do so, we combine paradigmatic
+representations of word context with features of co-occurring words
+within the co-occurrence data embedding (CODE) framework
+\cite{globerson2007euclidean,maron2010sphere}.  The resulting
+embeddings for word types are split into 45 clusters using k-means and
+the clusters are compared to the 45 gold tags in the PTB.  We obtain
+many-to-one accuracies up to .7680 using only distributional
+information (the identity of the word and a representation of its
+context) and .8023 using morphological and orthographic features of
+words improving the state-of-the-art in unsupervised part-of-speech
+tagging performance on the PTB.  We extend the experiments to 19
+corpora in 15 languages and achieve state-of-the-art \mto scores on 17
+of them.
+
+The next section gives a detailed review of related work.
 Section~\ref{sec:subthr} describes the construction of the substitute
-vectors.  Section~\ref{sec:subapp} analyzes the limits of solely using
-substitute vectors on a sample data set.  Section~\ref{sec:code}
-describes co-occurrence data embedding, the learning algorithm used in
-our experiments.  Section~\ref{sec:exp} describes possible usage
-scenerios of substitute vectors with S-Code on English and determines
-the best setup.  Section~\ref{sec:multilang} applies the best setup to
-different languages and compares with previous work.
-Section~\ref{sec:discuss} gives a brief error analysis and
-Section~\ref{sec:contrib} summarizes our contributions.  All the data
-and the code to replicate the results given in this paper is available
-from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
-
+vectors and applies various similarity metrics, dimensionality
+reduction and clustering methods on substitute vectors.
+Section~\ref{sec:code} describes co-occurrence data embedding, the
+learning algorithm used in our experiments.  Section~\ref{sec:exp}
+describes possible usage scenerios of substitute vectors with S-Code
+on the PTB and determines the best setup.  Section~\ref{sec:multilang}
+applies the best setup to different languages and compares our results
+with previous work.  Section~\ref{sec:discuss} gives a brief error
+analysis and Section~\ref{sec:contrib} summarizes our contributions.
+All the data and the code to replicate the results given in this paper
+is available from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
 
 %% Computational models of syntactic category acquisition rely mainly on
 %% distributional analysis: Words that share the same distribution

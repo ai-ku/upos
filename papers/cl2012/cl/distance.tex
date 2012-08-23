@@ -1,4 +1,4 @@
-\subsection{Distance Metric}
+\subsection{Distance Metrics}
 \label{sec:dist}
 
 We represent each context with a sparse high dimensional probability
@@ -14,21 +14,23 @@ Table~\ref{tab:metrics}.
 % also update the table caption
 
 \begin{table}[ht] \centering
-\small
+%\small
+\caption{Similarity metrics.  JS is the Jensen-Shannon divergence and
+  KL2 is a symmetric implementation of Kullback-Leibler
+  divergence. Bold lower case letters represent vectors.}
 \begin{tabular}{|lll|}
 \hline
 %% Pretify this table norm numbers looks weird.
-Cosine($\mathbf{p}, \mathbf{q}$) & = & $<\mathbf{p},\mathbf{q}> / (\|\mathbf{p}\|_{2} \|\mathbf{q}\|_{2})$ \\
-Euclid($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{2}$ \\
-Manhattan($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{1}$ \\
-Maximum($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{\infty}$ \\
+Cosine($\mathbf{p}, \mathbf{q}$) & = & $<\mathbf{p},\mathbf{q}> / (\|\mathbf{p}\|_{_{2}} \|\mathbf{q}\|_{_{2}})$ \\
+Euclid($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{_{2}}$ \\
+Manhattan($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{_{1}}$ \\
+Maximum($\mathbf{p}, \mathbf{q}$) & = & $\|\mathbf{p} - \mathbf{q}\|_{_{\infty}}$ \\
 KL2($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/q_i) + q_iln(q_i/p_i) $\\
 JS($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/m_i) + q_iln(q_i/m_i) $\\
-& & where $m_i = (p_i + q_i) / 2$\\
+& & where $m_i = 0.5(p_i + q_i)$\\
+%JS($\mathbf{p}, \mathbf{q}$) & = & KL2($\mathbf{p},0.5(\mathbf{p}+\mathbf{q})$)\\
 \hline
 \end{tabular}
-\caption{Similarity metrics.  JS is the Jensen-Shannon divergence and
-  KL2 is a symmetric implementation of Kullback-Leibler divergence.}
 \label{tab:metrics}
 \end{table}
 
@@ -38,12 +40,15 @@ To judge the merit of each distance metric we obtained supervised
 baseline scores using leave-one-out cross validation and the weighted
 k-nearest-neighbor algorithm\footnote{Neighbors were weighted using
   1/distance, $k=30$ was chosen empirically.} on the gold tags of the
-1M word WSJ corpus.  The results are listed in
+PTB24K.  The results are listed in
 Table~\ref{tab:distscores} sorted by score.
 
 
 % update scores in this table
 \begin{table}[ht] \centering
+\caption{Supervised baseline scores with different distance metrics.
+  Log-metric indicates that metric applied to the log of the
+  probability vectors.}
 \begin{tabular}{|l|c|}
 \hline
 Metric & Accuracy(\%) \\
@@ -72,9 +77,6 @@ lg2-Manhattan & 0.3729 \\
 %% lg2-Manhattan & ? \\
 \hline
 \end{tabular}
-\caption{Supervised baseline scores with different distance metrics.
-  Log-metric indicates that metric applied to the log of the
-  probability vectors.}
 \label{tab:distscores}
 \end{table}
 
@@ -103,22 +105,21 @@ lg2-Manhattan & 0.3729 \\
 % log-Manhattan & ?\\
 
 
-% update scores in this paragraph as well
-The entries with the log- prefix indicate a metric applied to the log
-of the probability vectors.  Distance metrics on log probability
-vectors performed poorly compared to their regular counterparts
-indicating differences in low probability words are relatively
-unimportant and high probability substitutes determine syntactic
-category.  The surprisingly good result achieved by the simple Maximum
-metric (which identifies the dimension with the largest difference
-between two vectors) also support this conclusion.  The maximum score
-of .73\% can be taken as a rough upper bound for an unsupervised
-learner using this space on the 45-tag 1M word WSJ corpus because
-.27\% of the instances are assigned to the wrong part of speech by the
-majority of their closest neighbors.  We will discuss ways to push
-this upper bound higher by including word type information together
-with other features in Section~\ref{sec:exp} and
-Section~\ref{sec:feat}, respectively.
+% update scores in this paragraph as well The entries with the log-
+prefix indicate a metric applied to the log of the probability
+vectors.  Distance metrics on log probability vectors performed poorly
+compared to their regular counterparts indicating that differences in
+low probability words are relatively unimportant and high probability
+substitutes determine syntactic category.  The surprisingly good
+result achieved by the simple Maximum metric (which identifies the
+dimension with the largest difference between two vectors) also
+support this conclusion.  The maximum score of .73\% can be taken as a
+rough upper bound for an unsupervised learner using this space on the
+PTB24K corpus because .27\% of the instances are assigned to the wrong
+part of speech by the majority of their closest neighbors.  We will
+discuss alternative ways to push this upper bound higher by forcing
+one-tag-per-word or including word type information together with
+other features in the rest of this paper.
 
 % moreover we are using probability vectors so its more natural to use
 % kl2

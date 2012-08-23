@@ -2,10 +2,9 @@
 \label{sec:wsj}
 
 % what is the test data
-In this subsection, we expanded our test corpus to the complete Wall
-Street Journal Section of the Penn Treebank \cite{treebank3}
-(1,173,766 tokens, 49,206 types) and applied spectral clustering with
-45 clusters.
+
+In this subsection, we expanded our test corpus from PTB24K to PTB and
+applied spectral clustering with 45 clusters.
 %
 New language model is trained with the same settings in
 Section~\ref{sec:subapp}, with exception of observation threshold for
@@ -38,7 +37,7 @@ metric is chosen for further computations.
 
 % here's some comments on results of spectral clustering.
 
-Spectral clustering on 1M word data set scored .58??\mto accuracy.  To
+Spectral clustering on the PTB scored .58??\mto accuracy.  To
 enforce one-tag-per-word assumption we collapsed the result of
 spectral clustering and assigned word instances to their most observed
 cluster by which \mto accuracy is increased to .68??.

@@ -8,11 +8,22 @@
 %% 
 %  \tiny
   \small
+  \caption{The \mto and \vm scores on 19 corpora in 15 languages
+    together with the number of types and gold tag-set clusters which
+    equals to number of induced clusters in all languages.  Best
+    published results are from
+    $^\ddagger$\protect\cite{blunsom-cohn:2011:ACL-HLT2011},
+    $^\star$\protect\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
+    and $^\dagger$\protect\cite{Clark:2003:CDM:1067807.1067817}. Bold
+    results represents the best \mto and \vm accuracies of the
+    corresponding language.  MULTEXT-East corpora do not tag the
+    punctuation marks, thus we add an extra tag for punctuation and
+    represent it with ``+1''.}
   \begin{flushleft}
 %  \begin{tabular}{|l|l|l|l|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-  \begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+  \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
         \hline
-        & Language   & Types   & Tags & Best Published            & Bigram &uPos           & uPos+O            & uPos+O+M     \\ \hline % Multext data
+        & Language   & Types   & Tags & \specialcell{Best\\Published}            & Bigram &uPos           & uPos+O            & uPos+O+M     \\ \hline % Multext data
         \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
         & English    & 49,190  & 45 & .775 / .697$^\ddagger$  &.7314 / .6558 & .7680 / .6822 & ? / ? & \textbf{.8004 / .7160}           \\
         & & & & & & & &\\ \hline
@@ -44,13 +55,6 @@
 %        & A.Greek    & 15,194  & 15 & - & & - & -               & -        \\ \hline
     \end{tabular}
   \end{flushleft}
-  \caption{The \mto and \vm scores on 19 corpora in 15 languages
-    together with the number of types and gold tag-set clusters which
-    equals to number of induced clusters in all languages.  Best
-    published resutls are from
-    $^\ddagger$\protect\cite{blunsom-cohn:2011:ACL-HLT2011},
-    $^\star$\protect\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
-    and $^\dagger$\protect\cite{Clark:2003:CDM:1067807.1067817}.}
   \label{tab:multiresults}
 \end{table}
 

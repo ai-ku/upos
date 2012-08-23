@@ -1,125 +1,99 @@
-\section{S-Code and Substitute Vector Application}
-\label{sec:exp}
+%\subsection{S-Code and Substitute Vector Application}
+\subsection{Experiment Settings}\label{sec:expset}
+To make a meaningful comparison on the PTB we re-ran all the
+experiments using the following default settings: (i) each word was
+kept with its original capitalization, (ii) the learning rate
+parameters were adjusted to $\varphi_0=50$, $\eta_0=0.2$ for faster
+convergence in log likelihood, (iii) the number of s-code iterations
+were increased from 12 to 50 million, (iv) the s-code dimensions and
+$Z$ were set to 25 and 0.166, respectively, (v) k-means initialization
+was improved using \cite{arthur2007k}, and (vi) the number of k-means
+restarts were increased to 128 to improve clustering and reduce
+variance.
 
-\begin{table*}[t] \footnotesize
-
-\begin{tabular}{|l|l|l|}
-\hline
-Distributional Models & \mto & \vm \\
-\hline
-\cite{Lamar:2010:LCU:1870658.1870736} & .708 & -\\ %algorithm name LDC
-\cite{Brown:1992:CNG:176313.176316}* & .678 & .630\\
-%kcls(Och,1999) & .737 & .656\\
-%\cite{goldwater-griffiths:2007:ACLMain} & .632 & .562\\
-(Goldwater et al., 2007) & .632 & .562\\
-\cite{Ganchev:2010:PRS:1859890.1859918}* & .625 & .548\\
-\cite{maron2010sphere} & .688 (.0016)&-\\
-Bigrams (Sec.~\ref{sec:bigram}) & \bgmto & \bgvm \\
-Partitions (Sec.~\ref{sec:rpart}) & \rpmto & \rpvm \\
-Substitutes (Sec.~\ref{sec:wordsub}) & \wsmto & \wsvm \\
-\hline
-\end{tabular}
-\\
-\begin{tabular}{|l|l|l|}
-\hline
-Models with Additional Features & \mto & \vm \\
-\hline
-\cite{Clark:2003:CDM:1067807.1067817}* & .712 & .655 \\
-\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP} & .728 & .661\\
-\cite{bergkirkpatrick-klein:2010:ACL} & .755 & -\\ % Interesting in  christo paper:73.9/67.7
-\cite{Christodoulopoulos:2010:TDU:1870658.1870714} & .761 & .688\\
-\cite{blunsom-cohn:2011:ACL-HLT2011} & .775 & .697\\
-Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
-& & \\
-& & \\
-\hline
-\end{tabular}
-
-\caption{Summary of results in terms of the \mto and \vm scores.
-  Standard errors are given in parentheses when available.  Starred
-  entries have been reported in the review paper
-  \protect\cite{Christodoulopoulos:2010:TDU:1870658.1870714}.
-  Distributional models use only the identity of the target word and
-  its context.  The models on the right incorporate orthographic and
-  morphological features.}
-\label{tab:results}
-\end{table*}
-
-In this section we present applications of substitute vectors as
-representations of word context within the S-CODE framework.
-Section~\ref{sec:bigram} replicates the bigram based S-CODE results
-from \cite{maron2010sphere} as a baseline.  The S-CODE algorithm works
-with discrete inputs.  The substitute vectors as described in
-Section~\ref{sec:subthr} are high dimensional and continuous.  We
-experimented with two approaches to use substitute vectors in a
-discrete setting.  Section~\ref{sec:rpart} presents an algorithm that
-partitions the high dimensional space of substitute vectors into small
-neighborhoods and uses the partition id as a discrete context
-representation.  Section~\ref{sec:wordsub} presents an even simpler
-model which pairs each word with a random substitute.  When the
-left-word -- right-word pairs used in the bigram model are replaced
-with word -- partition-id or word -- substitute pairs we see
-significant gains in accuracy.  These results support our running
-hypothesis that paradigmatic features, i.e. potential substitutes of a
-word, are better determiners of syntactic category compared to left
-and right neighbors.  Section~\ref{sec:feat} explores morphologic and
-orthographic features as additional sources of information and its
-results improve the state-of-the-art in the field of unsupervised
-syntactic category acquisition.  Finally, section~\ref{sec:multilang}
-extends best performing setting to 14 languages other than English.
+Section~\ref{sec:dist} shows that low probability substitutes are
+relatively unimportant thus for computational efficiency only the top
+100 substitutes and their unnormalized probabilities were computed for
+each positions in the PTB\footnote{The substitutes with unnormalized
+  log probabilities can be downloaded from
+  \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
+    fastsubs} algorithm used to generate the substitutes please see
+  \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
+  accomplishes this task in about 5 hours, a naive algorithm that
+  looks at the whole vocabulary would take more than 6 days on a
+  typical 2012 workstation.}.  The probability vectors for each
+position were normalized to add up to 1.0 giving us the final
+substitute vectors used in the rest of this study.  Another advantage
+of using the top 100 substitutes is we are able to increase the
+vocabulary size to 78,498 by reducing the vocabulary threshold to 20.
+% \footnote{Reducing the vocabulary threshold to 20 from 500
+%  increases the vocabulary size to 78,498 from 12,672. }
 
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this paper and the ones we cite from the literature.
 
-\subsection{Bigram model}\label{sec:bigram}
+\subsection{Random partitions}\label{sec:rpart}
+\begin{table*}[t] \footnotesize
+\caption{Summary of results in terms of the \mto and \vm scores.
+  Standard errors are given in parentheses when available.  Starred
+  entries have been reported in the review paper
+  \protect\cite{Christodoulopoulos:2010:TDU:1870658.1870714}.  Distributional
+  models use only the identity of the target word and its context.
+  The models on the right incorporate orthographic and
+  morphological features.}
+\begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
+\hline
+Distributional Models & \mto & \vm \\
+\hline
+Lamar et al. \shortcite{Lamar:2010:LCU:1870658.1870736} & .708 & -\\ %algorithm name LDC
+Brown et al. \shortcite{Brown:1992:CNG:176313.176316}* & .678 & .630\\
+%kcls(Och,1999) & .737 & .656\\
+%\cite{goldwater-griffiths:2007:ACLMain} & .632 & .562\\
+Goldwater et al. \shortcite{goldwater-griffiths:2007:ACLMain} & .632 & .562\\
+Ganchev et al. \shortcite{Ganchev:2010:PRS:1859890.1859918}* & .625 & .548\\
+Maron et al. \shortcite{maron2010sphere} & .688 (.0016)&-\\
+Bigrams (Sec.~\ref{sec:bigram}) & \bgmto & \bgvm \\
+Partitions (Sec.~\ref{sec:rpart}) & \rpmto & \rpvm \\
+Substitutes (Sec.~\ref{sec:wordsub}) & \wsmto & \wsvm \\
+\hline
+\end{tabular}
+\begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
+\hline
+Models with Additional Features & \mto & \vm \\
+\hline
+Clark \shortcite{Clark:2003:CDM:1067807.1067817}* & .712 & .655 \\
+Christodoulopoulos et al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP} & .728 & .661\\
+Berg-Kirkpatrick et al. \shortcite{bergkirkpatrick-klein:2010:ACL} & .755 & -\\ % Interesting in  christo paper:73.9/67.7
+Christodoulopoulos et al. \shortcite{Christodoulopoulos:2010:TDU:1870658.1870714} & .761 & .688\\
+Blunsom and Cohn \shortcite{blunsom-cohn:2011:ACL-HLT2011} & .775 & .697\\
+Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
+& & \\
+& & \\
+\hline
+\end{tabular}
+\label{tab:results}
+\end{table*}
 
 In \cite{maron2010sphere} adjacent word pairs (bigrams) in the corpus
 are fed into the S-CODE algorithm as $X, Y$ samples.  The algorithm
 uses stochastic gradient ascent to find the $\phi_x, \psi_y$
 embeddings for left and right words in these bigrams on a single
-25-dimensional sphere.  At the end each word $w$ in the vocabulary
-ends up with two points on the sphere, a $\phi_w$ point representing
-the behavior of $w$ as the left word of a bigram and a $\psi_w$ point
-representing it as the right word.  The two vectors for $w$ are
-concatenated to create a 50-dimensional representation at the end.
-These 50-dimensional vectors are clustered using an instance weighted
-k-means algorithm and the resulting groups are compared to the correct
-part-of-speech tags.  Maron et al. \shortcite{maron2010sphere} report
-many-to-one scores of .6880 (.0016) for 45 clusters and .7150 (.0060)
-for 50 clusters (on the full PTB45 tag-set).  If only $\phi_w$ vectors
-are clustered without concatenation we found the performance drops
-significantly to about .62.
-
-To make a meaningful comparison we re-ran the bigram experiments using
-our default settings and obtained a many-to-one score of \bgmto\ 
-and the V-measure is \bgvm\  for 45 clusters.  The following
-default settings were used: (i) each word was kept with its original
-capitalization, (ii) the learning rate parameters were adjusted to
-$\varphi_0=50$, $\eta_0=0.2$ for faster convergence in log likelihood,
-(iii) the number of s-code iterations were increased from 12 to 50
-million, (iv) k-means initialization was improved using
-\cite{arthur2007k}, and (v) the number of k-means restarts were
-increased to 128 to improve clustering and reduce variance.
-
-\subsection{Random partitions}\label{sec:rpart}
-
-Instead of using left-word -- right-word pairs as inputs to S-CODE we
-wanted to pair each word with a paradigmatic representation of its
-context to get a direct comparison of the two context representations.
-To obtain a discrete representation of the context, the
-random--partitions algorithm first designates a random subset of
-substitute vectors as centroids to partition the space, and then
-associates each context with the partition defined by the closest
+25-dimensional sphere.  Instead of using left-word -- right-word pairs
+as inputs to S-CODE we wanted to pair each word with a paradigmatic
+representation of its context to get a direct comparison of the two
+context representations.  To obtain a discrete representation of the
+context, the random--partitions algorithm first designates a random
+subset of substitute vectors as centroids to partition the space, and
+then associates each context with the partition defined by the closest
 centroid in cosine distance.  Each partition thus defined gets a
 unique id, and word ($X$) -- partition-id ($Y$) pairs are given to
 S-CODE as input.  The algorithm cycles through the data until we get
 approximately 50 million updates.  The resulting $\phi_x$ vectors are
-clustered using the k-means algorithm (no vector concatenation is
-necessary).  Using default settings (64K random partitions, 25 s-code
-dimensions, $Z=0.166$) the many-to-one accuracy is \rpmto\ and
-the V-measure is \rpvm.
+clustered using the k-means algorithm.  Using default settings with
+64K random partitions the many-to-one accuracy is \rpmto\ and the
+V-measure is \rpvm.
 
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
@@ -168,9 +142,10 @@ clusters from coalescing.
 %%% I have seen the first, but the second is pure guess, need to
 %%% look.  The distances seem to be decreasing on that end as well!
 
-We find the random partition algorithm to be fairly robust to different
-parameter settings and the resulting many-to-one score significantly
-better than the bigram baseline.
+We find the random partition algorithm to be fairly robust to
+different parameter settings and the resulting many-to-one score
+significantly better than the state-of-the-art featureless
+distributional models.
 
 \subsection{Random substitutes}\label{sec:wordsub}
 
@@ -187,14 +162,32 @@ many-to-one score of \wsmto\ and a V-measure of \wsvm.
 This result is close to the previous result by the random-partition
 algorithm, \rpmto, demonstrating that two very different discrete
 representations of context based on paradigmatic features give
-consistent results.  Both results are significantly above the bigram
-baseline, \bgmto.  Figure~\ref{plot-s} illustrates that the
+consistent results.  Figure~\ref{plot-s} illustrates that the
 random-substitute result is fairly robust as long as the training
 algorithm can observe more than a few random substitutes per word.
 
 \begin{figure}[ht] \centering
-\includegraphics[width=\linewidth]{plot-s.pdf}
+\includegraphics[width=0.5\linewidth]{plot-s.pdf}
 \caption{\mto is not sensitive to the number of random substitutes
   sampled per word token.}
 \label{plot-s}
 \end{figure}
+
+
+\subsection{Bigram model}\label{sec:bigram}
+
+This model uses bigrams as $X, Y$ samples and at the end each word $w$
+in the vocabulary ends up with two points on the sphere, a $\phi_w$
+point representing the behavior of $w$ as the left word of a bigram
+and a $\psi_w$ point representing it as the right word.  The two
+vectors for $w$ are concatenated to create a 50-dimensional
+representation at the end.  These 50-dimensional vectors are clustered
+using an instance weighted k-means algorithm and the resulting groups
+are compared to the correct part-of-speech tags.  Maron et
+al. \shortcite{maron2010sphere} report many-to-one scores of .6880
+(.0016) for 45 clusters and .7150 (.0060) for 50 clusters (on the
+PTB).  If only $\phi_w$ vectors are clustered without concatenation we
+found the performance drops significantly to about .62.  Using our
+default settings bigram model achieves \bgmto \mto and \bgvm \vm
+accuracies.  Both results are significantly lower than the random
+partition and substitute \mto and \vm accuracies.

@@ -1,4 +1,4 @@
-\section{Co-occurrence Data Embedding Theory}
+\section{Co-occurrence Modeling}
 \label{sec:code}
 
 The general strategy we follow for unsupervised syntactic category
@@ -6,20 +6,42 @@ acquisition is to combine features of the context with the identity
 and features of the target word.  Our preliminary experiments in
 Section~\ref{sec:clustering} indicated that using the context
 information alone (e.g. clustering substitute vectors) without the
-target word identity and features had limited success.
-%\footnote{A
-%  10-nearest-neighbor supervised baseline using cosine distance
-%  between substitute vectors gives .7213 accuracy.  Clustering
-%  substitute vectors using various distance metrics and dimensionality
-%  reduction methods give results inferior to this upper bound.} 
-It is
-the co-occurrence of a target word with a particular type of context
-that best predicts the syntactic category.  In this section we review
-the unsupervised methods we used to model co-occurrence statistics:
-the Co-occurrence Data Embedding (CODE) method
-\cite{globerson2007euclidean} and its spherical extension (S-CODE)
-introduced by \cite{maron2010sphere}.  In Section~\ref{sec:feat} we
-extend the S-CODE to handle more than two variables.
+target word identity and features had limited success.  Moreover
+incoorporating word identities (i.e. one-tag-per-word constraint) even
+in an ad-hoc manner by collapsing the clustering output significantly
+improves the \mto accuracy.  Thus it is the co-occurrence of a target
+word with a particular type of context that best predicts the
+syntactic category.  
+
+In this section we present theory and applications of substitute
+vectors as representations of word context within the Co-occurrence
+Data Embedding (CODE)\cite{globerson2007euclidean} framework.
+Section~\ref{sec:codethr} reviews the unsupervised methods we used to
+model co-occurrence statistics: the CODE method and its spherical
+extension (S-CODE) introduced by \cite{maron2010sphere}.  The S-CODE
+algorithm works with discrete inputs.  The substitute vectors as
+described in Section~\ref{sec:subthr} are high dimensional and
+continuous.  We experimented with two approaches to use substitute
+vectors in a discrete setting using the default parameters defined in
+Section~\ref{sec:expset}.  Section~\ref{sec:rpart} presents an
+algorithm that partitions the high dimensional space of substitute
+vectors into small neighborhoods and uses the partition id as a
+discrete context representation.  Section~\ref{sec:wordsub} presents
+an even simpler model which pairs each word with a random substitute.
+Section~\ref{sec:bigram} replicates the bigram based S-CODE results
+from \cite{maron2010sphere} as a baseline.  When the left-word --
+right-word pairs used in the bigram model are replaced with word --
+partition-id or word -- substitute pairs we see significant gains in
+accuracy.  These results support our running hypothesis that
+paradigmatic features, i.e. potential substitutes of a word, are
+better determiners of syntactic category compared to left and right
+neighbors (syntagmatic features).  Section~\ref{sec:feat} explores
+morphologic and orthographic features as additional sources of
+information and its results improve the state-of-the-art in the field
+of unsupervised syntactic category acquisition.
+
+\subsection{CODE Theory}
+\label{sec:codethr}
 
 Let $X$ and $Y$ be two categorical variables with finite cardinalities
 $|X|$ and $|Y|$.  We observe a set of pairs $\{x_i, y_i\}_{i=1}^n$
@@ -71,8 +93,7 @@ around a fixed value during gradient ascent.  This allows S-CODE to
 substitute an approximate constant $\tilde{Z}$ in gradient
 calculations for the real $Z$ for computational efficiency.  In our
 experiments, we used S-CODE with its sampling based stochastic
-gradient ascent algorithm and smoothly decreasing learning
-rate.
+gradient ascent algorithm and smoothly decreasing learning rate.
 
 %% \subsection{S-Code with More than Two Variables}
 

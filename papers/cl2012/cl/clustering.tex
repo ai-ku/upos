@@ -2,21 +2,21 @@
 \label{sec:clustering}
 
 We compared three clustering algorithms applied to the original
-substitute vectors using many-to-one accuracy on the 45-tag 24K word
-test corpus.  Hierarchical agglomerative clustering with complete
-linkage (HAC) starts with each instance in its own cluster and
-iteratively combines the two closest groups (measured by their most
-distant points) at each step \cite{manning2008introduction}.
-K-medoids minimizes sum of pairwise distances between each datapoint
-to the exemplar at the center of its cluster
-\cite{kaufman2005finding}.  Spectral clustering\footnote{We used the
-  implementation in \cite{chen2011parallel} with a symmetric sparse
-  affinity matrix of 550 nearest neighbors.} uses the eigenvalues of
-the graph Laplacian $L=D^{-1/2} W D^{-1/2}$ to reduce the number of
-dimensions (similar to Laplacian eigenmaps) and uses simple k-means
-clustering on the resulting representation \cite{ng2002spectral}.  All
-three algorithms accept the distance matrix based on the KL2 distance
-(see Section~\ref{sec:dist}) as input.
+substitute vectors using many-to-one accuracy on the PTB24K.
+Hierarchical agglomerative clustering with complete linkage (HAC)
+starts with each instance in its own cluster and iteratively combines
+the two closest groups (measured by their most distant points) at each
+step \cite{manning2008introduction}.  K-medoids minimizes sum of
+pairwise distances between each datapoint to the exemplar at the
+center of its cluster \cite{kaufman2005finding}.  Spectral
+clustering\footnote{We used the implementation in
+  \cite{chen2011parallel} with a symmetric sparse affinity matrix of
+  550 nearest neighbors.} uses the eigenvalues of the graph Laplacian
+$L=D^{-1/2} W D^{-1/2}$ to reduce the number of dimensions (similar to
+Laplacian eigenmaps) and uses simple k-means clustering on the
+resulting representation \cite{ng2002spectral}.  All three algorithms
+accept the distance matrix based on the KL2 distance (see
+Section~\ref{sec:dist}) as input.
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.5\textwidth]{clustering_graph_mono.png}
@@ -42,28 +42,45 @@ three algorithms accept the distance matrix based on the KL2 distance
 
 
 Figure~\ref{fig:clustering} plots the many-to-one score versus number
-of clusters for the three algorithms on the 45-tag 24K word test
-corpus.  The many-to-one score naturally increases as we approach the
-one cluster per word limit, however we find the evolution of the
-curves informative.  At the high end (more than 2000 clusters) HAC
-performs best with its conservative clusters, but its performance
-degrades fast as we reduce the number of clusters because it cannot
-reverse the accumulating mistakes.  At the low end (less than 16
-clusters) k-medoids and spectral have similar performance.  However
-for the region of interest (between 16 to 2000 clusters) spectral
-clustering is clearly superior with \spectralResult\% many-to-one
-accuracy at 45 clusters.
+of clusters for the three algorithms on the PTB24K.  The many-to-one
+score naturally increases as we approach the one cluster per word
+limit, however we find the evolution of the curves informative.  At
+the high end (more than 2000 clusters) HAC performs best with its
+conservative clusters, but its performance degrades fast as we reduce
+the number of clusters because it cannot reverse the accumulating
+mistakes.  At the low end (less than 16 clusters) k-medoids and
+spectral have similar performance.  However for the region of interest
+(between 16 to 2000 clusters) spectral clustering is clearly superior
+with \spectralResult \mto accuracy at 45 clusters.
 
-%% In accord with results on 24K word data set, we apply the spectral
-%% clustering to 1M word Penn Treebank data set.  Section~\ref{sec:dist}
-%% reveals that substitutes with low probabilities are relatively
-%% unimportant compared to the top ones.  Thus instead of extracting all
-%% substitutes we extract only top 100 substitutes of each target word
-%% using the language model described in Section~\cite{sec:lm}.  Using
-%% the top 100 substitutes results in sparse substitute vectors on which
-%% KL2 is undefined.  However score ordering found to be in line with
-%% results from Section~\ref{sec:dist} on 1M word data and KL2's
-%% successor Manhattan metric is chosen for spectral cluster computation.
+We noted that the 45 cluster spectral clustering result assigned many
+more tags to each word than the gold standard.  To apply
+one-tag-per-word restriction we collapse the tag assignment of
+spectral clustering by re-taging each word with its most frequent tag
+in the original assignment (we break ties randomly).  Collapsing
+improves the many-to-one accuracy by more than 10\% from
+\spectralResult\% to \collapseResult\%.
+
+In accord with the findings and results on the PTB24K, we perform
+spectral clustering on the PTB by using the language model defined in
+Section~\ref{sec:exp} together with the Manhattan similarity
+metric\footnote{The new language model in Section~\ref{sec:exp} only
+  calculates the top 100 substitutes and set the ones other than the
+  top 100 to 0 which results in sparse substitute vectors.  As a
+  results the new model is computationally more efficient than the one
+  in this section and it is more appropriate for large datasets like
+  the PTB.  KL2 is undefined on sparse vectors, therefore we use
+  Manhattan which is the successor of KL2 on both the PTB24K and PTB
+  (see Appendix~\ref{app:dist1M}).}  and achieve \spectralResultPTB
+\mto (\collapseResultPTB \vm) accuracy which is comparable with the
+results on the PTB24.
+
+%% Section~\ref{sec:dist} reveals that using the language model described
+%% in Section~\cite{sec:lm}.  Using the top 100 substitutes results in
+%% sparse substitute vectors on which KL2 is undefined.  However scores
+%% of similarity metrics on PTB found to be in line with results on
+%% PTB24K from Section~\ref{sec:dist}. Thus KL2's successor Manhattan
+%% metric is chosen for spectral clustering.
 
 %% Spectral clustering on 1M word data set scored ??\mto accuracy.  To
 %% enforce one-tag-per-word assumption we assigned each word to its most

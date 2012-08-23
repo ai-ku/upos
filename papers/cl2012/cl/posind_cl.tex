@@ -3,11 +3,11 @@
 \issue{?}{?}{2012}
 
 %Document Head
-\dochead{Draft Paper \date{}}
+\dochead{Draft Paper v.2 \date{}}
 
-\runningtitle{Learning Syntactic Categories Using Paradigmatic
-  Representations of Word Context}
+%\runningtitle{Learning Syntactic Categories Using Paradigmatic  Representations of Word Context}
 
+\runningtitle{Unsupervised Part of Speech Induction Using Paradigmatic Representations of Word Context}
 \runningauthor{?}
 
 %\usepackage{acl2012}
@@ -35,6 +35,12 @@
 
 % Adopt the .7654 convention rather than percentages like 76.54%.
 % Define the results here for consistency
+%% Spectral results
+\newcommand{\spectralResult}{.5841}
+\newcommand{\collapseResult}{.7082}
+\newcommand{\spectralResultPTB}{.58?}
+\newcommand{\collapseResultPTB}{.68??}
+%% Scode resutls
 \newcommand{\bgmto}{.7314 (.0096)}
 \newcommand{\bgvm}{.6558 (.0052)}
 \newcommand{\rpmto}{.7554 (.0055)}
@@ -46,8 +52,7 @@
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
-\title{Learning Syntactic Categories Using Paradigmatic
-  Representations of\\ Word Context}
+\title{Unsupervised Part of Speech Induction \\Using Paradigmatic Representations of \\Word Context}
 
 \author{
 %Mehmet Ali Yatbaz \hspace*{10mm} Enis Sert \hspace*{10mm} Deniz Yuret \\
@@ -61,12 +66,12 @@
 \input{introduction.tex}
 \input{related.tex}
 \input{substitute.tex}
-\input{subvecapp.tex}
+%\input{subvecapp.tex}
 \input{distance.tex}
 \input{dimension.tex}
 \input{clustering.tex}
 %\input{sparsity.tex} % omit
-\input{scaling1m.tex}
+%\input{scaling1m.tex}
 \input{scode.tex}
 \input{experiments.tex}
 \input{features.tex}
