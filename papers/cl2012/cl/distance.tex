@@ -34,7 +34,6 @@ JS($\mathbf{p}, \mathbf{q}$) & = & $\sum_i p_iln(p_i/m_i) + q_iln(q_i/m_i) $\\
 \label{tab:metrics}
 \end{table}
 
-
 % are we still using k = 30 ? update if necessary
 To judge the merit of each distance metric we obtained supervised
 baseline scores using leave-one-out cross validation and the weighted
@@ -43,9 +42,8 @@ k-nearest-neighbor algorithm\footnote{Neighbors were weighted using
 PTB24K.  The results are listed in
 Table~\ref{tab:distscores} sorted by score.
 
-
 % update scores in this table
-\begin{table}[ht] \centering
+\begin{table}[h] \centering
 \caption{Supervised baseline scores with different distance metrics.
   Log-metric indicates that metric applied to the log of the
   probability vectors.}
@@ -79,7 +77,6 @@ lg2-Manhattan & 0.3729 \\
 \end{tabular}
 \label{tab:distscores}
 \end{table}
-
 % K=1 1M WSJ
 % KL2 can we define kl2 on sparse vectors
 % Manhattan 
@@ -91,7 +88,6 @@ lg2-Manhattan & 0.3729 \\
 % lg2-Cosine 
 % lg2-Euclid 
 % lg2-Manhattan 
-
 % K=20 1M WSJ
 % KL2 & ?\\
 % Manhattan & ?\\
@@ -104,22 +100,22 @@ lg2-Manhattan & 0.3729 \\
 % log-Euclid & ?\\
 % log-Manhattan & ?\\
 
-
-% update scores in this paragraph as well The entries with the log-
-prefix indicate a metric applied to the log of the probability
-vectors.  Distance metrics on log probability vectors performed poorly
-compared to their regular counterparts indicating that differences in
-low probability words are relatively unimportant and high probability
-substitutes determine syntactic category.  The surprisingly good
-result achieved by the simple Maximum metric (which identifies the
-dimension with the largest difference between two vectors) also
-support this conclusion.  The maximum score of .73\% can be taken as a
-rough upper bound for an unsupervised learner using this space on the
-PTB24K corpus because .27\% of the instances are assigned to the wrong
-part of speech by the majority of their closest neighbors.  We will
-discuss alternative ways to push this upper bound higher by forcing
-one-tag-per-word or including word type information together with
-other features in the rest of this paper.
+% update scores in this paragraph as well 
+The entries with the log-prefix indicate a metric applied to the log
+of the probability vectors.  Distance metrics on log probability
+vectors performed poorly compared to their regular counterparts
+indicating that differences in low probability words are relatively
+unimportant and high probability substitutes determine syntactic
+category.  The surprisingly good result achieved by the simple Maximum
+metric (which identifies the dimension with the largest difference
+between two vectors) also support this conclusion.  The maximum score
+of .73\% can be taken as a rough upper bound for an unsupervised
+learner using this space on the PTB24K corpus because .27\% of the
+instances are assigned to the wrong part of speech by the majority of
+their closest neighbors.  We will discuss alternative ways to push
+this upper bound higher by forcing one-tag-per-word or including word
+type information together with other features in the rest of this
+paper.
 
 % moreover we are using probability vectors so its more natural to use
 % kl2

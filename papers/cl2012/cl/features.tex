@@ -27,24 +27,38 @@ reflect the relative importance of each $Y^{(k)}$ and all embeddings
 are mapped to unit-sphere.
 
 We adopt this likelihood function, set all $w_k=1$, let $X$ represent
-a word, $Y^{(1)}$ represent a random substitute and $Y^{(2)}, \ldots,
-Y^{(K)}$ stand for one morphological and various orthographic features
-of the word.  With this setup, the training procedure needs to change
-little: instead of sampling a word -- random-substitute pair, the
-word -- substitute -- features tuple is sampled and input to the
-gradient ascent algorithm.
+a word, $Y^{(1)}$ represent a random substitute, $Y^{(2)}$ represent
+morphological feature and $Y^{(3)}, \ldots, Y^{(K)}$ stand for various
+orthographic features of the word thus each word is a (K+1)-tuple,
+$(X, Y^{(1)}, \hdots Y^{(K)})$.  With this setup, the training
+procedure needs to change little: instead of sampling a word --
+random-substitute pair, the word -- random-substitute -- features
+tuple is sampled and input to the gradient ascent algorithm.  The
+gradient search algorithm updates the embeddings according to
+$p(x,y^{(i)})$ where $i=1\hdots k$ and no updates are performed
+between $y^{(i)}$s since they do not have any co-occurance statistics
+and $x$ is the shared variable.
 
-One problem with this setup is that unobserved features misguide the
-gradient search algorithm and lead to a suboptimal convergence point.
-For example, ``\textbf{car}'' and ``\textbf{red}'' belong to the
-``Noun'' and ``Adjective'' clusters, respectivly, and neither of them
-have a morphological feature, thus their morphological features are
-represented by a null value, ``X''.  However setting the unobserved
-features of words from different clusters to ``X'' leads to a false
-similarity between these words.  To solve this problem, during the
-gradient search we don't perform any pull or push updates on
-embeddings if the corresponding $y^{(k)}$ is null\footnote{$x\inX$
-  represents a word type therefore it is always observed.}.
+
+Word tuples might have null values due to the unobserved features.
+For example, the word ``\textbf{car}'' has no morphological or
+ortographic features therefore all the elements of tuple have null
+value except the word type($X$) and random-substitute($Y^{(1)}$).
+S-CODE models the co-occurance of variables and unobserved features
+represent the absence of co-occurance therefore we do not perform any
+pull or push updates on embeddings during the gradient search if the
+corresponding $y^{(k)}$ is null\footnote{$X$ and $Y^{(1)}$ represents
+  the word type and random-substitute therefore they are always
+  observed.}.
+
+%% One problem with this setup is that unobserved features misguide the
+%% gradient search algorithm and lead to a suboptimal convergence point.
+%% For example, ``\textbf{car}'' and ``\textbf{red}'' belong to the
+%% ``Noun'' and ``Adjective'' clusters, respectivly, and neither of them
+%% have a morphological feature, thus their morphological features are
+%% represented by a null value, ``X''.  However setting the unobserved
+%% features of words from different clusters to ``X'' leads to a false
+%% similarity between these words.  To solve this problem, 
 
 The orthographic features we used are similar to the ones in
 \cite{bergkirkpatrick-EtAl:2010:NAACLHLT} with small modifications:
@@ -83,8 +97,9 @@ types.
 %% million (12 substitutes per word) to 17.7 million (additional 0.25
 %% features on average for each of the 14.1 million words).
 
-Using similar training settings as the previous section, the addition
-of morphological and orthographic features increased the many-to-one
-score of the random-substitute model to \ftmto\ and V-measure to \ftvm.
-Both these results improve the state-of-the-art in part-of-speech
-induction significantly as seen in Table~\ref{tab:results}.
+Using the training settings of the previous section, the addition of
+morphological and orthographic features increased the many-to-one
+score of the random-substitute model to \ftmto\ and V-measure to
+\ftvm.  Both these results improve the state-of-the-art in
+part-of-speech induction significantly as seen in
+Table~\ref{tab:results}.

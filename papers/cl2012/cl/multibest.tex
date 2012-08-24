@@ -14,12 +14,12 @@ Dutch, German, Portuguese, Slovene, Spanish, Swedish and Turkish).
 the best performing model of Section~\ref{sec:code} (i.e. the random
 substitute model) with default settings.  To make meaningful
 comparison with the previous work we only use the training section of
-MULTEXT-East and CONLL-X languages
+MULTEXT-East\footnote{Languages of MULTEXT-East corpora do not tag the
+  punctuation marks, thus we add an extra tag for punctuation to the
+  tag-set of these languages.} and CONLL-X languages
 \cite{Lee:2010:STU:1870658.1870741}.  The number of word types and
 clusters of each language are summarized in
-Table~\ref{tab:multiresults}\footnote{Languages of MULTEXT-East
-  corpora do not tag the punctuation marks, thus we add an extra tag
-  for punctuation to the tag-set of these languages.}.
+Table~\ref{tab:multiresults}.
 
 \subsection{Substitute Vectors and Features}
 
@@ -97,7 +97,7 @@ Section~\ref{sec:feat} except we add an ``Only-Punctuation'' feature
 to the languages of MULTEXT-East corpora.  The ``Only-Punctuation''
 feature is generated when a token consists of punctuations.
 
-Morphological features of each language is extracted by the method
+Morphological feature of each language is extracted by the method
 described in Section~\ref{sec:feat}.  Language specific morphological
 feature statistics are summarized in Table~\ref{tab:morpho}.
 \begin{table}[h]
@@ -155,7 +155,7 @@ Romanian, Serbian and Czech (CONLL-X).  uPos+O+M has the
 state-of-the-art \mto and \vm accuracy on the PTB.  uPos+O and
 uPos+O+M achieved the highest \mto scores on all languages of
 MULTEXT-East corpora while scoring the highest \vm accuracies on
-English and Romanian.  On the CoNLL-X languages Pos+O and uPos+M
+English and Romanian.  On the CoNLL-X languages uPos+O and uPos+O+M
 models perform better than the best published \mto score on 7
 languages (Czech, Dutch, German, Portuguese, Slovene, Swedish and
 Turkish).  Similarly, these models achieved the top \vm scores on 7
