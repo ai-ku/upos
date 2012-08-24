@@ -4,16 +4,25 @@
 %\vspace*{-10mm}
 \includegraphics[width=\textwidth]{hinton.png}
 %\vspace*{-30mm}
-\caption{Hinton diagram comparing most frequent tags and clusters.}
+\caption{Hinton diagram comparing most frequent tags and clusters.
+  Area of each square is proportional to the joint probability of the
+  given tag and cluster.}
 \label{plot-hinton}
 \end{figure*}
 
-Figure~\ref{plot-hinton} is the Hinton diagram of Penn Treebank WSJ
-showing the relationship between the most frequent tags and clusters
-from the experiment in Section~\ref{sec:feat}.  In general the errors
-seem to be the lack of completeness (multiple large entries in a row),
-rather than lack of homogeneity (multiple large entries in a column).
-The algorithm tends to split large word classes into several clusters.
+In this section we perform further analysis on our clustering outputs
+and indicate the possible reasons of comparably low performance on \vm
+scores.  To illustrate how words are distributed in the induced
+clusters, we compare the output of our model with gold-tags of the
+PTB.  We also discuss the effect of coarse gold-tag sets on our model
+performance.
+
+Figure~\ref{plot-hinton} is the Hinton diagram of the PTB showing the
+relationship between the most frequent tags and clusters from the
+experiment in Section~\ref{sec:feat}.  In general the errors seem to
+be the lack of completeness (multiple large entries in a row), rather
+than lack of homogeneity (multiple large entries in a column).  The
+algorithm tends to split large word classes into several clusters.
 Some examples are:
 \begin{itemize}
 \item Titles like Mr., Mrs., and Dr. are split from the rest of the

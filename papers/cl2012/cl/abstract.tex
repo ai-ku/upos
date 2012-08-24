@@ -1,24 +1,29 @@
 \begin{abstract}
-\paragraph{ACL}
-We introduce a paradigmatic representation of word context and
-demonstrate its utility in learning syntactic categories.  Unlike the
-typical syntagmatic representations of word context which consist of
-properties of neighboring words, our paradigmatic representation
-consists of substitute vectors: possible substitutes of the target
-word and their probabilities.  When word contexts are clustered based
-on their substitute vectors they reveal a grouping that largely match
-the traditional part of speech boundaries with a many-to-one accuracy
-of \collapseResult\% on a 45-tag 24K word test corpus.
-\paragraph{EMNLP}
+%% \paragraph{ACL}
+%% We introduce a paradigmatic representation of word context and
+%% demonstrate its utility in learning syntactic categories.  Unlike the
+%% typical syntagmatic representations of word context which consist of
+%% properties of neighboring words, our paradigmatic representation
+%% consists of substitute vectors: possible substitutes of the target
+%% word and their probabilities.  When word contexts are clustered based
+%% on their substitute vectors they reveal a grouping that largely match
+%% the traditional part of speech boundaries with a many-to-one accuracy
+%% of \collapseResult\% on a 45-tag 24K word test corpus.
+%% \paragraph{EMNLP}
+
 We investigate paradigmatic representations of word context in the
-domain of unsupervised syntactic category acquisition.  Paradigmatic
+domain of unsupervised part-of-speech induction (UPOS).  Paradigmatic
 representations of word context are based on potential substitutes of
 a word in contrast to syntagmatic representations based on properties
-of neighboring words.  We compare a bigram based baseline model with
-several paradigmatic models and demonstrate significant gains in
-accuracy.  Our best model based on Euclidean co-occurrence embedding
+of neighboring words.  We demonstrate paradigmatic models within two
+frameworks: (1) Vector Space Models and (2) Co-occurance Data
+Embedding .  In the former one we cluster words based on their
+substitute vectors without using any extra features and they reveal a
+grouping that largely match the traditional part of speech boundaries.
+In the second one we construct Euclidean co-occurrence embedding that
 combines the paradigmatic context representation with morphological
-and orthographic features and achieves 80\% many-to-one accuracy on a
-45-tag 1M word corpus.
+and orthographic features.  We compare our best model based with the
+best published models and demonstrate significant gains in many-to-one
+accuracy on 17 out of 19 corpora in 15 languages.
 \end{abstract}
 

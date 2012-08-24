@@ -103,3 +103,30 @@ score of the random-substitute model to \ftmto\ and V-measure to
 \ftvm.  Both these results improve the state-of-the-art in
 part-of-speech induction significantly as seen in
 Table~\ref{tab:results}.
+
+\subsection{Summary}
+\label{sec:expsum}
+
+We presented methods to determine best usega of substitute vectors
+within the CODE framework and performed sensitivity analysis on model
+parameters to not only show the robustness but also to decide the best
+configuration of S-CODE with paradigmatic approach.  To use the
+substitute vectors as co-occurance statistics we discritized the
+substitute vectors using two methods.  The first method
+(Section~\ref{sec:rpart}) selected 64K random substitute vectors as
+the center of 64K random partitions and then randomly assigned rest of
+the substitute vectors to the closest random partition.  As a results
+each word represented as a word -- partition-id pair which we input to
+the S-CODE. The second method (Section~\ref{sec:wordsub}) sampled
+random substitutes from the substitute vectors using the fact that
+subsitute vectors are probability distrubutions.  We fed the word --
+random-substitute pairs into S-CODE.  Both methods significantly
+outperforms the S-CODE model trained with bigrams
+(Section~\ref{sec:bigram}) on the PTB.  Finally,
+Section~\ref{sec:feat} showed that adding morphological and
+ortographic features improved the accuracy and we achieved the
+state-of-the-art \mto and \vm accuracies on the PTB.
+
+In the next section we extend our test set to include more languages
+to demonstrate the robustness of paradigmatic approach on languages
+with different characteristics.
