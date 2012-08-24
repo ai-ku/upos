@@ -1,0 +1,75 @@
+\begin{table}[ht]
+%  \small
+  \caption{Summary of language model training and test corpora
+    statistics for each language in the test set.  Last two column
+    presents the number of induced suffix parts and word types with
+    these suffix parts after the morfological feature extraction.}
+  \begin{tabular}{@{ }l@{ }|@{ }l@{ }|@{ }c@{ }|@{ }c@{ }|c@{ }|@{ }c@{ }|@{ }c@{ }|@{ }c@{ }|@{ }c@{ }|}
+  \hline
+    & & \multicolumn{2}{@{ }c@{ }|}{Language Model} & \multicolumn{5}{@{ }c@{ }|}{Test set}\\    \hline
+    & Language & Source & \specialcell{Word\\Count} & \specialcell{Word\\Count} & \specialcell{Perplexity\\(ppl)} & \specialcell{Unknown\\Word} & \specialcell{Suffix\\Parts} & \specialcell{Word Types\\with\\Suffix parts}\\ \cline{1-9}
+    \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
+    &English & News & 126,170,376 & 1,173,766 & 79.926 & 0.012 & 5575 & 19223 \\
+    & & & && & & &\\\hline
+    \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}}
+    &Bulgarian& Wikipedia & 32,511,616 & 101,173 & 655.202 & .0565 & 609 & 4209\\
+    &Czech & Wikipedia & 59,698,049 & 100,368 & 1,069.67 & .0299 & 2787 & 12848\\
+    &English & News & 126,170,376 & 118,424 & 265.246 & .0288 & 1251 & 4783\\
+    &Estonian & Wikipedia & 14,513,571 & 94,898 & 871.765 & .0654 & 4448 & 13638\\
+    &Hungarian & Wikipedia & 66,069,788 & 98,426 & 742.676 & .0449 & 5423 & 15995\\
+    &Romanian & Wikipedia & 35680870 & 118,328 & 666.855 & .1074 & 2064 & 9445\\
+    &Slovene & Wikipedia & 18,969,846 & 112,278 & 658.711 & .0389 & 2093 & 11834\\
+    &Serbian & Wikipedia & 17,129,679 & 108,809 & 804.962 & .0580 & 2722 & 12476\\
+    \hline % Conll06 data
+    \multirow{10}{*}{\begin{sideways}\textbf{CoNLL-X Shared Task}\end{sideways}}
+    &Bulgarian& Wikipedia & 32,511,616 & 190,217 & 538.972 & .0430 & 926 & 8225\\
+    &Czech & Wikipedia & 59,698,049 & 1,249,408 & 1,233.95 &.0250 & 12443 & 85673\\
+    &Danish & Wikipedia & 35,863,945 & 94,386 & 351.24 & .0393 & 3708 & 10897\\
+    &Dutch & Wikipedia & 159,978,524 & 195,069 & 390.818 & .0476 & 5250 & 13407\\
+    &German & Wikipedia & 437,777,863 & 699,610 & 680.036 & .0487 & 15219 & 45414\\
+    &Portuguese & Wikipedia & 150,099,154 & 206,678 & 378.656 & .0861 & 5033 & 15721\\
+    &Slovene & Wikipedia & 18,969,846 & 28,750 & 663.053 & .0414  & 1257 & 4781\\
+    &Spanish & Wikipedia & 332,311,650 & 89,334 & 274.418 & .0424  & 2648 & 9316\\
+    &Swedish & Wikipedia & 32,004,538 & 191,467 & 1,233.95 & .0250  & 2897 & 12725\\
+    &Turkish & Web & 491,195,991 & 47,605 & 868.829 & .0508  & 5651 & 14227\\
+    \hline
+  \end{tabular}
+  \label{tab:lmstatistics}
+\end{table}
+
+%% \begin{table}[ht]
+%%   %\tiny  
+%%   \caption{Summary of language model training and test corpora
+%%   statistics for each language in the test set.} 
+%%   \begin{tabular}{@{ }l@{ }|@{ }l@{ }|@{ }c@{ }|@{ }c@{ }|@{ }c@{ }|c@{ }|@{ }c@{ }|@{ }c@{ }|@{ }c@{ }|}
+%%   \hline
+%%     & & \multicolumn{3}{c|}{Language Model} & \multicolumn{4}{c|}{Test set}\\    \hline
+%%     & Language & Source & \specialcell{Sentence\\Count} & \specialcell{Word\\Count} & \specialcell{Sentence\\Count} & \specialcell{Word\\Count} & \specialcell{Perplexity\\(ppl)} & \specialcell{Unknown\\Word} \\ \cline{1-9}
+%%     \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
+%%     &English & News & 5,187,874 & 126,170,376 & 49,208 & 1,173,766 & 79.926 & 0.012\\
+%%     & & & & && & &\\\hline
+%%     \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}}
+%%     &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 6,682 & 101,173 & 655.202 & .0565\\
+%%     &Czech & Wikipedia &3,059,678 & 59,698,049 & 6,752 & 100,368 & 1,069.67 & .0299\\
+%%     &English & News & 5,187,874 & 126,170,376 & 6,737 & 118,424 & 265.246 & .0288\\
+%%     &Estonian & Wikipedia &833,677 & 14,513,571 & 6,478 & 94,898 & 871.765 & .0654\\
+%%     &Hungarian & Wikipedia &3,250,267& 66,069,788 & 6,768 & 98,426 & 742.676 & .0449\\
+%%     &Romanian & Wikipedia &3,250,267&66,069,788  & 6,520 & 118,328 & 666.855 & .1074\\
+%%     &Slovene & Wikipedia & 899,329&18,969,846 & 6,689 & 112,278 & 658.711 & .0389\\
+%%     &Serbian & Wikipedia & 782,278 & 17,129,679 & 6,677 & 108,809 & 804.962 & .0580\\
+%%     \hline % Conll06 data
+%%     \multirow{10}{*}{\begin{sideways}\textbf{CoNLL-X Shared Task}\end{sideways}}
+%%     &Bulgarian& Wikipedia &1,596,399 & 32,511,616  & 12,823 & 190,217 & 538.972 & .0430\\
+%%     &Czech & Wikipedia &3,059,678 & 59,698,049 & 72,703 & 1,249,408 & 1,233.95 &.0250\\
+%%     &Danish & Wikipedia &1,672,003 & 35,863,945 & 5,190 & 94,386 & 351.24 & .0393\\
+%%     &Dutch & Wikipedia &8,266,922 & 159,978,524 & 13,349 & 195,069 & 390.818 & .0476\\
+%%     &German & Wikipedia &22,454,543&437,777,863 & 39,216 & 699,610 & 680.036 & .0487\\
+%%     &Portuguese & Wikipedia & 5,706,037 & 150,099,154 & 9071 & 206,678 & 378.656 & .0861\\
+%%     &Slovene & Wikipedia & 899,329 & 18,969,846 & 1,534 & 28,750 & 663.053 & .0414\\
+%%     &Spanish & Wikipedia &11,534,351 & 332,311,650& 3,306 & 89,334 & 274.418 & .0424\\
+%%     &Swedish & Wikipedia &1,953,794 & 32,004,538& 11,042 & 191,467 & 1,233.95 & .0250\\
+%%     &Turkish & Web &39,595,781 & 491,195,991& 4,997 & 47,605 & 868.829 & .0508\\
+%%     \hline
+%%   \end{tabular}
+%%   \label{tab:lmstatistics}
+%% \end{table}
