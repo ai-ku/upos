@@ -19,7 +19,7 @@ accept the distance matrix based on the KL2 distance (see
 Section~\ref{sec:dist}) as input.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.5\textwidth]{clustering_graph_mono.png}
+  \includegraphics[width=0.6\textwidth]{clustering_graph_mono.png}
 \caption{Many-to-one score for three clustering algorithms on the
   45-tag 24K word corpus.}
 \label{fig:clustering}
@@ -64,16 +64,15 @@ improves the many-to-one accuracy by more than 10\% from
 In accord with the findings and results on the PTB24K, we perform
 spectral clustering on the PTB by using the language model defined in
 Section~\ref{sec:expset} together with the Manhattan similarity
-metric\footnote{The new language model in Section~\ref{sec:expset} only
-  calculates the top 100 substitutes and set the ones other than the
-  top 100 to 0 which results in sparse substitute vectors.  As a
+metric\footnote{The new language model in Section~\ref{sec:expset}
+  only calculates the top 100 substitutes and set the ones other than
+  the top 100 to 0 which results in sparse substitute vectors.  As a
   results the new model is computationally more efficient than the one
   in this section and it is more appropriate for large datasets like
   the PTB.  KL2 is undefined on sparse vectors, therefore we use
-  Manhattan which is the successor of KL2 on both the PTB24K and PTB
-  (see Appendix~\ref{app:dist1M}).}  and achieve \spectralResultPTB
-\mto (\collapseResultPTB \vm) accuracy which is comparable with the
-results on the PTB24.
+  Manhattan which is the successor of KL2 on both the PTB24K and PTB.}
+and achieve \spectralResultPTB \mto (\collapseResultPTB \vm) accuracy
+which is comparable with the results on the PTB24.
 
 %% Section~\ref{sec:dist} reveals that using the language model described
 %% in Section~\cite{sec:lm}.  Using the top 100 substitutes results in

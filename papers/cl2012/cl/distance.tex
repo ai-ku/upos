@@ -49,19 +49,19 @@ Table~\ref{tab:distscores} sorted by score.
   probability vectors.}
 \begin{tabular}{|l|c|}
 \hline
-Metric & Accuracy(\%) \\
+Metric & Accuracy \\
 \hline
 %% K=30 24K WSJ
-KL2 & 0.6889 \\
-Manhattan & 0.6865 \\
-Jensen & 0.6801 \\
-Cosine & 0.6706 \\
-Maximum & 0.6663 \\
-Euclid & 0.6255 \\
-lg2-Maximum & 0.5361 \\
-lg2-Cosine & 0.4847 \\
-lg2-Euclid & 0.4038 \\
-lg2-Manhattan & 0.3729 \\
+KL2 & .6889 \\
+Manhattan & .6865 \\
+Jensen & .6801 \\
+Cosine & .6706 \\
+Maximum & .6663 \\
+Euclid & .6255 \\
+lg2-Maximum & .5361 \\
+lg2-Cosine & .4847 \\
+lg2-Euclid & .4038 \\
+lg2-Manhattan & .3729 \\
 %% K=30 1M WSJ
 %% KL2 & ? \\
 %% Manhattan & .7354\\ %0.735381668919
@@ -109,8 +109,8 @@ unimportant and high probability substitutes determine syntactic
 category.  The surprisingly good result achieved by the simple Maximum
 metric (which identifies the dimension with the largest difference
 between two vectors) also support this conclusion.  The maximum score
-of .73\% can be taken as a rough upper bound for an unsupervised
-learner using this space on the PTB24K corpus because .27\% of the
+of .68 can be taken as a rough upper bound for an unsupervised
+learner using this space on the PTB24K corpus because .32\% of the
 instances are assigned to the wrong part of speech by the majority of
 their closest neighbors.  We will discuss alternative ways to push
 this upper bound higher by forcing one-tag-per-word or including word

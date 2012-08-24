@@ -15,8 +15,7 @@ focussing on how to incoorporate extra features to the vectors, we
 dedicate this section to determine the best usage of substitute
 vectors within the VSM framework by comparing similarity metrics
 together with dimension reduction and clustering methods on UPOS
-without using the word identities or any features other than the
-substitute vectors.
+without using the word identities or any other features.
 
 %% Following Turney and Pantel \shortcite{DBLP:journals/jair/TurneyP10}
 %% we determine the best usage of substitute vectors by comparing various
@@ -33,18 +32,18 @@ substitute vectors.
 %% measure between the vectors.  We also apply dimensionality reduction
 %% algorithms to reduce the computaional complexy.
 
-In the following section, we describe the substitute vector theory and
-computation of substitute vectors using a statistical language model.
+In the following section, we describe the theory and computation of
+substitute vectors using a statistical language model.
 Section~\ref{sec:dist} gives a detailed comparison of similarity
 metrics in high dimensional substitute vector space.
 Section~\ref{sec:dimreduce} analyzes application of possible
 dimensionality reduction algorithms to our problem.
 Section~\ref{sec:clustering} presents comparison of various clustering
-techniques and finally Section~\ref{sec:wsj} applies the findings of
-the previous sections to the PTB.
+techniques and applies the findings of the previous sections to the
+PTB.
 
-In section~\ref{sec:code} and \ref{sec:feat}[??] we discuss the
-co-occurance modeling as an alternative to VSM.
+In section~\ref{sec:code} we discuss the co-occurance modeling as an
+alternative to VSM.
 
 \subsection{Computation of Substitute Vectors}
 \label{sec:subcomp}
@@ -128,10 +127,11 @@ of substitute probabilities.
 
 % what is the LM training data
 %Train => 5181717 126019973 690121813
+
 To compute substitute probabilities we trained a language model using
 approximately 126 million tokens of Wall Street Journal data
-(1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding WSJ
-Section 00).
+(1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding the
+PTB).
 % how is the language model trained
 We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
 Kneser-Ney discounting.

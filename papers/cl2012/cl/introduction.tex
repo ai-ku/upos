@@ -108,22 +108,23 @@ information (the identity of the word and a representation of its
 context) and .8023 using morphological and orthographic features of
 words improving the state-of-the-art in unsupervised part-of-speech
 tagging performance on the PTB.  We extend the experiments to 19
-corpora in 15 languages and achieve state-of-the-art \mto scores on 17
-of them.
+corpora in 15 languages and achieve state-of-the-art many-to-one
+(\mto) scores on 17 of them.
 
 The next section gives a detailed review of related work.
 Section~\ref{sec:subthr} describes the construction of the substitute
-vectors and applies various similarity metrics, dimensionality
-reduction and clustering methods on substitute vectors.
-Section~\ref{sec:code} describes co-occurrence data embedding, the
-learning algorithm used in our experiments.  Section~\ref{sec:exp}
-describes possible usage scenerios of substitute vectors with S-Code
-on the PTB and determines the best setup.  Section~\ref{sec:multilang}
-applies the best setup to different languages and compares our results
-with previous work.  Section~\ref{sec:discuss} gives a brief error
-analysis and Section~\ref{sec:contrib} summarizes our contributions.
-All the data and the code to replicate the results given in this paper
-is available from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
+vectors and applies various distance metrics, dimensionality reduction
+and clustering methods on substitute vectors of the PTB.
+Section~\ref{sec:code} describes co-occurrence data embedding
+(i.e. the learning algorithm used in our experiments), introduces
+possible usage scenerios of substitute vectors with S-Code and
+determines the best setup on the PTB.  Section~\ref{sec:multilang}
+extends experiments to different languages and compares our results
+with the best published results.  Section~\ref{sec:discuss} gives a
+brief error analysis and Section~\ref{sec:contrib} summarizes our
+contributions.  All the data and the code to replicate the results
+given in this paper is available from the authors' website at
+\mbox{\url{xxx.xxx.xxx}}.
 
 %% Computational models of syntactic category acquisition rely mainly on
 %% distributional analysis: Words that share the same distribution
