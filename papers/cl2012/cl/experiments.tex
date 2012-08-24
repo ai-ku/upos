@@ -1,5 +1,6 @@
 %\subsection{S-Code and Substitute Vector Application}
 \subsection{Experiment Settings}\label{sec:expset}
+
 To make a meaningful comparison on the PTB we re-ran all the
 experiments using the following default settings: (i) each word was
 kept with its original capitalization, (ii) the learning rate
@@ -14,14 +15,10 @@ variance.
 Section~\ref{sec:dist} shows that low probability substitutes are
 relatively unimportant thus for computational efficiency only the top
 100 substitutes and their unnormalized probabilities were computed for
-each positions in the PTB\footnote{The substitutes with unnormalized
-  log probabilities can be downloaded from
-  \mbox{\url{http://goo.gl/jzKH0}}.  For a description of the {\sc
-    fastsubs} algorithm used to generate the substitutes please see
-  \mbox{\url{http://arxiv.org/abs/1205.5407v1}}.  {\sc fastsubs}
-  accomplishes this task in about 5 hours, a naive algorithm that
-  looks at the whole vocabulary would take more than 6 days on a
-  typical 2012 workstation.}.  The probability vectors for each
+each positions in the PTB using the {\sc fastsubs} algorithm
+\cite{yuret2021fastsub}\footnote{The substitutes with unnormalized log
+  probabilities can be downloaded from
+  \mbox{\url{http://goo.gl/jzKH0}}.}  The probability vectors for each
 position were normalized to add up to 1.0 giving us the final
 substitute vectors used in the rest of this study.  Another advantage
 of using the top 100 substitutes is we are able to increase the
