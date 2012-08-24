@@ -1,25 +1,25 @@
 %\subsection{S-Code and Substitute Vector Application}
 \subsection{Experiment Settings}\label{sec:expset}
 
-To make a meaningful comparison on the PTB we re-ran all the
-experiments using the following default settings: (i) each word was
-kept with its original capitalization, (ii) the learning rate
-parameters were adjusted to $\varphi_0=50$, $\eta_0=0.2$ for faster
-convergence in log likelihood, (iii) the number of s-code iterations
-were increased from 12 to 50 million, (iv) the s-code dimensions and
-$Z$ were set to 25 and 0.166, respectively, (v) k-means initialization
-was improved using \cite{arthur2007k}, and (vi) the number of k-means
-restarts were increased to 128 to improve clustering and reduce
-variance.
+To make a meaningful comparison on the PTB we ran all the experiments
+using the following default settings (unless otherwise stated): (i)
+each word was kept with its original capitalization, (ii) the learning
+rate parameters were adjusted to $\varphi_0=50$, $\eta_0=0.2$ for
+faster convergence in log likelihood, (iii) the number of s-code
+iterations were increased from 12 to 50 million, (iv) the s-code
+dimensions and $Z$ were set to 25 and 0.166, respectively, (v) k-means
+initialization was improved using \cite{arthur2007k}, and (vi) the
+number of k-means restarts were increased to 128 to improve clustering
+and reduce variance.
 
 Section~\ref{sec:dist} shows that low probability substitutes are
 relatively unimportant thus for computational efficiency only the top
 100 substitutes and their unnormalized probabilities were computed for
-each positions in the PTB using the {\sc fastsubs} algorithm
-\cite{yuret2021fastsub}\footnote{The substitutes with unnormalized log
-  probabilities can be downloaded from
-  \mbox{\url{http://goo.gl/jzKH0}}.}  The probability vectors for each
-position were normalized to add up to 1.0 giving us the final
+each positions in the PTB(1,173,766 tokens, 49,206 types) using the
+{\sc fastsubs} algorithm \cite{yuret2021fastsub}\footnote{The
+  substitutes with unnormalized log probabilities can be downloaded
+  from \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors
+for each position were normalized to add up to 1.0 giving us the final
 substitute vectors used in the rest of this study.  Another advantage
 of using the top 100 substitutes is we are able to increase the
 vocabulary size to 78,498 by reducing the vocabulary threshold to 20.
@@ -29,7 +29,7 @@ vocabulary size to 78,498 by reducing the vocabulary threshold to 20.
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
-reported in this paper and the ones we cite from the literature.
+reported in this section and the ones we cite from the literature.
 
 \subsection{Random partitions}\label{sec:rpart}
 \begin{table*}[t] \footnotesize
@@ -88,9 +88,10 @@ centroid in cosine distance.  Each partition thus defined gets a
 unique id, and word ($X$) -- partition-id ($Y$) pairs are given to
 S-CODE as input.  The algorithm cycles through the data until we get
 approximately 50 million updates.  The resulting $\phi_x$ vectors are
-clustered using the k-means algorithm.  Using default settings with
-64K random partitions the many-to-one accuracy is \rpmto\ and the
-V-measure is \rpvm.
+clustered using an instance weighted k-means algorithm and the
+resulting groups are compared to the correct part-of-speech tags.
+Using default settings with 64K random partitions the many-to-one
+accuracy is \rpmto\ and the V-measure is \rpvm.
 
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
@@ -180,12 +181,11 @@ point representing the behavior of $w$ as the left word of a bigram
 and a $\psi_w$ point representing it as the right word.  The two
 vectors for $w$ are concatenated to create a 50-dimensional
 representation at the end.  These 50-dimensional vectors are clustered
-using an instance weighted k-means algorithm and the resulting groups
-are compared to the correct part-of-speech tags.  Maron et
-al. \shortcite{maron2010sphere} report many-to-one scores of .6880
-(.0016) for 45 clusters and .7150 (.0060) for 50 clusters (on the
-PTB).  If only $\phi_w$ vectors are clustered without concatenation we
-found the performance drops significantly to about .62.  Using our
-default settings bigram model achieves \bgmto \mto and \bgvm \vm
-accuracies.  Both results are significantly lower than the random
-partition and substitute \mto and \vm accuracies.
+using the k-means algorithm.  Maron et al. \shortcite{maron2010sphere}
+report many-to-one scores of .6880 (.0016) for 45 clusters and .7150
+(.0060) for 50 clusters (on the PTB).  If only $\phi_w$ vectors are
+clustered without concatenation we found the performance drops
+significantly to about .62.  Using our default settings bigram model
+achieves \bgmto \mto and \bgvm \vm accuracies.  Both results are
+significantly lower than the random partition and substitute \mto and
+\vm accuracies.

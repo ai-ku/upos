@@ -173,7 +173,19 @@ statistics, using the whole 78,498 word vocabulary rather than the
 most frequent 250 words.  More importantly, rather than simply
 concatenating vectors that represent the target word with vectors that
 represent the context we use S-CODE to model their co-occurrence
-statistics.
+statistics.  
+
+Yatbaz et. al \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} applied
+paradigmatic approach together with S-CODE to PTB.  In their work they
+don't define separate variables for each feature.  As a result their
+model represents co-occurrence statistics from different domains such
+as substitutes, orthographic or morphological features with only one
+variable and unable to weight them according to their relevance.
+
+This paper defines a new representation that models the features from
+different domains as separate variables and relates them to each other
+by using their co-occurrence statistics with a shared variable
+(i.e. word types).  
 
 \subsection{Evaluation}
 %% It is natural to question the merit of evaluating unsupervised results

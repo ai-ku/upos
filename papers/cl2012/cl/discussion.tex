@@ -1,5 +1,12 @@
 \section{Discussion}
 \label{sec:discuss}
+
+In this section we perform further analysis on the clustering output
+of our best model and indicate the possible reasons of comparably low
+\vm scores.  To illustrate how words are distributed in the induced
+clusters, we compare the output of our model with gold-tags of the
+PTB.  We also discuss the effect of coarse gold-tag sets on our model
+performance.
 \begin{figure*}[ht] \centering
 %\vspace*{-10mm}
 \includegraphics[width=\textwidth]{hinton.png}
@@ -9,13 +16,6 @@
   given tag and cluster.}
 \label{plot-hinton}
 \end{figure*}
-
-In this section we perform further analysis on our clustering outputs
-and indicate the possible reasons of comparably low performance on \vm
-scores.  To illustrate how words are distributed in the induced
-clusters, we compare the output of our model with gold-tags of the
-PTB.  We also discuss the effect of coarse gold-tag sets on our model
-performance.
 
 Figure~\ref{plot-hinton} is the Hinton diagram of the PTB showing the
 relationship between the most frequent tags and clusters from the

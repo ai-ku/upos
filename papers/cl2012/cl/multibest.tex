@@ -9,7 +9,7 @@ addition to the PTB we extend our experiments to 8 languages from
 MULTEXT-East (Bulgarian, Czech, English, Estonian, Hungarian,
 Romanian, Slovene and Serbian) \cite{citeulike:5820223} and 10
 languages from the CoNLL-X shared task (Bulgarian, Czech, Danish,
-Dutch, German, Portuguese, Slovene, Spanish, Swedish and Turkish).
+Dutch, German, Portuguese, Slovene, Spanish, Swedish and Turkish)
 \cite{Buchholz:2006:CST:1596276.1596305}.  For all experiments, we use
 the best performing model of Section~\ref{sec:code} (i.e. the random
 substitute model) with default settings.  To make meaningful
@@ -17,36 +17,41 @@ comparison with the previous work we only use the training section of
 MULTEXT-East\footnote{Languages of MULTEXT-East corpora do not tag the
   punctuation marks, thus we add an extra tag for punctuation to the
   tag-set of these languages.} and CONLL-X languages
-\cite{Lee:2010:STU:1870658.1870741}.  The number of word types and
-clusters of each language are summarized in
-Table~\ref{tab:multiresults}.
+\cite{Lee:2010:STU:1870658.1870741}.  
+
+Section~\ref{sec:multivecfeat} details the language model and feature
+statistics of each language.  Section~\ref{sec:multires} summarizes
+the results of our models for all of the languages in our test
+corpora.
 
 \subsection{Substitute Vectors and Features}
-
-To calculate the top 100 substitutes of each position, we trained a 4-gram
-language model with the corresponding training corpora of each
+\label{sec:multivecfeat}
+To calculate the top 100 substitutes of each position, we train a
+4-gram language model with the corresponding training corpora of each
 language as described in Section~\ref{sec:expset}.
 Table~\ref{tab:lmstatistics} presents statistics related to the
 language model training and testing corpora.  For all languages except
-Serbian, English and Turkish, we trained the language models by using
+Serbian, English and Turkish, we train the language models by using
 the corresponding Wikipedia dump files\footnote{Latest Wikipedia dump
   files are freely available at \url{http://dumps.wikimedia.org/} and
   the text in the dump files can be extracted using WP2TXT
   (\url{http://wp2txt.rubyforge.org/})}[Should we talk about
-  tokenizer??].
-\input{datatable.tex}
-Serbian shares common basis with Croatian and Bosnian therefore we
-trained 3 different language models using Wikipedia dump files of
-Serbian together with these two languages and measured the
-perplexities on Serbian test corpus.  We chose the Croatian language
-model since it achieved the lowest perplexity score and unknown word
-ratio on Serbian test corpus.
+  tokenizer??].  
 
-To train statistical language model of English, we used Wall Street
+\input{datatable.tex} 
+
+Serbian shares common basis with Croatian and Bosnian therefore we
+train 3 different language models using Wikipedia dump files of
+Serbian together with these two languages and measure the perplexities
+on Serbian test corpus.  We choose the Croatian language model since
+it achieves the lowest perplexity score and unknown word ratio on
+Serbian test corpus.
+
+To train statistical language model of English, we use Wall Street
 Journal data (1987-1994) extracted from CSR-III Text \cite{csr3text}
 (excluding sections of the PTB) and for the Turkish language modeling
-we used the web corpus that was collected from Turkish news and blog
-sites \cite{sak2008turkish}.
+we use the web corpus collected from Turkish news and blog sites
+\cite{sak2008turkish}.
 
 Language model training files vary across the languages, in order to
 reduce the unknown word ratio of resource poor languages and to
@@ -103,29 +108,35 @@ statistics are summarized in Table~\ref{tab:lmstatistics}.
 %% \end{table}
 
 \subsection{Results}
-\input{multitable.tex} 
+\label{sec:multires}
+
 For each language we report results: (1) without features (uPos), (2)
 with orthographic features (uPos+O) and (3) with both orthographic and
 morphological features (uPos+O+M).  In accord with the results of
 Section~\ref{sec:wordsub}, we use the 25 dimensional sphere with 64
-substitutes for all languages.  As a baseline model we chose the
-bi-gram version of S-Code described in Section~\ref{sec:bigram} which
-is a very strong baseline compared to the ones used in
+substitutes for all languages.  For each languge number of induced
+clusters is set to number of tags in the gold-set as presented in
+Table~\ref{tab:multiresults}.
+
+As a baseline model we chose the bigram version of S-Code described in
+Section~\ref{sec:bigram} which is a very strong baseline compared to
+the ones used in
 \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
 Table~\ref{tab:multiresults} summarizes the \mto and \vm scores of our
 models together with the bi-gram baseline and the best published
 accuracies on each language corpus.
+\input{multitable.tex} 
 
-uPos significantly outperformed the bi-gram baseline in both \mto and
-\vm scores on 14 languages while bi-gram model performed better on
+uPos significantly outperforms the bi-gram baseline in both \mto and
+\vm scores on 14 languages while bigram model performs better on
 Romanian, Serbian and Czech (CONLL-X).  uPos+O+M has the
 state-of-the-art \mto and \vm accuracy on the PTB.  uPos+O and
-uPos+O+M achieved the highest \mto scores on all languages of
+uPos+O+M achieve the highest \mto scores on all languages of
 MULTEXT-East corpora while scoring the highest \vm accuracies on
 English and Romanian.  On the CoNLL-X languages uPos+O and uPos+O+M
 models perform better than the best published \mto score on 7
 languages (Czech, Dutch, German, Portuguese, Slovene, Swedish and
-Turkish).  Similarly, these models achieved the top \vm scores on 7
+Turkish).  Similarly, these models achieves the top \vm scores on 7
 languages (Czech, Danish, Dutch, German, Portuguese, Spanish and
 Turkish).  uPos achieves the best published \mto score on CONLL-X
 Bulgarian corpora.

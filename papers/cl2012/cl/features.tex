@@ -14,7 +14,7 @@ al. \shortcite{globerson2007euclidean} suggest the following
 likelihood function:
 
 \begin{eqnarray}
-&\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multiscode} \sum_k w_k \sum_{x,y^{(k)}} \bar{p}(x,y^{(k)}) \log p(x,y^{(k)})
+&\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multiscode} \sum_i^K w_i \sum_{x,y^{(i)}} \bar{p}(x,y^{(i)}) \log p(x,y^{(i)})
 \end{eqnarray}
 
 \noindent where $Y^{(1)}, \ldots, Y^{(K)}$ are $K$ different variables
@@ -36,16 +36,16 @@ random-substitute pair, the word -- random-substitute -- features
 tuple is sampled and input to the gradient ascent algorithm.  The
 gradient search algorithm updates the embeddings according to
 $p(x,y^{(i)})$ where $i=1\hdots k$ and no updates are performed
-between $y^{(i)}$s since they do not have any co-occurance statistics
+between $y^{(i)}$s since they do not have any co-occurrence statistics
 and $x$ is the shared variable.
 
 
 Word tuples might have null values due to the unobserved features.
 For example, the word ``\textbf{car}'' has no morphological or
-ortographic features therefore all the elements of tuple have null
+orthographic features therefore all the elements of tuple have null
 value except the word type($X$) and random-substitute($Y^{(1)}$).
-S-CODE models the co-occurance of variables and unobserved features
-represent the absence of co-occurance therefore we do not perform any
+S-CODE models the co-occurrence of variables and unobserved features
+represent the absence of co-occurrence therefore we do not perform any
 pull or push updates on embeddings during the gradient search if the
 corresponding $y^{(k)}$ is null\footnote{$X$ and $Y^{(1)}$ represents
   the word type and random-substitute therefore they are always
@@ -82,7 +82,7 @@ stem and a suffix part.  The suffix part is used as the morphological
 feature thus each word type has only one morphological
 feature\footnote{We extracted the stem part by concatenating the
   splits until including the first ``STM'' labeled split and the
-  suffix part by concatinating rest of the splits.}.  The program
+  suffix part by concatenating rest of the splits.}.  The program
 induced 5575 suffix types that are present in a total of 19223 word
 types.
 
@@ -107,11 +107,11 @@ Table~\ref{tab:results}.
 \subsection{Summary}
 \label{sec:expsum}
 
-We presented methods to determine best usega of substitute vectors
+We presented methods to determine best usage of substitute vectors
 within the CODE framework and performed sensitivity analysis on model
 parameters to not only show the robustness but also to decide the best
 configuration of S-CODE with paradigmatic approach.  To use the
-substitute vectors as co-occurance statistics we discritized the
+substitute vectors as co-occurrence statistics we discretized the
 substitute vectors using two methods.  The first method
 (Section~\ref{sec:rpart}) selected 64K random substitute vectors as
 the center of 64K random partitions and then randomly assigned rest of
@@ -119,12 +119,12 @@ the substitute vectors to the closest random partition.  As a results
 each word represented as a word -- partition-id pair which we input to
 the S-CODE. The second method (Section~\ref{sec:wordsub}) sampled
 random substitutes from the substitute vectors using the fact that
-subsitute vectors are probability distrubutions.  We fed the word --
+substitute vectors are probability distributions.  We fed the word --
 random-substitute pairs into S-CODE.  Both methods significantly
 outperforms the S-CODE model trained with bigrams
 (Section~\ref{sec:bigram}) on the PTB.  Finally,
 Section~\ref{sec:feat} showed that adding morphological and
-ortographic features improved the accuracy and we achieved the
+orthographic features improved the accuracy and we achieved the
 state-of-the-art \mto and \vm accuracies on the PTB.
 
 In the next section we extend our test set to include more languages
