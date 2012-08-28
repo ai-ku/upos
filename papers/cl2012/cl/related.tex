@@ -148,6 +148,16 @@ acquisition.
 
 \subsection{Paradigmatic representations}
 
+Yatbaz et. al \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} explore
+the paradigmatic representation of word contexts by modeling the
+co-occurrence of words and their substitutes within the CODE framework.
+Their experiments on the PTB shows that paradigmatic representation
+improves the state-of-the-art \mto and V-measure (VM) accuracies of both
+distributional models and models with additional word features.  This
+paper builds on that preliminary work by (1) exploring clustering of
+substitute vectors, (2) model improvements, and (3) additional
+languages.
+
 Sahlgren \shortcite{sahlgren2006word} gives a detailed analysis of
 paradigmatic and syntagmatic relations in the context of word-space
 models used to represent word meaning.  Sahlgren's paradigmatic model
@@ -158,9 +168,16 @@ Our substitute vectors do not represent word types at all, but {\em
   contexts of word tokens} using probabilities of likely substitutes.
 Sahlgren finds that in word-spaces built by frequent neighbor vectors,
 more nearest neighbors share the same part-of-speech compared to
-word-spaces built by context vectors.  We find that representing the
-paradigmatic axis more directly using substitute vectors rather than
-frequent neighbors improves part-of-speech induction.
+word-spaces built by context vectors.  Similarly, Sch{\"u}tze and
+Pedersen \shortcite{SchutzePe93} define the words that frequently
+co-occur together as the {\em syntagmatic associates} and words that
+have similar left and right neighbors as the {\em paradigmatic
+  parallels}.  Turney and Pantel
+\shortcite{DBLP:journals/jair/TurneyP10} give a broad overview of
+syntagmatic approaches and their applications within the Vector Space
+Modeling framework.  We find that representing the paradigmatic axis
+more directly using substitute vectors rather than frequent neighbors
+improves part-of-speech induction.
 
 Our paradigmatic representation is also related to the second order
 co-occurrences used in \cite{Schutze:1995:DPT:976973.976994}.
@@ -175,17 +192,10 @@ concatenating vectors that represent the target word with vectors that
 represent the context we use S-CODE to model their co-occurrence
 statistics.  
 
-Yatbaz et. al \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} applied
-paradigmatic approach together with S-CODE to PTB.  In their work they
-don't define separate variables for each feature.  As a result their
-model represents co-occurrence statistics from different domains such
-as substitutes, orthographic or morphological features with only one
-variable and unable to weight them according to their relevance.
-
-This paper defines a new representation that models the features from
-different domains as separate variables and relates them to each other
-by using their co-occurrence statistics with a shared variable
-(i.e. word types).  
+%% This paper defines a new representation that models the features from
+%% different domains as separate variables and relates them to each other
+%% by using their co-occurrence statistics with a shared variable
+%% (i.e. word types).
 
 \subsection{Evaluation}
 %% It is natural to question the merit of evaluating unsupervised results

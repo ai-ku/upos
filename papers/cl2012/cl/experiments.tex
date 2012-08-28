@@ -1,16 +1,16 @@
 %\subsection{S-Code and Substitute Vector Application}
-\subsection{Experiment Settings}\label{sec:expset}
+\subsection{Experimental Settings}\label{sec:expset}
 
 To make a meaningful comparison on the PTB we ran all the experiments
 using the following default settings (unless otherwise stated): (i)
 each word was kept with its original capitalization, (ii) the learning
-rate parameters were adjusted to $\varphi_0=50$, $\eta_0=0.2$ for
-faster convergence in log likelihood, (iii) the number of s-code
-iterations were increased from 12 to 50 million, (iv) the s-code
-dimensions and $Z$ were set to 25 and 0.166, respectively, (v) k-means
-initialization was improved using \cite{arthur2007k}, and (vi) the
-number of k-means restarts were increased to 128 to improve clustering
-and reduce variance.
+rate parameters were set to $\varphi_0=50$, $\eta_0=0.2$ for faster
+convergence in log likelihood, (iii) the number of S-CODE iterations
+were set to 50 million, (iv) the S-CODE dimensions and $Z$ were set to
+25 and 0.166, respectively, (v) a modified k-means algorithm with
+smart initialization was used \cite{arthur2007k}, and (vi) the number
+of k-means restarts were set to 128 to improve clustering and reduce
+variance.
 
 Section~\ref{sec:dist} shows that low probability substitutes are
 relatively unimportant thus for computational efficiency only the top
@@ -20,10 +20,12 @@ each positions in the PTB(1,173,766 tokens, 49,206 types) using the
   substitutes with unnormalized log probabilities can be downloaded
   from \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors
 for each position were normalized to add up to 1.0 giving us the final
-substitute vectors used in the rest of this study.  Another advantage
-of using the top 100 substitutes is we are able to increase the
-vocabulary size to 78,498 by reducing the vocabulary threshold to 20.
+substitute vectors used in the rest of this study.  We set the
+vocabulary threshold to 20 which increases the vocabulary size to
+78,498.
+
 % \footnote{Reducing the vocabulary threshold to 20 from 500
+
 %  increases the vocabulary size to 78,498 from 12,672. }
 
 Each experiment was repeated 10 times with different random seeds and
@@ -31,7 +33,7 @@ the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this section and the ones we cite from the literature.
 
-\subsection{Random partitions}\label{sec:rpart}
+\subsection{Random Partitions}\label{sec:rpart}
 \begin{table*}[t] \footnotesize
 \caption{Summary of results in terms of the \mto and \vm scores.
   Standard errors are given in parentheses when available.  Starred
@@ -73,25 +75,21 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 \label{tab:results}
 \end{table*}
 
-In \cite{maron2010sphere} adjacent word pairs (bigrams) in the corpus
-are fed into the S-CODE algorithm as $X, Y$ samples.  The algorithm
-uses stochastic gradient ascent to find the $\phi_x, \psi_y$
-embeddings for left and right words in these bigrams on a single
-25-dimensional sphere.  Instead of using left-word -- right-word pairs
-as inputs to S-CODE we wanted to pair each word with a paradigmatic
-representation of its context to get a direct comparison of the two
-context representations.  To obtain a discrete representation of the
-context, the random--partitions algorithm first designates a random
-subset of substitute vectors as centroids to partition the space, and
-then associates each context with the partition defined by the closest
+To obtain a discrete representation of the context, the
+random--partitions algorithm first designates a random subset of
+substitute vectors as centroids to partition the space, and then
+associates each context with the partition defined by the closest
 centroid in cosine distance.  Each partition thus defined gets a
 unique id, and word ($X$) -- partition-id ($Y$) pairs are given to
-S-CODE as input.  The algorithm cycles through the data until we get
-approximately 50 million updates.  The resulting $\phi_x$ vectors are
-clustered using an instance weighted k-means algorithm and the
-resulting groups are compared to the correct part-of-speech tags.
-Using default settings with 64K random partitions the many-to-one
-accuracy is \rpmto\ and the V-measure is \rpvm.
+S-CODE as input.  The algorithm uses stochastic gradient ascent to
+find the $\phi_x, \psi_y$ embeddings for word and partition-id in
+these pairs on a single 25-dimensional sphere.  The algorithm cycles
+through the data until we get approximately 50 million updates.  The
+resulting $\phi_x$ vectors are clustered using an instance weighted
+k-means algorithm and the resulting groups are compared to the correct
+part-of-speech tags.  Using default settings with 64K random
+partitions the many-to-one accuracy is \rpmto\ and the V-measure is
+\rpvm.
 
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
@@ -142,10 +140,9 @@ clusters from coalescing.
 
 We find the random partition algorithm to be fairly robust to
 different parameter settings and the resulting many-to-one score
-significantly better than the state-of-the-art featureless
-distributional models.
+significantly better than the state-of-the-art distributional models.
 
-\subsection{Random substitutes}\label{sec:wordsub}
+\subsection{Random Substitutes}\label{sec:wordsub}
 
 Another way to use substitute vectors in a discrete setting is simply
 to sample individual substitute words from them according to the
@@ -172,20 +169,23 @@ algorithm can observe more than a few random substitutes per word.
 \label{plot-s}
 \end{figure}
 
+\subsection{Paradigmatic vs Syntagmatic Representations of Word Context}\label{sec:bigram}
 
-\subsection{Bigram model}\label{sec:bigram}
-
-This model uses bigrams as $X, Y$ samples and at the end each word $w$
-in the vocabulary ends up with two points on the sphere, a $\phi_w$
-point representing the behavior of $w$ as the left word of a bigram
-and a $\psi_w$ point representing it as the right word.  The two
-vectors for $w$ are concatenated to create a 50-dimensional
+To get a direct comparison of the paradigmatic and syntagmatic context
+representations we feed the adjacent word pairs (bigrams) in the
+corpus into the S-CODE algorithm as $X, Y$ samples
+\cite{maron2010sphere} instead of using word -- partition-id or word
+-- randon-substitute pairs as inputs to S-CODE.  At the end each word
+$w$ in the vocabulary ends up with two points on the sphere, a
+$\phi_w$ point representing the behavior of $w$ as the left word of a
+bigram and a $\psi_w$ point representing it as the right word.  The
+two vectors for $w$ are concatenated to create a 50-dimensional
 representation at the end.  These 50-dimensional vectors are clustered
 using the k-means algorithm.  Maron et al. \shortcite{maron2010sphere}
 report many-to-one scores of .6880 (.0016) for 45 clusters and .7150
 (.0060) for 50 clusters (on the PTB).  If only $\phi_w$ vectors are
 clustered without concatenation we found the performance drops
-significantly to about .62.  Using our default settings bigram model
-achieves \bgmto \mto and \bgvm \vm accuracies.  Both results are
+significantly to about .62.  Using our default settings the bigram
+model achieves \bgmto \mto and \bgvm \vm accuracies.  Both results are
 significantly lower than the random partition and substitute \mto and
 \vm accuracies.

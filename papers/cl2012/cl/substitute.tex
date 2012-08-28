@@ -1,49 +1,19 @@
-\section{Substitute Theory and Application}
+\section{Substitute Vectors}
 \label{sec:subthr}
 %%substitute vector applications
 
-Substitute theory is a special case of Vector Space Models (VSM)
-\cite{DBLP:journals/jair/TurneyP10} in which meaning of a word is
-represented by high dimensional substitute vectors.  Substitute
-vectors capture the word--context relation by constructing probability
-vectors therefore context of each word is represented by its possible
-substitutes instead of the neighboring words.  One problem of VSM is
-that vectors do not keep the information of identity, ortographic or
-morphological features of words and there is no standard way of
-incorporating these extra features into VSM.  Thus instead of
-focusing on how to incorporate extra features to the vectors, we
-dedicate this section to determine the best usage of substitute
-vectors within the VSM framework by comparing similarity metrics
-together with dimension reduction and clustering methods on UPOS
-without using the word identities or any other features.
-
-%% Following Turney and Pantel \shortcite{DBLP:journals/jair/TurneyP10}
-%% we determine the best usage of substitute vectors by comparing various
-%% well knwon similarity metrics together with dimensionality reduction
-%% and clustering algorithms.
-
-%% [??Vector space model paper distance, dim red, matrix type.]
-
-%% To determine the best usage scenerio of high dimensional substitute
-%% vectors in terms of both \mto accuracies and computational
-%% performance.
-
-%% we compare well known distance metrics to distinguish best similarity
-%% measure between the vectors.  We also apply dimensionality reduction
-%% algorithms to reduce the computaional complexy.
-
-In the following section, we describe the theory and computation of
-substitute vectors using a statistical language model.
-Section~\ref{sec:dist} gives a detailed comparison of similarity
-metrics in high dimensional substitute vector space.
-Section~\ref{sec:dimreduce} analyzes application of possible
+In this section we determine the best usage of substitute vectors on
+unsupervised part-of-speech induction by comparing similarity metrics
+together with dimension reduction and clustering methods without using
+the word identities or any other features.  In the following section,
+we describe the theory and computation of substitute vectors using a
+statistical language model.  Section~\ref{sec:dist} gives a detailed
+comparison of similarity metrics in high dimensional substitute vector
+space.  Section~\ref{sec:dimreduce} analyzes application of possible
 dimensionality reduction algorithms to our problem.
 Section~\ref{sec:clustering} presents comparison of various clustering
 techniques and applies the findings of the previous sections to the
 PTB.
-
-In section~\ref{sec:code} we discuss the co-occurrence modeling as an
-alternative to VSM.
 
 \subsection{Computation of Substitute Vectors}
 \label{sec:subcomp}
@@ -108,10 +78,10 @@ experiments.
 Near the sentence boundaries the appropriate terms were truncated in
 Equation \ref{eq:lm3}.  Specifically, at the beginning of the sentence
 shorter n-gram contexts were used and at the end of the sentence terms
-beyond the end-of-sentence token were dropped.  Rest of this section
-details the choice of the data set, the vocabulary and the estimation
-of substitute probabilities.
+beyond the end-of-sentence token were dropped.  
 
+%% Rest of this section details the choice of the data set, the
+%% vocabulary and the estimation of substitute probabilities.
 %% For computational efficiency only the top 100 substitutes and their
 %% unnormalized probabilities were computed for each of the 1,173,766
 %% positions in the test set\footnote{The substitutes with unnormalized

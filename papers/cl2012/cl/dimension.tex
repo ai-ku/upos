@@ -30,12 +30,10 @@ k-nearest-neighbor supervised baseline as in the previous section)
 changes based on the number of dimensions for each dimensionality
 reduction algorithm.
 %
-For computational efficiency, we built 10 substitute vector sets for
-24k chunks of contiguous segments extracted from the Wall Street
-Journal Section of the Penn Treebak \cite{treebank3}.  We applied each
-algorithm to each chunk and obtained average accuracy and standard
-deviation for a given  number of dimensions.
-
+%% For computational efficiency, we extracted the first 24K tokens of
+%% Wall Street Journal Section of the Penn Treebak \cite{treebank3}.  We
+%% applied each algorithm to each chunk and obtained average accuracy and
+%% standard deviation for a given number of dimensions.
 For algorithms that require a distance matrix rather than raw input
 vectors we used the Jensen-Shannon divergence judged best by the
 experiments of the previous section.  For graph based methods we built

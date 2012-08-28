@@ -58,10 +58,10 @@ Jensen & .6801 \\
 Cosine & .6706 \\
 Maximum & .6663 \\
 Euclid & .6255 \\
-lg2-Maximum & .5361 \\
-lg2-Cosine & .4847 \\
-lg2-Euclid & .4038 \\
-lg2-Manhattan & .3729 \\
+log-Maximum & .5361 \\
+log-Cosine & .4847 \\
+log-Euclid & .4038 \\
+log-Manhattan & .3729 \\
 %% K=30 1M WSJ
 %% KL2 & ? \\
 %% Manhattan & .7354\\ %0.735381668919
@@ -109,13 +109,13 @@ unimportant and high probability substitutes determine syntactic
 category.  The surprisingly good result achieved by the simple Maximum
 metric (which identifies the dimension with the largest difference
 between two vectors) also support this conclusion.  The maximum score
-of .68 can be taken as a rough upper bound for an unsupervised
-learner using this space on the PTB24K corpus because .32\% of the
-instances are assigned to the wrong part of speech by the majority of
-their closest neighbors.  We will discuss alternative ways to push
-this upper bound higher by forcing one-tag-per-word or including word
-type information together with other features in the rest of this
-paper.
+of .68 can be taken as a rough upper bound for an unsupervised learner
+using this space on the PTB24K corpus because 32\% of the instances
+are assigned to the wrong part of speech by the majority of their
+closest neighbors.  We will discuss alternative ways to push this
+upper bound higher by forcing one-tag-per-word in
+Section~\ref{sec:clustering} and including word type information
+together with other features in Section~\ref{sec:code}.
 
 % moreover we are using probability vectors so its more natural to use
 % kl2

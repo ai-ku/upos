@@ -13,9 +13,9 @@ improves the \mto accuracy.  Thus it is the co-occurrence of a target
 word with a particular type of context that best predicts the
 syntactic category.  
 
-In this section we present theory and applications of substitute
-vectors as representations of word context within the Co-occurrence
-Data Embedding (CODE)\cite{globerson2007euclidean} framework.
+In this section we present applications of substitute vectors as
+representations of word context within the Co-occurrence Data
+Embedding (CODE)\cite{globerson2007euclidean} framework.
 Section~\ref{sec:codethr} reviews the unsupervised methods we used to
 model co-occurrence statistics: the CODE method and its spherical
 extension (S-CODE) introduced by \cite{maron2010sphere}.  The S-CODE
@@ -27,20 +27,22 @@ Section~\ref{sec:expset}.  Section~\ref{sec:rpart} presents an
 algorithm that partitions the high dimensional space of substitute
 vectors into small neighborhoods and uses the partition id as a
 discrete context representation.  Section~\ref{sec:wordsub} presents
-an even simpler model which pairs each word with a random substitute.
-Section~\ref{sec:bigram} replicates the bigram based S-CODE results
-from \cite{maron2010sphere} as a baseline.  When the left-word --
-right-word pairs used in the bigram model are replaced with word --
-partition-id or word -- substitute pairs we see significant gains in
-accuracy.  These results support our running hypothesis that
-paradigmatic features, i.e. potential substitutes of a word, are
-better determiners of syntactic category compared to left and right
-neighbors (syntagmatic features).  Section~\ref{sec:feat} explores
-morphological and orthographic features as additional sources of
-information and its results improve the state-of-the-art in the field
-of unsupervised syntactic category acquisition.
+an even simpler model which pairs each word with random substitutes
+sampled from the substitute vector.  Section~\ref{sec:bigram}
+replicates the bigram based S-CODE results from \cite{maron2010sphere}
+as a direct comparison of paradigmatic vs syntagmatic representations
+of word context.  When the left-word -- right-word pairs used in the
+bigram model are replaced with word -- partition-id or word --
+substitute pairs we see significant gains in accuracy.  These results
+support our running hypothesis that paradigmatic features,
+i.e. potential substitutes of a word, are better determiners of
+syntactic category compared to left and right neighbors (syntagmatic
+features).  Section~\ref{sec:feat} explores morphological and
+orthographic features as additional sources of information and its
+results improve the state-of-the-art in the field of unsupervised
+syntactic category acquisition.
 
-\subsection{CODE Theory}
+\subsection{The CODE Model}
 \label{sec:codethr}
 
 Let $X$ and $Y$ be two categorical variables with finite cardinalities
