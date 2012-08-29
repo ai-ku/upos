@@ -51,7 +51,7 @@ the number of clusters because it cannot reverse the accumulating
 mistakes.  At the low end (less than 16 clusters) k-medoids and
 spectral have similar performance.  However for the region of interest
 (between 16 to 2000 clusters) spectral clustering is clearly superior
-with \spectralResult \mto accuracy at 45 clusters.
+with \spectralResult\ \mto\ accuracy at 45 clusters.
 
 In accord with the findings and results on the PTB24K, we perform
 spectral clustering on the larger PTB.  We calculate the substitute
@@ -64,20 +64,20 @@ defined in Section~\ref{sec:expset}\footnote{The new language model in
   appropriate for large datasets like the PTB.}.  We use the Manhattan
 distance\footnote{KL2 is undefined on sparse vectors, therefore we use
   Manhattan which is the successor of KL2 on both the PTB24K and PTB.}
-to compute the vector similarities and achieve \spectralMtoPTB \mto
- (\collapseVmPTB \vm) accuracy which is comparable with the results
-on the PTB24.
+to compute the vector similarities and achieve \spectralMtoPTB\ \mto\
+ (\collapseVmPTB\ \vm) accuracy which is comparable with the results on
+the PTB24.
 
 We noted that the 45 cluster spectral clustering result assigned many
 more tags to each word than the gold standard.  To apply
 one-tag-per-word restriction we collapse the tag assignment of
 spectral clustering on the PTB by re-tagging each word with its most
 frequent tag in the original assignment (we break ties randomly).
-Collapsing improves the MTO (VM) accuracy by more than 10\% (3\%)
-from \spectralMtoPTB (\spectralVmPTB) to \collapseMtoPTB (\collapseVmPTB).
+Collapsing improves the \mto\ (\vm) accuracy by more than 10\% (3\%)
+from \spectralMtoPTB\ (\spectralVmPTB) to \collapseMtoPTB\ (\collapseVmPTB).
 
 Collapsing experiments shows that one-tag-per-word restriction
-improves the model performance in terms of the \mto accuracy by
+improves the model performance in terms of the \mto\ accuracy by
 explicitly incorporating the word type information into the model.  In
 the next section we suggest an alternative method that implicitly
 models the word types and their substitutes jointly and improves the

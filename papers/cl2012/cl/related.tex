@@ -140,7 +140,7 @@ al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
 define a type-based Bayesian multinomial mixture model in which each
 word instance is generated from the corresponding word type mixture
 component and word contexts are represented as features.  They achieve
-a .728 \mto score by extending their model with additional
+a .728\ \mto\ score by extending their model with additional
 morphological and alignment features gathered from parallel corpora.
 To our knowledge, nobody has yet tried to incorporate phonological or
 prosodic features in a computational model for syntactic category
@@ -152,7 +152,7 @@ Yatbaz et. al \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} explore
 the paradigmatic representation of word contexts by modeling the
 co-occurrence of words and their substitutes within the CODE framework.
 Their experiments on the PTB shows that paradigmatic representation
-improves the state-of-the-art \mto and V-measure (VM) accuracies of both
+improves the state-of-the-art \mto\ and V-measure (\vm) accuracies of both
 distributional models and models with additional word features.  This
 paper builds on that preliminary work by (1) exploring clustering of
 substitute vectors, (2) model improvements, and (3) additional
@@ -225,17 +225,17 @@ statistics.
 
 We report many-to-one and V-measure scores for our experiments as
 suggested in \cite{Christodoulopoulos:2010:TDU:1870658.1870714}.  The
-many-to-one (MTO) evaluation maps each cluster to its most frequent
+many-to-one (\mto) evaluation maps each cluster to its most frequent
 gold tag and reports the percentage of correctly tagged instances.
-The \mto score naturally gets higher with increasing number of
+The \mto\ score naturally gets higher with increasing number of
 clusters but it is an intuitive metric when comparing results with the
-same number of clusters.  The V-measure (VM) \cite{rosenberg2007v} is
+same number of clusters.  The V-measure (\vm) \cite{rosenberg2007v} is
 an information theoretic metric that reports the harmonic mean of
 homogeneity (each cluster should contain only instances of a single
 class) and completeness (all instances of a class should be members of
 the same cluster).  In Section~\ref{sec:discuss} we argue that
 homogeneity is perhaps more important in part-of-speech induction and
-suggest \mto with a fixed number of clusters as a more intuitive
+suggest \mto\ with a fixed number of clusters as a more intuitive
 metric.
 
 %% \paragraph{Many-to-one (MTO)} metric measures the cluster purity 
