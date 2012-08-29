@@ -174,12 +174,12 @@ algorithm can observe more than a few random substitutes per word.
 To get a direct comparison of the paradigmatic and syntagmatic context
 representations we feed the adjacent word pairs (bigrams) in the
 corpus into the S-CODE algorithm as $X, Y$ samples
-\cite{maron2010sphere} instead of using word -- partition-id or word
--- randon-substitute pairs as inputs to S-CODE.  At the end each word
-$w$ in the vocabulary ends up with two points on the sphere, a
-$\phi_w$ point representing the behavior of $w$ as the left word of a
-bigram and a $\psi_w$ point representing it as the right word.  The
-two vectors for $w$ are concatenated to create a 50-dimensional
+\cite{maron2010sphere} instead of pairing each word with a
+paradigmatic representation of its context.  At the end each word $w$
+in the vocabulary ends up with two points on the sphere, a $\phi_w$
+point representing the behavior of $w$ as the left word of a bigram
+and a $\psi_w$ point representing it as the right word.  The two
+vectors for $w$ are concatenated to create a 50-dimensional
 representation at the end.  These 50-dimensional vectors are clustered
 using the k-means algorithm.  Maron et al. \shortcite{maron2010sphere}
 report many-to-one scores of .6880 (.0016) for 45 clusters and .7150

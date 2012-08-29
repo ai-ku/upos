@@ -28,6 +28,7 @@ the training corpora.
 
 \subsection{Substitute Vectors and Features}
 \label{sec:multivecfeat}
+\input{datatable.tex} 
 To calculate the top 100 substitutes of each position, we train a
 4-gram language model with the corresponding training corpora of each
 language as described in Section~\ref{sec:expset}.
@@ -38,8 +39,6 @@ using the corresponding Wikipedia dump files\footnote{Latest Wikipedia
   dump files are freely available at \url{http://dumps.wikimedia.org/}
   and the text in the dump files can be extracted using WP2TXT
   (\url{http://wp2txt.rubyforge.org/})}
-
-\input{datatable.tex} 
 
 Serbian shares a common basis with Croatian and Bosnian therefore we
 trained 3 different language models using Wikipedia dump files of
@@ -58,8 +57,7 @@ Language model training files vary across the languages, in order to
 reduce the unknown word ratio of resource poor languages and to
 standardize the process we set the vocabulary threshold to 2 for all
 languages except English.  English has relatively low unknown word
-ratio therefore we set the threshold to 20 instead of 2. [??double
-  check for Multext-East English.??]
+ratio therefore we set the threshold to 20 instead of 2.
 
 %\subsection{Features}
 We use the same set of orthographic features described in
