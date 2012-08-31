@@ -53,35 +53,33 @@ spectral have similar performance.  However for the region of interest
 (between 16 to 2000 clusters) spectral clustering is clearly superior
 with \spectralResult\ \mto\ accuracy at 45 clusters.
 
-In accord with the findings and results on the PTB24K, we perform
-spectral clustering on the larger PTB.  We calculate the substitute
-vectors of each position in the PTB by using the language model
-defined in Section~\ref{sec:expset}\footnote{The new language model in
+To demonstrate that the clustering algorithm can scale, we performed
+spectral clustering on the full PTB.  We calculated the substitute
+vectors of each position in the PTB by using an efficient algorithm
+described in Section~\ref{sec:expset}\footnote{The algorithm in
   Section~\ref{sec:expset} only calculates the top 100 substitutes and
-  set the ones other than the top 100 to 0 which results in sparse
-  substitute vectors.  As a result the new model is computationally
-  more efficient than the one in this section and it is more
-  appropriate for large datasets like the PTB.}.  We use the Manhattan
+  their unnormalized probabilities which results in sparse substitute
+  vectors.  As a result the new model is computationally more
+  efficient than the one in this section and it is more appropriate
+  for large datasets like the PTB.}.  We used the Manhattan
 distance\footnote{KL2 is undefined on sparse vectors, therefore we use
-  Manhattan which is the successor of KL2 on both the PTB24K and PTB.}
-to compute the vector similarities and achieve \spectralMtoPTB\ \mto\
- (\collapseVmPTB\ \vm) accuracy which is comparable with the results on
-the PTB24.
+  Manhattan whose performance is close to KL2 on both the PTB24K and
+  PTB.}  to compute the vector similarities and achieve
+\spectralMtoPTB\ \mto\ accuracy.
 
 We noted that the 45 cluster spectral clustering result assigned many
-more tags to each word than the gold standard.  To apply
-one-tag-per-word restriction we collapse the tag assignment of
-spectral clustering on the PTB by re-tagging each word with its most
-frequent tag in the original assignment (we break ties randomly).
-Collapsing improves the \mto\ (\vm) accuracy by more than 10\% (3\%)
-from \spectralMtoPTB\ (\spectralVmPTB) to \collapseMtoPTB\ (\collapseVmPTB).
+more tags to each word than the gold standard.  To increase the
+sparsity of the solution we enforced a one-tag-per-word restriction by
+re-tagging each word with its most frequent tag in the original
+assignment (we break ties randomly).  One-tag-per-word re-tagging
+improves the \mto\ accuracy from \spectralMtoPTB\ to \collapseMtoPTB.
 
-Collapsing experiments shows that one-tag-per-word restriction
+The re-tagging experiment shows that the one-tag-per-word restriction
 improves the model performance in terms of the \mto\ accuracy by
 explicitly incorporating the word type information into the model.  In
-the next section we suggest an alternative method that implicitly
-models the word types and their substitutes jointly and improves the
-results on the PTB.
+the next section we suggest an alternative method that models the
+co-occurrence of word types and their contexts as represented by
+substitutes and improves the results on the PTB.
 
 %% Section~\ref{sec:dist} reveals that using the language model described
 %% in Section~\cite{sec:lm}.  Using the top 100 substitutes results in

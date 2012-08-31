@@ -2,19 +2,16 @@
 \label{sec:subthr}
 %%substitute vector applications
 
-In this section we determine the best usage of substitute vectors
-within the context clustering framework by comparing similarity
-metrics together with dimension reduction and clustering methods
-without using the word identities or any other features.  In the
-following section, we describe the theory and computation of
-substitute vectors using a statistical language model.
-Section~\ref{sec:dist} gives a detailed comparison of similarity
-metrics in high dimensional substitute vector space.
-Section~\ref{sec:dimreduce} analyzes application of possible
-dimensionality reduction algorithms to our problem.
-Section~\ref{sec:clustering} presents comparison of various clustering
-techniques and applies the findings of the previous sections to the
-PTB.
+In this section we explore the usage of substitute vectors within the
+context clustering framework by comparing similarity metrics,
+dimensionality reduction techniques and clustering methods.  The first
+subsection describes the computation of substitute vectors using a
+statistical language model.  Section~\ref{sec:dist} gives a detailed
+comparison of similarity metrics in the high dimensional substitute
+vector space.  Section~\ref{sec:dimreduce} analyzes the application of
+dimensionality reduction algorithms to substitute vectors.
+Section~\ref{sec:clustering} presents a comparison of clustering
+methods on the PTB.
 
 \subsection{Computation of Substitute Vectors}
 \label{sec:subcomp}
@@ -33,7 +30,7 @@ function of the context only and is indifferent to the target word.
 %% The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
 %% was used as the test corpus (1,173,766 tokens, 49,206 types).
 %% % what is the tag set
-%% The treebank uses 45 part-of-speech tags which is the set we used as
+%% The treebank uses 45 part of speech tags which is the set we used as
 %% the gold standard for comparison in our experiments.
 %% % what is the LM training data
 %% %Train => 5181717 126019973 690121813
@@ -52,7 +49,7 @@ function of the context only and is indifferent to the target word.
 %% The perplexity of the 4-gram language model on the test corpus is 96.
 
 % how are the substitutes computed
-It is best to use both left and right context when estimating the
+It is best to use both the left and the right context when estimating the
 probabilities for potential lexical substitutes.  For example, in
 \emph{``He lived in San Francisco suburbs.''}, the token \emph{San}
 would be difficult to guess from the left context but it is almost
@@ -112,8 +109,8 @@ were replaced by \textsc{unk} tags, which gave us a vocabulary size of
 12,672.
 % what is the test data
 The first 24,020 tokens of the Penn Treebank Wall Street Journal
-Section 00 (PTB24K) was used as the test corpus to be induced.  Corpus
-size kept small in order to efficiently compute full distance
+Section 00 (PTB24K) was used as the test corpus to be induced.  The corpus
+size was kept small in order to efficiently compute full distance
 matrices.  Substitution probabilities for 12,672 vocabulary words were
 computed at each of the 24,020 positions.
 % perplexity
@@ -121,5 +118,5 @@ The perplexity of the 4-gram language model on the test corpus was
 55.4 which is quite low due to using a small 
 vocabulary and in-domain data.
 % what is the tag set
-The treebank uses 45 part-of-speech tags which is the set we used as
+The treebank uses 45 part of speech tags which is the set we used as
 the gold standard for comparison in our experiments.

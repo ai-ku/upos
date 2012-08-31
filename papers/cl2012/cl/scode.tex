@@ -1,29 +1,27 @@
 \section{Co-occurrence Modeling}
 \label{sec:code}
 
-The general strategy we follow for unsupervised syntactic category
-acquisition is to combine features of the context with the identity
-and features of the target word.  Our preliminary experiments in
-Section~\ref{sec:clustering} indicated that using the context
-information alone (e.g. clustering substitute vectors) without the
-target word identity and features had limited success.  Moreover
-incorporating word identities (i.e. one-tag-per-word constraint) even
-in an ad-hoc manner by collapsing the clustering output significantly
-improves the \mto\ accuracy.  Thus it is the co-occurrence of a target
-word with a particular type of context that best predicts the
-syntactic category.  
+In this section we combine the paradigmatic representation of the word
+context with the identity and features of the target word for part of
+speech induction using a co-occurrence modeling framework.  Our
+preliminary experiments in Section~\ref{sec:clustering} indicated that
+using the context information alone (e.g. clustering substitute
+vectors) without the target word identity and features had limited
+success.  Moreover incorporating word identities (i.e. the
+one-tag-per-word constraint) even in an ad-hoc manner by re-tagging
+the clustering output significantly improves the \mto\ accuracy.  It
+seems that the co-occurrence of a target word with a particular type
+of context may be a better predictor of the syntactic category.
 
-In this section we present applications of substitute vectors as
-representations of word context within the Co-occurrence Data
-Embedding (CODE)\ \cite{globerson2007euclidean} framework.
-Section~\ref{sec:codethr} reviews the unsupervised methods we used to
-model co-occurrence statistics: the CODE method and its spherical
-extension (S-CODE) introduced by \cite{maron2010sphere}.  The S-CODE
-algorithm works with discrete inputs.  The substitute vectors as
-described in Section~\ref{sec:subthr} are high dimensional and
-continuous.  We experimented with two approaches to use substitute
-vectors in a discrete setting using the default parameters defined in
-Section~\ref{sec:expset}.  Section~\ref{sec:rpart} presents an
+Section~\ref{sec:codethr} reviews the unsupervised methods we use to
+model co-occurrence statistics: the Co-occurrence Data Embedding
+(CODE)\ \cite{globerson2007euclidean} method and its spherical
+extension (S-CODE) introduced by \cite{maron2010sphere}.
+Section~\ref{sec:expset} describes the general experimental settings.
+The S-CODE algorithm works with discrete inputs.  The substitute
+vectors as described in Section~\ref{sec:subthr} are high dimensional
+and continuous.  We experimented with two approaches to use substitute
+vectors in a discrete setting.  Section~\ref{sec:rpart} presents an
 algorithm that partitions the high dimensional space of substitute
 vectors into small neighborhoods and uses the partition id as a
 discrete context representation.  Section~\ref{sec:wordsub} presents
@@ -40,7 +38,7 @@ syntactic category compared to left and right neighbors (syntagmatic
 features).  Section~\ref{sec:feat} explores morphological and
 orthographic features as additional sources of information and its
 results improve the state-of-the-art in the field of unsupervised
-syntactic category acquisition.
+part of speech induction.
 
 \subsection{The CODE Model}
 \label{sec:codethr}

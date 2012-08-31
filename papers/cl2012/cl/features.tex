@@ -3,7 +3,7 @@
 
 Clark \shortcite{Clark:2003:CDM:1067807.1067817} demonstrates that
 using morphological and orthographic features significantly improves
-part-of-speech induction with an HMM based model.
+part of speech induction with an HMM based model.
 Section~\ref{sec:related} describes a number of other approaches that
 show similar improvements.  This section describes one way to
 integrate additional features to the random-substitute model.
@@ -45,8 +45,7 @@ null value except the word type ($X$) and the random-substitute
 ($Y^{(1)}$).  We do not perform any pull or push updates on embeddings
 during the gradient search if the corresponding $y^{(k)}$ is
 null\footnote{$X$ and $Y^{(1)}$ represents the word type and
-  random-substitute therefore they are always observed.  In our
-  implementation we represent the null feature values with ``XX''.}.
+  random-substitute therefore they are always observed.}.
 
 %% One problem with this setup is that unobserved features misguide the
 %% gradient search algorithm and lead to a suboptimal convergence point.
@@ -98,7 +97,7 @@ Using the training settings of the previous section, the addition of
 morphological and orthographic features increased the many-to-one
 score of the random-substitute model to \ftmto\ and V-measure to
 \ftvm.  Both these results improve the state-of-the-art in
-part-of-speech induction significantly as seen in
+part of speech induction significantly as seen in
 Table~\ref{tab:results}.
 
 \subsection{Summary}
@@ -125,4 +124,4 @@ achieved the state-of-the-art \mto\ and \vm\ accuracies on the PTB.
 
 In the next section we extend our experiments to include more
 languages to demonstrate the robustness of paradigmatic approach on
-the languages with different characteristics.
+languages with different characteristics.

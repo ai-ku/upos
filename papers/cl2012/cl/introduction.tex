@@ -3,7 +3,7 @@
 
 Grammar rules apply not to individual words (e.g. dog, eat) but to
 syntactic categories of words (e.g. noun, verb).  Thus constructing
-syntactic categories (also known as lexical or part-of-speech
+syntactic categories (also known as lexical or part of speech
 categories) is one of the fundamental problems in language
 acquisition.
 
@@ -13,10 +13,9 @@ Linguists identify syntactic categories based on semantic, syntactic,
 and morphological properties of words.  There is also evidence that
 children use prosodic and phonological features to bootstrap syntactic
 category acquisition \cite{ambridge2011child}.  However there is as
-yet no satisfactory computational model that can match human
-performance.  Thus identifying the best set of features and best
-learning algorithms for syntactic category acquisition is still an
-open problem.
+yet no satisfactory computational model that match human performance.
+Thus identifying the best set of features and best learning algorithms
+for syntactic category acquisition is still an open problem.
 
 \begin{figure}[t] 
   \centering
@@ -48,53 +47,52 @@ refer to the use of features based on substitute vectors as
 {\em paradigmatic representations of word context}.
 
 % example substitute vectors (both syntactic and semantic)
+
+The two examples below illustrate the advantage of paradigmatic
+representations in uncovering similarities where no overt similarity
+that can be captured by a syntagmatic representation exists.  The word
+``board'' from the first sentence and the word ``council'' from the
+second sentence have no common neighbors except the determiner
+``the''.  The paradigmatic representation captures the similarity of
+these words by suggesting the same top substitutes for both (the
+numbers in parentheses give substitute probabilities):
+\begin{quote}
+ (1) \noindent{\em ``Pierre Vinken, 61 years old, will join the {\bf board} as a nonexecutive director Nov.~29.''}\\
+% {\bf the:} its (.9011), the (.0981), a (.0006), $\ldots$\\
+ {\bf board:} board (.4288), company (.2584), firm (.2024), bank (.0731), $\ldots$
+\end{quote}
+
+\begin{quote}
+%  (2) \noindent {\em ``Blacks and Hispanics currently make up 38 \% of the city 's population and hold only 25 \% of the seats on the {\bf council} .''}\\
+  (2) \noindent {\em ``$\ldots$ and hold only 25 \% of the seats on the {\bf council} .''}\\
+ \noindent {\bf council:} board (.6591), company (.0795), firm (.0542), bank (.0154), $\ldots$
+\end{quote}
+
 The high probability substitutes reflect both semantic and syntactic
-properties of the context as seen in the example below (the numbers in
-parentheses give substitute probabilities):
-\begin{quote}
-  (1) \noindent {\em ``Blacks and Hispanics currently make up 38 \% of the city 's population and hold only 25 \% of the seats on the {\bf council} .''}\\
-            \noindent {\bf council:} board (.6591), company (.0795), firm (.0542), bank (.0154), $\ldots$
-\end{quote}
-\\\\
-\begin{quote}
- (2) \noindent{\em ``Pierre Vinken, 61 years old, will join {\bf the board} as a nonexecutive director Nov.~29.''}\\
- {\bf the:} its (.9011), the (.0981), a (.0006), $\ldots$\\
-            {\bf board:} board (.4288), company (.2584), firm (.2024), bank (.0731), $\ldots$
-\end{quote}
+properties of the context.  Top substitutes for ``board'' and
+``council'' are not only nouns, but specifically nouns compatible with
+the semantic context.  Top substitutes for the word ``the'' in the
+first example consist of words that can act as determiners: its
+(.9011), the (.0981), a (.0006), $\ldots$
 
-Top substitutes for ``council'' and ``board'' are not only nouns, but
-specifically nouns compatible with the semantic context.  Top
-substitutes for the word ``the'' in the second example consist of
-words that can act as determiners.
-
-The examples above demonstrate the advantage of the paradigmatic
-representation over the syntagmatic representation for the words occur
-in different contexts.  The word ``council'' from the first sentence
-and the word ``board'' from the second one have completely different
-contexts except the word ``the''.  The paradigmatic representation
-captures the similarity of these words by suggesting the same top
-substitutes for both words while the sytagmatic representation fails
-to capture similarity due to the distinction of contexts.
-
-Example~2 illustrates two concerns inherent in all distributional
-methods: (i) words that are generally substitutable like ``the'' and
-``its'' are placed in separate categories ({\sc dt} and {\sc prp\$})
-by the gold standard, (ii) words that are generally not substitutable
-like ``do'' and ``put'' are placed in the same category ({\sc vb}).
-Freudenthal et al. \shortcite{freudenthal2005resolution} point out
-that categories with unsubstitutable words fail the standard
-linguistic definition of a syntactic category and children do not seem
-to make errors of substituting such words in utterances
-(e.g. {\em``What do you want?''}  vs. {\em *``What put you want?''}).
-Whether gold standard part-of-speech tags or distributional categories
-are better suited to applications like parsing or machine translation
-can be best decided using extrinsic evaluation.  However in this study
-we follow previous work and evaluate our results by comparing them to
-gold standard part-of-speech tags and left the extrinsic evaluation as
-a future work.
+There are two concerns inherent in all distributional methods: (i)
+words that are generally substitutable like ``the'' and ``its'' are
+placed in separate categories ({\sc dt} and {\sc prp\$}) by the gold
+standard, (ii) words that are generally not substitutable like ``do''
+and ``put'' are placed in the same category ({\sc vb}).  Freudenthal
+et al. \shortcite{freudenthal2005resolution} point out that categories
+with unsubstitutable words fail the standard linguistic definition of
+a syntactic category and children do not seem to make errors of
+substituting such words in utterances (e.g. {\em``What do you want?''}
+vs. {\em *``What put you want?''}).  Whether gold standard part of
+speech tags or distributional categories are better suited to
+applications like parsing or machine translation can be best decided
+using extrinsic evaluation.  In this study we evaluate our results by
+comparing them to gold standard part of speech tags and leave the
+extrinsic evaluation of the induced tags for future work.
 
 Our preliminary experiments on a subsection of 1M word Penn Treebank
-Wall Street Journal corpus \cite{treebank3} (PTB) indicate that using
+Wall Street Journal corpus (PTB) \cite{treebank3} indicate that using
 context information alone without the identity or the features of the
 target word (e.g. using dimensionality reduction and clustering on
 substitute vectors) has limited success and modeling the co-occurrence
@@ -107,10 +105,10 @@ embeddings for word types are split into 45 clusters using k-means and
 the clusters are compared to the 45 gold tags in the PTB.  We obtain
 many-to-one accuracies up to .7680 using only distributional
 information (the identity of the word and a representation of its
-context) and .8023 using morphological and orthographic features of
-words improving the state-of-the-art in unsupervised part-of-speech
-tagging performance on the PTB.  We extend the experiments to 19
-corpora in 15 languages and achieve state-of-the-art many-to-one
+context) and .8023 by adding morphological and orthographic features
+of the words improving the state-of-the-art in unsupervised part of
+speech induction performance on the PTB.  We extend the experiments to
+19 corpora in 15 languages and achieve state-of-the-art many-to-one
 (\mto) scores on 17 of them.
 
 The next section gives a detailed review of related work.
@@ -118,15 +116,14 @@ Section~\ref{sec:subthr} describes the construction of the substitute
 vectors and applies various distance metrics, dimensionality reduction
 and clustering methods on substitute vectors of the PTB.
 Section~\ref{sec:code} describes co-occurrence data embedding
-(i.e. the learning algorithm used in our experiments), introduces
-possible usage scenarios of substitute vectors with spherical
-extenstion of CODE(S-CODE) and determines the best setup on the PTB.
-Section~\ref{sec:multilang} extends experiments to different languages
-and compares our results with the best published results.
-Section~\ref{sec:discuss} gives a brief error analysis and
-Section~\ref{sec:contrib} summarizes our contributions.  All the data
-and the code to replicate the results given in this paper is available
-from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
+(i.e. the learning algorithm used in our later experiments),
+introduces possible usage scenarios of substitute vectors and
+determines the best setup on the PTB.  Section~\ref{sec:multilang}
+extends experiments to 15 languages and compares our results with the
+best published results.  Section~\ref{sec:discuss} gives a brief error
+analysis and Section~\ref{sec:contrib} summarizes our contributions.
+All the data and the code to replicate the results given in this paper
+is available from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
 
 %% Computational models of syntactic category acquisition rely mainly on
 %% distributional analysis: Words that share the same distribution

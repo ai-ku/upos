@@ -2,11 +2,11 @@
 \label{sec:related}
 %%% This part looks fine
 There are several good reviews of algorithms for unsupervised
-part-of-speech induction
+part of speech induction
 \cite{Christodoulopoulos:2010:TDU:1870658.1870714,Gao:2008:CBE:1613715.1613761}
 and models of syntactic category acquisition \cite{ambridge2011child}.
 
-This work is to be distinguished from supervised part-of-speech
+This work is to be distinguished from supervised part of speech
 disambiguation systems, which use labeled training data
 \cite{Toutanova:2003:FPT:1073445.1073478}, unsupervised disambiguation
 systems, which use a dictionary of possible tags for each word
@@ -22,7 +22,7 @@ labeled prototypes, or dictionary constraints.
 %\paragraph{Distributional vs. Feature Based}
 % \subsection{Distributional vs. Feature Based}
 
-Models of unsupervised part-of-speech induction fall into two broad
+Models of unsupervised part of speech induction fall into two broad
 groups based on the information they utilize.  Distributional models
 only use word types and their context statistics.  Word-feature models
 incorporate additional morphological and orthographic features.
@@ -148,14 +148,15 @@ acquisition.
 
 \subsection{Paradigmatic representations}
 
-Yatbaz et. al \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} explore
+Yatbaz et al. \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} explore
 the paradigmatic representation of word contexts by modeling the
-co-occurrence of words and their substitutes within the CODE framework.
-Their experiments on the PTB shows that paradigmatic representation
-improves the state-of-the-art \mto\ and V-measure (\vm) accuracies of both
-distributional models and models with additional word features.  This
-paper builds on that preliminary work by (1) exploring clustering of
-substitute vectors, (2) model improvements, and (3) additional
+co-occurrence of words and their substitutes within the CODE
+framework.  Their experiments on the PTB shows that paradigmatic
+representation improves the state-of-the-art \mto\ and V-measure (\vm)
+accuracies of both distributional models and models with additional
+word features.  This paper builds on that preliminary work by (1)
+exploring clustering of substitute vectors, (2) improving the model
+for using additional features, and (3) experimenting with additional
 languages.
 
 Sahlgren \shortcite{sahlgren2006word} gives a detailed analysis of
@@ -167,17 +168,18 @@ types using counts of contexts (documents, sentences) they occur in.
 Our substitute vectors do not represent word types at all, but {\em
   contexts of word tokens} using probabilities of likely substitutes.
 Sahlgren finds that in word-spaces built by frequent neighbor vectors,
-more nearest neighbors share the same part-of-speech compared to
-word-spaces built by context vectors.  Similarly, Sch{\"u}tze and
-Pedersen \shortcite{SchutzePe93} define the words that frequently
-co-occur together as the {\em syntagmatic associates} and words that
-have similar left and right neighbors as the {\em paradigmatic
-  parallels}.  Turney and Pantel
+more nearest neighbors share the same part of speech compared to
+word-spaces built by context vectors.  
+
+Similarly, Sch{\"u}tze and Pedersen \shortcite{SchutzePe93} define the
+words that frequently co-occur together as the {\em syntagmatic
+  associates} and words that have similar left and right neighbors as
+the {\em paradigmatic parallels}.  Turney and Pantel
 \shortcite{DBLP:journals/jair/TurneyP10} give a broad overview of
 syntagmatic approaches and their applications within the Vector Space
 Modeling framework.  We find that representing the paradigmatic axis
 more directly using substitute vectors rather than frequent neighbors
-improves part-of-speech induction.
+improves part of speech induction.
 
 Our paradigmatic representation is also related to the second order
 co-occurrences used in \cite{Schutze:1995:DPT:976973.976994}.
@@ -189,8 +191,7 @@ his foundation by using a 4-gram language model rather than bigram
 statistics, using the whole 78,498 word vocabulary rather than the
 most frequent 250 words.  More importantly, rather than simply
 concatenating vectors that represent the target word with vectors that
-represent the context we use S-CODE to model their co-occurrence
-statistics.  
+represent the context we use a co-occurrence modeling algorithm.
 
 %% This paper defines a new representation that models the features from
 %% different domains as separate variables and relates them to each other
@@ -234,7 +235,7 @@ an information theoretic metric that reports the harmonic mean of
 homogeneity (each cluster should contain only instances of a single
 class) and completeness (all instances of a class should be members of
 the same cluster).  In Section~\ref{sec:discuss} we argue that
-homogeneity is perhaps more important in part-of-speech induction and
+homogeneity is perhaps more important in part of speech induction and
 suggest \mto\ with a fixed number of clusters as a more intuitive
 metric.
 
