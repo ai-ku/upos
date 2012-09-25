@@ -1,0 +1,7 @@
+*~
+*.o
+foo*
+fastsubs
+wordsub
+sentence-test
+subs
