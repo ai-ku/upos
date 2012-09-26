@@ -1,5 +1,6 @@
 bin/*
 run/*
+src/*
 TODO
 data
 run.*

@@ -280,8 +280,6 @@ bgplot-v.%.dat: bgrun.%.out
 # vm-mean vm-std
 # time-mean time-std (in seconds)
 
-
-
 .SECONDARY: 
 	%.lm.gz %.sub.gz %.knn.gz %.vocab.gz %.words.gz %.pos.gz \
            %.pairs.gz %.scode.gz %.kmeans.gz\
