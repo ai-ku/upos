@@ -10,13 +10,10 @@ export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 ## ### INPUT files:
 ## # WSJ training data from CSR-3.  wc=5187874 126170376 690948662
 ## NTEST=118424 # Number of test instances of English
-## LANGUAGE=trc
-## #Number of clusters
-## LANG_CL=30
 
 ### SRILM options:
 LM_NGRAM=4 # n-gram order
-LM_VOCAB=2 # words seen less than this in GETTRAIN will be replaced with <unk>
+#LM_VOCAB=2 # words seen less than this in GETTRAIN will be replaced with <unk>
 LM_MTYPE=i686-m64 # architecture for compiling srilm
 LM_DISCOUNT=-wbdiscount
 #GET_LANG=`perl -e '$$var=${TEST}; $$var=~m/_(\w\w)./;print $$1;'`
@@ -97,7 +94,7 @@ wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-WSC_OPTIONS=-r 1 -i 1 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+WSC_OPTIONS=-r 1 -i 100 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
@@ -132,7 +129,7 @@ KM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
 	zcat $*.kmeans.gz | wkmeans2eval.pl -t ${LANGUAGE}.tok.gz | perl -lane 'print "$$i++ $$F[0]"' > $@
 
 .SECONDEXPANSION:
-%.eval: ${LANGUAGE}.pos.gz %.kmeans.gz
+%.eval: ${LANGUAGE}.pos.gz %.kmeans.gz 
 	zcat $*.kmeans.gz | wkmeans2eval.pl -t ${LANGUAGE}.tok.gz | eval.pl -m -v -g ${LANGUAGE}.pos.gz
 
 ### BIGRAM options (needs scode -m): (Maron et.al. 2010)
@@ -140,10 +137,12 @@ KM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
 bigram.%.pairs.gz: %.tok.gz
 	zcat $< | perl -lne 'for $$w (split) {print "$$p\t$$w" if defined $$p; $$p=$$w;}' | gzip > $@
 
-bigram.%.scode.gz: bigram.%.pairs.gz
-	zcat $< | scode -m -i 50 ${SC_OPTIONS} | gzip > $@
+BSC_OPTIONS=-r 1 -i 100 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 
-bigram.%.kmeans.gz: %.scode.gz
+bigram.%.scode.gz: bigram.%.pairs.gz
+	zcat $< | scode -m -i 50 ${BSC_OPTIONS} | gzip > $@
+
+bigram.${LANGUAGE}.kmeans.gz: bigram.${LANGUAGE}.scode.gz
 	zcat $< | wkmeans ${KM_OPTIONS} | gzip > $@
 
 ### 3.1.4 WORDSUB+FEATURES options:
@@ -152,7 +151,7 @@ ws+f.%.pairs.gz: wordsub.%.pairs.gz %.feat.gz  # time=7s wc=4493184 8986368 5177
 	zcat $< | add-features-3.pl -f $*.feat.gz | gzip > $@
 
 ws+f.%.scode.gz: ws+f.%.pairs.gz # -i 10: time=2m22s wc=49206 1328562 12222826
-	zcat $< | scode ${SC_OPTIONS} | gzip > $@
+	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
 ### SCODE options:
 # -r RESTART: number of restarts (default 1)                    
@@ -165,10 +164,10 @@ ws+f.%.scode.gz: ws+f.%.pairs.gz # -i 10: time=2m22s wc=49206 1328562 12222826
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-SC_OPTIONS=-r 1 -i 2 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+#SC_OPTIONS=-r 1 -i 2 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 
-%.scode.gz: %.pairs.gz
-	zcat $< | scode ${SC_OPTIONS} | gzip > $@
+#%.scode.gz: %.pairs.gz
+#	zcat $< | scode ${SC_OPTIONS} | gzip > $@
 
 ## With options -r1 -i20 -d25:
 ## rpart.scode.gz: time=53s wc=49207 1328564 12213908
