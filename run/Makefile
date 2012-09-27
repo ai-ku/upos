@@ -164,10 +164,10 @@ ws+f.%.scode.gz: ws+f.%.pairs.gz # -i 10: time=2m22s wc=49206 1328562 12222826
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-#SC_OPTIONS=-r 1 -i 2 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+SC_OPTIONS=-r 1 -i 101 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 
-#%.scode.gz: %.pairs.gz
-#	zcat $< | scode ${SC_OPTIONS} | gzip > $@
+%.scode.gz: %.pairs.gz
+	zcat $< | scode ${SC_OPTIONS} | gzip > $@
 
 ## With options -r1 -i20 -d25:
 ## rpart.scode.gz: time=53s wc=49207 1328564 12213908
