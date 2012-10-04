@@ -11,11 +11,20 @@ export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 ## # WSJ training data from CSR-3.  wc=5187874 126170376 690948662
 ## NTEST=118424 # Number of test instances of English
 
+### Distances
+
+KNN=1000 # number of nearest neighbors to compute
+KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
+KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
+
+%.knn.gz: %.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
+	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
+
 ### SRILM options:
 LM_NGRAM=4 # n-gram order
 #LM_VOCAB=2 # words seen less than this in GETTRAIN will be replaced with <unk>
 LM_MTYPE=i686-m64 # architecture for compiling srilm
-LM_DISCOUNT=-wbdiscount
+LM_DISCOUNT=-kndiscount
 #GET_LANG=`perl -e '$$var=${TEST}; $$var=~m/_(\w\w)./;print $$1;'`
 
 %.vocab.gz: train.%.tok.gz ## LM_VOCAB=2: time=1m16s, wc=78498   78498  672284
@@ -37,16 +46,8 @@ FS_NSUB=100 # go until you have this many substitutes
 FS_PSUB=1.0 # or this much cumulative probability
 FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
 
-%.sub.gz: %.tok.gz %.lm.gz  ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
+%.sub.gz: %.tok.gz %.lm.gz %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
 	zcat $< | fastsubs ${FS_OPTIONS} $*.lm.gz | gzip > $@
-
-### KNN options:[??del or comment out]
-KNN=1000 # number of nearest neighbors to compute
-KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
-KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
-
-%.knn.gz: %.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
-	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
 
 ### 2.5.1 MORFESSOR:
 # creates the segmentation file with morfessor
