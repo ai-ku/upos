@@ -110,6 +110,7 @@ ITERS = i ii iii iiii iiiii iiiiii iiiiiii iiiiiiii iiiiiiiii iiiiiiiiii
 # the rest using different PPLTHRESH values.
 
 traindata.nowcounts.gz: $(GZIPPEDINPUTDATA)
+	echo Threshold ${PPLTHRESH} 
         # Don't use word counts to train the initial baseline segmentation
         # using Morfessor Baseline
 	$(ZCAT) $< | sed 's/^[0-9]*/1/' | sort -u | gzip > $@

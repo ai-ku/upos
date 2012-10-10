@@ -10,18 +10,20 @@ char * usage =  "\nUsage: dists [options] < input-stream\n"
 "\t\t2 for Manhattan\n"
 "\t\t3 for Maximum\n"
 "\t\t4 for Jensen\n"
-"\t\t5 for Zero-mean covariance\n"
+"\t\t5 for KL2 distance (KL(p,q) + KL(q,p))\n"
+"\t\t6 for Zero-mean covariance\n"
      "\t-u <upper-bound>\tCalculate 1000NN of the rows up to the <upper-bound>(default number of rows)\n"
      "\t-l <lower-bound>\tCalculate 1000NN of the rows starting from <lower-bound>(default 0)\n"
      "\t-p <arg>\t\tRun <arg> parallel jobs to calculate kNN(default 1)\n"
      "\t-k <arg>\t\tCalculate <arg>NN of the data, set 0 to get all distances.(default 1000)\n"
-     "\t-t Transpose input data"
-     "\t-v \t\t\tVerbose\n";
+     "\t-t Transpose input data\n"
+     "\t-g Take log2 of the input (works with Euclid, Cosine, Manhattan, Maximum)\n"
+     "\t-v Verbose\n";
 
 /* NOT TESTED FUNCTIONS
    
 */
-
+int LogScale;
 int Up;
 int Low;
 int ThreadCount;
@@ -38,7 +40,8 @@ enum DTYPE {
      manhattan = 2,
      maximum = 3,
      jensen = 4,
-     zerocov = 5
+     kl2 = 5,
+     zerocov = 6
 } Dtype;
 
 void init_dist(){
@@ -46,6 +49,7 @@ void init_dist(){
      Dist = NULL;
      DistFunc = dist_cosine_sparse;
      ThreadCount = 1;
+     LogScale = 0;
      Up = Low = -1;
      Ncol = 0;
      K = 1000;
@@ -133,6 +137,8 @@ void read_data_stdin(){
                          rr->lval = (float *) calloc(nnz, sizeof(float));
                     else if(Dtype == jensen)
                          rr->lval = (float *) calloc(nnz, sizeof(float));
+                    else if(Dtype == kl2)
+                         rr->lval = (float *) calloc(nnz, sizeof(float));
                     else rr->lval = NULL;
                     push(Data,rr);
                     continue;
@@ -143,12 +149,17 @@ void read_data_stdin(){
                }
                else if(iter %2 == 1){
                     rr->val[pos] = atof(word);
+                    if (LogScale) rr->val[pos] = rr->val[pos] == 0 ? LOG_ZERO : log2(rr->val[pos]);
                     if(Dtype == euclid)
                          rr->lval[pos] = rr->val[pos] * rr->val[pos];
-                    else if(Dtype == cosine)
+                    else if(Dtype == cosine){
+                         if(rr->val[pos] == LOG_ZERO) rr->val[pos] = 0;
                          rr->norm += rr->val[pos] * rr->val[pos];
+                    }
                     else if(Dtype == jensen)
-                         rr->lval[pos] = rr->val[pos] * log2(rr->val[pos]);
+                         rr->lval[pos] = rr->val[pos] == 0 ? 0 : rr->val[pos] * log2(rr->val[pos]);
+                    else if(Dtype == kl2)
+                         rr->lval[pos] = rr->val[pos] == 0 ? 0 : log2(rr->val[pos]);
                     else if(Dtype == zerocov)
                          rr->norm += rr->val[pos];
                     pos++;
@@ -160,7 +171,7 @@ void read_data_stdin(){
                foreach_int(i,0,nnz){
                     rr->val[i] /= rr->norm;
                }
-          }      
+          } 
      }
      Ncol += 1;
      if(Dtype == zerocov){
@@ -168,6 +179,7 @@ void read_data_stdin(){
                rr->norm /= Ncol;
           }
      }
+     msg("Reading is done\n");
 }
 
 void data_transpose(){
@@ -455,9 +467,9 @@ float dist_jensen_sparse(Row p, Row q){
      unsigned * pids = p->ids, *qids = q->ids;
      while(p_i < pnnz && q_i < qnnz){
           if (pids[p_i] == qids[q_i]){
-               float m = 0.5*(p->val[p_i] + q->val[q_i]);
-               float m2 = (p->val[p_i] + q->val[q_i]);
-               sum += p->lval[p_i] + q->lval[q_i] - (m2) *log2(m);
+               float m = (p->val[p_i] + q->val[q_i]);
+               float term = m == 0 ? 0 : m * log2(0.5*m);               
+               sum += p->lval[p_i] + q->lval[q_i] - term;
                p_i++;
                q_i++;            
           }
@@ -482,6 +494,23 @@ float dist_jensen_sparse(Row p, Row q){
      return sqrt(0.5 * sum);     
 }
 
+float dist_kl2_sparse(Row p, Row q){
+     double sum = 0; 
+     int p_i = 0, q_i = 0, pnnz = p->nnz, qnnz = q->nnz;
+     unsigned * pids = p->ids, *qids = q->ids;
+     if(pnnz != qnnz)  g_error("KL2 only accepts distributions from same domain [%d %d]\n", pnnz, qnnz);
+     while(p_i < pnnz && q_i < qnnz){
+          if (pids[p_i] != qids[q_i]){
+               g_error("KL2 only accepts distributions from same domain\n");
+          }
+          sum += p->val[p_i] * (p->lval[p_i] - q->lval[p_i]) + q->val[q_i] * (q->lval[q_i] - p->lval[p_i]);
+          p_i++;
+          q_i++;            
+     }
+     if(sum < 0) sum = 0;
+     return sum;
+}
+
 int main (int argc, char * argv[]){
      init_dist();
      clock_t start;
@@ -490,7 +519,7 @@ int main (int argc, char * argv[]){
      int opt;
      enum DTYPE opt_dist = 1;
      char *opt_file = NULL;
-     while ((opt = getopt(argc, argv, "d:f:u:l:p:k:htv")) != -1) {
+     while ((opt = getopt(argc, argv, "d:f:u:l:p:k:htvg")) != -1) {
           switch(opt) {
                case 'd':
                     opt_dist = atoi(optarg);
@@ -519,6 +548,11 @@ int main (int argc, char * argv[]){
                               msg("Sparse Jensen  distance");
                               Dtype = jensen;
                               DistFunc = dist_jensen_sparse;
+                              break;
+                         case kl2:
+                              msg("Sparse KL2 distance");
+                              Dtype = kl2;
+                              DistFunc = dist_kl2_sparse;
                               break;
                          case zerocov:
                               msg("Sparse zero-mean covariance");
@@ -553,11 +587,18 @@ int main (int argc, char * argv[]){
                case 'v':
                     VERBOSE = 1;
                     break;
+               case 'g':
+                    LogScale = 1;
+                    break;
                default:
                     g_warning("Invalid option:%s\n",optarg);
                     g_error("%s",usage);
           }
-     }
+     }     
+     if(LogScale && (opt_dist == 4 || opt_dist == 5 || opt_dist == 6))
+          g_error("Log Scale is only applicable to Euclid, Cosine, Manhattan and Maximum\n%s\n", usage);
+     else if (LogScale) msg("Log Scale is enabled\n");
+
      msg("File:%s Distance:%d Threads:%d Up:%d Low:%d KNN:%d", opt_file, opt_dist, ThreadCount, Up, Low, K);
      /* if (argc <= 1 || DistFunc == NULL){ */
      /*      g_error("%s",usage); */

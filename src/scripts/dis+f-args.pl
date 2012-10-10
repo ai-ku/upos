@@ -4,7 +4,7 @@ use strict;
 my $usage = q{Usage: wsrun-args.pl nclu lang ntok > args
 };
 
-my $seed = 1;
+my $seed = 10;
 my $ndim = 25;
 my $nsub = 12;
 my $Z = 0.166;
@@ -18,10 +18,10 @@ my $line = `zcat $test | wc -l`;
 
 chomp($line);
 for my $nsub qw(1 2 3 4 6 8 10 12 16 25 32 45 64 90 128) {
-    $seed = 1;
+    $seed = 10;
     for (my $j=0; $j < 10; $j++) {
 	print "$line\t$lang\t$K\t$featfile\t$seed\t$nsub\t$ndim\t$Z\t$phi\t$nu\n";
-	$seed++;
+	$seed+=5;
     }
 }
 

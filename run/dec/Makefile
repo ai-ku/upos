@@ -11,5 +11,8 @@ LANG_CL=54
 # Number of test instances of [LANGUAGE] We need to fix this!!
 NTEST=118424
 
+# Add feature for punctuation marks
+DIS_FEAT_OPT=
+
 #Experiments
 include ../Makefile

@@ -11,14 +11,46 @@ export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 ## # WSJ training data from CSR-3.  wc=5187874 126170376 690948662
 ## NTEST=118424 # Number of test instances of English
 
-### Distances
+### SMALLER DATA for distance, dimensionality reduction and clustering sections
+#Top MINI_SIZE words of the data are extracted
+MINI_SIZE=24000
+mini.tok.gz: ${LANGUAGE}.tok.gz
+	zcat $< | perl -lane 'if($$c < ${MINI_SIZE}) { print "$$_";} else {exit(0);}; $$c+=@F' | gzip > $@
+	zcat ${LANGUAGE}.gold.gz | perl -lane 'exit(0) if $$c > ${MINI_SIZE} && !$$_; $$c+=@F/2; print;' | gzip > mini.gold.gz
 
-KNN=1000 # number of nearest neighbors to compute
-KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
-KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
+### MINI-SRILM options:
 
-%.knn.gz: %.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
-	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
+mini.vocab.gz: train.${LANGUAGE}.tok.gz ## LM_VOCAB=2: time=1m16s, wc=78498   78498  672284
+	zcat $< | ngram-count -write-order 1 -text - -write - | \
+	perl -lane 'print $$F[0] if $$F[1] >= ${MINI_LM_VOCAB}' | gzip > $@
+
+mini.lm.gz: mini.vocab.gz train.${LANGUAGE}.tok.gz mini.tok.gz  ## LM_NGRAM=4, LM_VOCAB=20: time=6m10s, wc=27427373 118077512 847912087
+	zcat train.${LANGUAGE}.tok.gz | ngram-count -order ${LM_NGRAM} ${LM_DISCOUNT} -interpolate -unk -vocab $< -text - -lm $@
+
+#ALLSUB Computes the all subs of a given test file
+%.allsub.gz: %.tok.gz %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125
+	zcat $< | subs $*.lm.gz | gzip > $@
+
+#DISTANCE METRICS
+
+MINI_KNN=1000 # number of nearest neighbors to compute
+#KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
+MINI_KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
+
+
+mini.knnlog%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
+	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -g -d $* -p ${NCPU}| gzip > mini.knnlog$*.gz 2> knnlog$*.err 
+
+mini.knn%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
+	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -d $* -p ${NCPU}| gzip > mini.knn$*.gz 2> knn$*.err 
+
+## DISTANCE TABLE
+SUP_KNN=30
+mini.dist: mini.knn0.gz mini.knn1.gz mini.knn2.gz mini.knn3.gz mini.knn4.gz mini.tok.gz
+	for label in 0 1 2 3 4 5 log0 log1 log2 log3; do \
+		echo "log0_logeuclid log1_logcosine log2_logmanhattan log3_logmaximum 0_euclid 1_cosine 2_manhattan 3_maximum 4_jensen 5_kl2" | sed "s/.*$${label}_\([a-z]*\).*/\1/" >> $@; \
+		zcat mini.knn$$label.gz | knnsparse.py mini.gold.gz ${SUP_KNN} >> $@ ; \
+	done
 
 ### SRILM options:
 LM_NGRAM=4 # n-gram order
@@ -41,20 +73,21 @@ LM_DISCOUNT=-kndiscount
 %.unk: %.vocab.gz %.tok.gz # Calculates unknown word ratio
 	unknown.pl $< $*.tok.gz > $@
 
-### FASTSUBS options:
-FS_NSUB=100 # go until you have this many substitutes
-FS_PSUB=1.0 # or this much cumulative probability
-FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
+### Distances
 
-%.sub.gz: %.tok.gz %.lm.gz %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
-	zcat $< | fastsubs ${FS_OPTIONS} $*.lm.gz | gzip > $@
+KNN=1000 # number of nearest neighbors to compute
+KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
+KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
+
+%.knn.gz: %.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
+	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
 
 ### 2.5.1 MORFESSOR:
 # creates the segmentation file with morfessor
 # -m for path to morfessor
 # -p for ppl threshold
 MORFESSOR=../../src/morfessor
-PPLTHRESH=1
+PPLTHRESH=10
 %.seg.gz: %.words.gz # time=32m56s wc=50069  182579 1059157
 	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH}  | gzip > $@
 
@@ -213,7 +246,7 @@ DISO_NARGS=10 # ntest, nclu, lang, ntok, seed, nsub, ndim, z => scode-logl, wkme
 DISO_FEAT=test.$*.disofeat.gz
 
 dis+o.%.out: %.words.gz %.pos.gz %.sub.gz 
-	feature-table.pl -p -w $*.words.gz | gzip > ${DISO_FEAT}
+	feature-table.pl ${DIS_FEAT_OPT} -w $< | gzip > ${DISO_FEAT}
 	dis+f-args.pl ${LANG_CL} ${LANGUAGE} ${DISO_FEAT} | xargs -n ${DISO_NARGS} -P${NCPU} dis+f-run.pl > $@
 	rm ${DISO_FEAT}
 
@@ -228,7 +261,7 @@ dis+oplot-s.%.dat: dis+o.%.out
 	cat $< | plotdata.pl 1=x 2=25 3=0.166 6=y > $@
 
 dis+oplot-v.%.dat: dis+o.%.out
-	cat $< | plotdata.pl 1=x 2=25 3=0.166 9=y > $@
+	cat $< | plotdata.pl 1=x 3=25 3=0.166 9=y > $@
 
 
 ### 4.3.2 WORDSUB + ORTOGRAPHIC + SUFFIX FEATURES experiments(DIS+O+M):
@@ -236,7 +269,7 @@ DISOM_NARGS=10 # ntest, nclu, lang, ntok, seed, nsub, ndim, z => scode-logl, wkm
 DISOM_FEAT=test.$*.disomfeat.gz
 
 dis+om.%.out: %.seg.gz %.words.gz %.pos.gz %.sub.gz 
-	feature-table.pl -p -s $< -w $*.words.gz | gzip > ${DISOM_FEAT}
+	feature-table.pl ${DIS_FEAT_OPT} -s $< -w $*.words.gz | gzip > ${DISOM_FEAT}
 	dis+f-args.pl ${LANG_CL} ${LANGUAGE} ${DISOM_FEAT} | xargs -n ${DISOM_NARGS} -P${NCPU} dis+f-run.pl > $@
 	rm ${DISOM_FEAT}
 
@@ -280,6 +313,8 @@ bgplot-v.%.dat: bgrun.%.out
 # comp-mean comp-std
 # vm-mean vm-std
 # time-mean time-std (in seconds)
+
+plotall: displot-s.${LANGUAGE}.dat displot-v.${LANGUAGE}.dat dis+oplot-s.${LANGUAGE}.dat dis+oplot-v.${LANGUAGE}.dat dis+omplot-s.${LANGUAGE}.dat dis+omplot-v.${LANGUAGE}.dat
 
 .SECONDARY: 
 	%.lm.gz %.sub.gz %.knn.gz %.vocab.gz %.words.gz %.pos.gz \

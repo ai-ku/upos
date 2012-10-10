@@ -17,6 +17,9 @@ while (<>) {
   $_ =~ s/\\\*/|AST|/g;
   $_ =~ s/\\\//|SLH|/g;
   $_ =~ s/\+/|PLS|/g;
+  #un-escaped characters are also catched.
+  $_ =~ s/\*/|OAST|/g;
+  $_ =~ s/\//|OSLH|/g;
   $words{$_}++;
 }
 
