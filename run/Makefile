@@ -35,8 +35,7 @@ mini.lm.gz: mini.vocab.gz train.${LANGUAGE}.tok.gz mini.tok.gz  ## LM_NGRAM=4, L
 
 MINI_KNN=1000 # number of nearest neighbors to compute
 #KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
-MINI_KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
-
+#MINI_KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
 
 mini.knnlog%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
 	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -g -d $* -p ${NCPU}| gzip > mini.knnlog$*.gz 2> knnlog$*.err 
@@ -51,6 +50,46 @@ mini.dist: mini.knn0.gz mini.knn1.gz mini.knn2.gz mini.knn3.gz mini.knn4.gz mini
 		echo "log0_logeuclid log1_logcosine log2_logmanhattan log3_logmaximum 0_euclid 1_cosine 2_manhattan 3_maximum 4_jensen 5_kl2" | sed "s/.*$${label}_\([a-z]*\).*/\1/" >> $@; \
 		zcat mini.knn$$label.gz | knnsparse.py mini.gold.gz ${SUP_KNN} >> $@ ; \
 	done
+
+## DIM REDUCTION
+# Spectral clustering runs on KL2 distance file with 1000NN
+DIM_KNN_OPTIONS=-k ${KNN} -v -d 1 -p ${NCPU}
+
+MATLAB_PATH=/mnt/opt/matlab/linux64/R2011a/bin/matlab -nojvm -nodisplay
+mini.spectral: mini.knn5.gz
+	${MATLAB_PATH} < ../../bin/runsc.m > mini.spectral 2> mini.spectral.err
+	gzip mini.spectral.c*
+
+mini.pca: mini.allsub.gz
+	${MATLAB_PATH} < ../../bin/runpca.m > mini.pca 2> mini.pca.err
+	gzip mini.pca.c*
+
+mini.lle: mini.knn5.gz
+	${MATLAB_PATH} < ../../bin/runlle.m > mini.lle 2> mini.lle.err
+	gzip mini.lle.c*
+
+mini.iso: mini.knn5.gz
+	${MATLAB_PATH} < ../../bin/runiso.m > mini.iso 2> mini.iso.err
+
+mini.spectral.c%.knn.gz: mini.spectral.c%.gz
+	zcat $< | perl -ane 'print scalar(@F); print  " ".$$c++." $$_" foreach @F; print "\n";$$c = 0;' | dists ${DIM_KNN_OPTIONS}  2> mini.spectral.c$*.knn.err | gzip > $@
+
+mini.pca.c%.knn.gz: mini.pca.c%.gz
+	zcat $< | perl -ane 'print scalar(@F); print  " ".$$c++." $$_" foreach @F; print "\n";$$c = 0;' | dists ${DIM_KNN_OPTIONS}  2> mini.pca.c$*.knn.err | gzip > $@
+
+mini.lle.c%.knn.gz: mini.lle.c%.gz
+	zcat $< | perl -ane 'print scalar(@F); print  " ".$$c++." $$_" foreach @F; print "\n";$$c = 0;' | dists ${DIM_KNN_OPTIONS}  2> mini.lle.c$*.knn.err | gzip > $@
+
+mini.iso.c%.knn.gz: mini.iso.c%.gz
+	zcat $< | perl -ane 'print scalar(@F); print  " ".$$c++." $$_" foreach @F; print "\n";$$c = 0;' | dists ${DIM_KNN_OPTIONS}  2> mini.iso.c$*.knn.err | gzip > $@
+
+%.dist: mini.%.c2.knn.gz mini.%.c4.knn.gz mini.%.c8.knn.gz mini.%.c16.knn.gz mini.%.c32.knn.gz mini.%.c64.knn.gz mini.%.c128.knn.gz mini.%.c256.knn.gz mini.%.c512.knn.gz mini.%.c1024.knn.gz mini.%.c2048.knn.gz
+	for label in 2 4 8 16 32 64 128 256 512 1024 2048; do \
+		echo "$*_c$$label" >> $@; \
+		zcat mini.$*.c$$label.knn.gz | knnsparse.py mini.gold.gz ${SUP_KNN} >> $@ ; \
+	done
+
+
 
 ### SRILM options:
 LM_NGRAM=4 # n-gram order
