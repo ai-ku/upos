@@ -6,7 +6,7 @@ my $usage = qq{eval.pl [-m -v] -g <gold> < input
 Calculates many-to-one and v-measure evaluations.
 -m prints many-to-one (default)
 -v prints v-measure (homogeneity, completeness, v-measure)
--c prints Mintz(2002) pairwise score
+-c prints Mintz(2002) pairwise score (accuracy(hit/(hit+false)), completeness(hit / (hit + miss)))
 -g file with gold answers
 };
 
@@ -16,12 +16,14 @@ getopts('mvcg:');
 die $usage unless $opt_g;
 $opt_g = "zcat $opt_g |" if $opt_g =~ /\.gz$/;
 
-my (%cnt);
+my (%cnt, %rcnt);
 open(GOLD, $opt_g) or die $!;
 while(<>) {
     my $g = <GOLD>;
     $cnt{$_}{$g}++;
+    $rcnt{$g}{$_}++;
 }
+
 close(GOLD);
 
 my @ans;
@@ -56,8 +58,20 @@ sub chi {
 	}
 	$total += $cc * 0.5 * ($cc - 1);
     }
-    return $hit / $total;
+    my $miss = 0;
+    my @k = keys %rcnt;
+    for(my $i = 0 ; $i < @k; $i++){
+	my @a = keys(%{$rcnt{$k[$i]}});
+	for(my $j = 0; $j < @a; $j++){
+	    for(my $l = $j + 1 ; $l < @a; $l++){
+		$miss += $rcnt{$k[$i]}{$a[$j]} * $rcnt{$k[$i]}{$a[$l]};
+	    }
+	}
+    }
+    return ($hit / $total, $hit * 1.0 / ($hit + $miss));
 }
+
+
 sub m2o {
     my $total = 0;
     my $correct = 0;
