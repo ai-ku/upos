@@ -1,16 +1,18 @@
 #!/usr/bin/perl -w
 use strict;
+use Data::Dumper;
 
 my $usage = qq{eval.pl [-m -v] -g <gold> < input
 Calculates many-to-one and v-measure evaluations.
 -m prints many-to-one (default)
 -v prints v-measure (homogeneity, completeness, v-measure)
+-c prints Mintz(2002) pairwise score
 -g file with gold answers
 };
 
 use Getopt::Std;
-our($opt_m, $opt_v, $opt_g);
-getopts('mvg:');
+our($opt_m, $opt_v, $opt_c, $opt_g);
+getopts('mvcg:');
 die $usage unless $opt_g;
 $opt_g = "zcat $opt_g |" if $opt_g =~ /\.gz$/;
 
@@ -23,17 +25,39 @@ while(<>) {
 close(GOLD);
 
 my @ans;
-if ($opt_m and $opt_v) {
+if ($opt_m and $opt_v and $opt_c) {
+    push @ans, m2o();
+    push @ans, vm();
+    push @ans, chi();
+} elsif ($opt_m and $opt_v ) {
     push @ans, m2o();
     push @ans, vm();
 } elsif ($opt_v) {
     push @ans, vm();
-} else {
+} elsif ($opt_c){
+    push @ans, chi();
+} else{
     push @ans, m2o();
-}
+} 
+
 $_ = sprintf("%f", $_) for @ans;
 print STDERR join("\t", @ans)."\n";
 
+sub chi {
+    my $total = 0;
+    my $hit = 0;
+    
+    for my $a (keys %cnt){
+	my $cc = 0;
+	for my $g (keys %{$cnt{$a}}){
+	    my $cn = $cnt{$a}{$g};
+	    $cc += $cn;
+	    $hit += $cn * 0.5 * ($cn - 1);	    
+	}
+	$total += $cc * 0.5 * ($cc - 1);
+    }
+    return $hit / $total;
+}
 sub m2o {
     my $total = 0;
     my $correct = 0;

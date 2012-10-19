@@ -32,6 +32,8 @@ runiso.m: check
 	test -e $@ || ln -s ../src/iso/runiso.m
 	test -e IsomapII.m || ln -s ../src/iso/IsomapII.m
 	test -e dijkstra.mexa64 || ln -s ../src/iso/dijkstra.mexa64
+	test -e dfun.m || ln -s ../src/iso/dfun.m
+	test -e L2_distance.m || ln -s ../src/iso/L2_distance.m
 
 readsparse.mexa64: check
 	cd ../src/readsparse/; make

@@ -70,6 +70,7 @@ mini.lle: mini.knn5.gz
 
 mini.iso: mini.knn5.gz
 	${MATLAB_PATH} < ../../bin/runiso.m > mini.iso 2> mini.iso.err
+	gzip mini.iso.c*
 
 mini.spectral.c%.knn.gz: mini.spectral.c%.gz
 	zcat $< | perl -ane 'print scalar(@F); print  " ".$$c++." $$_" foreach @F; print "\n";$$c = 0;' | dists ${DIM_KNN_OPTIONS}  2> mini.spectral.c$*.knn.err | gzip > $@
