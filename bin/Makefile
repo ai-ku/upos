@@ -1,11 +1,11 @@
-all: eval.pl fastsubs dists scode wkmeans wordsub readsparse.mexa64 runsc.m runpca.m runlle.m
+all: eval.pl fastsubs dists scode wkmeans wordsub readsparse.mexa64 runsc.m runpca.m runlle.m runiso.m
 
 eval.pl: check
 	test -e $@ || ln -s ../src/scripts/* .
 
 fastsubs: check
 	cd ../src/fastsubs; make
-	test -e $@ || ln -s ../src/fastsubs/fastsub
+	test -e $@ || ln -s ../src/fastsubs/fastsubs
 	test -e subs || ln -s ../src/fastsubs/subs
 	test -e wordsub || ln -s ../src/fastsubs/wordsub .
 
@@ -26,6 +26,12 @@ runlle.m: check
 	cd ../src/lle;
 	test -e $@ || ln -s ../src/lle/runlle.m
 	test -e lle.m || ln -s ../src/lle/lle.m
+
+runiso.m: check
+	cd ../src/iso; make
+	test -e $@ || ln -s ../src/iso/runiso.m
+	test -e IsomapII.m || ln -s ../src/iso/IsomapII.m
+	test -e dijkstra.mexa64 || ln -s ../src/iso/dijkstra.mexa64
 
 readsparse.mexa64: check
 	cd ../src/readsparse/; make

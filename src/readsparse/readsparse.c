@@ -160,7 +160,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]){
           mxFree(data[j]);
      }
      mxFree(data);
-     mxFree(buflen);
+     mxFree(buf);
      jcs[m] = k;
      mexPrintf("allnnz:%d\n",(int)k);
      return;
