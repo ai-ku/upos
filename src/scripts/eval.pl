@@ -48,7 +48,7 @@ print STDERR join("\t", @ans)."\n";
 sub chi {
     my $total = 0;
     my $hit = 0;
-    
+    my (%cnt, %rcnt);
     for my $a (keys %cnt){
 	my $cc = 0;
 	for my $g (keys %{$cnt{$a}}){

@@ -33,7 +33,7 @@ mini.lm.gz: mini.vocab.gz train.${LANGUAGE}.tok.gz mini.tok.gz  ## LM_NGRAM=4, L
 
 #DISTANCE METRICS
 
-MINI_KNN=1000 # number of nearest neighbors to compute
+MINI_KNN=30 # number of nearest neighbors to compute
 #KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
 #MINI_KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
 
@@ -44,7 +44,7 @@ mini.knn%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=
 	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -d $* -p ${NCPU}| gzip > mini.knn$*.gz 2> knn$*.err 
 
 ## DISTANCE TABLE
-SUP_KNN=30
+SUP_KNN=1000
 mini.dist: mini.knn0.gz mini.knn1.gz mini.knn2.gz mini.knn3.gz mini.knn4.gz mini.tok.gz
 	for label in 0 1 2 3 4 5 log0 log1 log2 log3; do \
 		echo "log0_logeuclid log1_logcosine log2_logmanhattan log3_logmaximum 0_euclid 1_cosine 2_manhattan 3_maximum 4_jensen 5_kl2" | sed "s/.*$${label}_\([a-z]*\).*/\1/" >> $@; \
@@ -89,6 +89,17 @@ mini.iso.c%.knn.gz: mini.iso.c%.gz
 		echo "$*_c$$label" >> $@; \
 		zcat mini.$*.c$$label.knn.gz | knnsparse.py mini.gold.gz ${SUP_KNN} >> $@ ; \
 	done
+
+## CLUSTERING
+
+## Spectral clustering
+# A distance matrix is available. 
+# Top 500 entries of each nearest neighbor is used since it is the
+# best working threshold according to my previous experience
+
+%.spectral: %.knn1.gz
+	${MATLAB_PATH} < ../../bin/runsc1M.m > $*.spectral 2> $*.spectral.err
+	gzip $*.spectral.c*
 
 
 
