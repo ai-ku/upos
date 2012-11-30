@@ -8,10 +8,11 @@ const char *usage = "Usage: scode [OPTIONS] < file\n"
      "-p PHI0: learning rate parameter (default 50.0)\n"
      "-u NU0: learning rate parameter (default 0.2)\n"
      "-s SEED: random seed (default 0)\n"
-     "-c: calculate real Z (default false)\n"
-     "-m: merge vectors at output (default false)\n"
-     "-w: The first line of the input is weights(default false)\n"
-     "-v: verbose messages (default false)\n";
+     "-c calculate real Z (default false)\n"
+     "-m merge vectors at output (default false)\n"
+     "-w The first line of the input is weights(default false)\n"
+     "-e experimental features (default false)\n"
+     "-v verbose messages (default false)\n";
 
 int NTOK = -1;
 int RESTART = 1;
@@ -26,6 +27,7 @@ int VMERGE = 0;
 int VERBOSE = 0;
 int NTUPLE = 0;
 int WEIGHT = 0;
+int EXPER = 0;
 
 #include <stdio.h>
 #include <unistd.h>
@@ -70,7 +72,7 @@ double calcZ();
 
 int main(int argc, char **argv) {
      int opt;
-     while((opt = getopt(argc, argv, "n:r:i:d:z:u:p:s:cmwv")) != -1) {
+     while((opt = getopt(argc, argv, "n:r:i:d:z:u:p:s:cmwve")) != -1) {
           switch(opt) {
                //               case 'n': NTOK = atoi(optarg); break;
                case 'n': break;
@@ -85,7 +87,8 @@ int main(int argc, char **argv) {
                case 'm': VMERGE = 1; break;
                case 'w': WEIGHT = 1; break;
                case 'v': VERBOSE = 1; break;
-               default: g_error(usage);
+               case 'e': EXPER = 1; break;
+               default: g_error("%s",usage);
           }
      }
 
@@ -146,7 +149,20 @@ int main(int argc, char **argv) {
                }
                putchar('\n');
           }
-     } else {			/* regular output */
+     } else if(EXPER){
+          fprintf(stderr,"experimental features\n");
+          for (int di = 0; di < NTUPLE; di++) {
+               GQuark *tar = &g_array_index(data, GQuark, di * NTOK);
+               for (guint t = 0; t < NTOK; t++) {
+                    int q = tar[t];
+                    g_assert(best_vec[t][q] != NULL);
+                    putchar('\t');
+                    svec_print(best_vec[t][q]);
+               }
+               putchar('\n');
+          }
+     }
+     else {			/* regular output */
           //NTOK is set to 1
           for (guint t = 0; t < 1; t++) {
                for (guint q = 1; q <= qmax; q++) {

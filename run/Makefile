@@ -153,13 +153,27 @@ PPLTHRESH=10
 
 ### RPART options:[??del or comment out]
 RPART=65536 # Number of random partitions
+RPART_DIST_FILE=knn2
 RP_OPTIONS=-n ${NTEST} -p ${RPART} -s ${SEED}
 
 %.words.gz: %.gold.gz  ## time=1s, wc=1173766 1173766 6412448
 	zcat $< | perl -lane 'print $$F[0] if /\S/' | gzip > $@
 
-rpart.%.pairs.gz: %.knn.gz %.words.gz ## RPART=65536: time=2m55s wc=1173766 2347532 14694702
+rpart.%.pairs.gz: %.${RPART_DIST_FILE}.gz %.words.gz ## RPART=65536: time=2m55s wc=1173766 2347532 14694702
 	zcat $< | rpart.pl ${RP_OPTIONS} | join.pl $*.words.gz - | gzip > $@
+
+RPC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+rpart.%.scode.gz: rpart.%.pairs.gz 
+	zcat $< | scode ${RPC_OPTIONS} | gzip > $@
+
+### EXPERIMENTAL-KMEANS ###
+REKM_OPTIONS=-k ${LANG_CL} -r 1 -s ${SEED} -v
+
+rparte.%.kmeans.gz: rpart.%.scode.gz
+	zcat $< | wkmeans ${REKM_OPTIONS} | gzip > $@
+
+rparte.%.eval: rparte.%.kmeans.gz
+	zcat $< | eval.pl -m -v -g $*.pos.gz
 
 ### WORDSUB options:
 WORDSUB=1 # Number of random substitutes per word
