@@ -7,6 +7,7 @@ SEED=1 # Random seed
 NCPU=10 # Number of threads/processes to use for parallel computations
 SRILM_PATH=/opt/srilm/bin/i686-m64
 export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
+LM_DISCOUNT=-kndiscount
 ## ### INPUT files:
 ## # WSJ training data from CSR-3.  wc=5187874 126170376 690948662
 ## NTEST=118424 # Number of test instances of English
@@ -133,6 +134,14 @@ KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
 %.knn.gz: %.sub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
 	zcat $< | preinput.py | dists ${KNN_OPTIONS} | gzip > $@
 
+### FASTSUBS options:
+FS_NSUB=100 # go until you have this many substitutes
+FS_PSUB=1.0 # or this much cumulative probability
+FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
+
+%.sub.gz: %.tok.gz %.lm.gz %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
+	zcat $< | fastsubs ${FS_OPTIONS} $*.lm.gz | gzip > $@
+
 ### 2.5.1 MORFESSOR:
 # creates the segmentation file with morfessor
 # -m for path to morfessor
@@ -163,6 +172,7 @@ rpart.%.pairs.gz: %.${RPART_DIST_FILE}.gz %.words.gz ## RPART=65536: time=2m55s 
 	zcat $< | rpart.pl ${RP_OPTIONS} | join.pl $*.words.gz - | gzip > $@
 
 RPC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+
 rpart.%.scode.gz: rpart.%.pairs.gz 
 	zcat $< | scode ${RPC_OPTIONS} | gzip > $@
 
@@ -193,9 +203,16 @@ wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-WSC_OPTIONS=-r 1 -i 100 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+WSC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
+
+wordsube.%.kmeans.gz: wordsub.%.scode.gz
+	zcat $< | wkmeans ${REKM_OPTIONS} | gzip > $@
+
+wordsube.%.eval: wordsube.%.kmeans.gz
+	zcat $< | eval.pl -m -v -g $*.pos.gz
+
 
 ### KMEANS options:
 # -k number of clusters (default 2)

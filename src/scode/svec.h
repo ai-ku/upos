@@ -17,6 +17,7 @@ typedef gsl_vector_float *svec;
 #define svec_add gsl_vector_float_add
 
 void svec_print(svec x);
+void svec_mul_print(svec x, double k);
 void svec_randomize(svec x);
 void svec_normalize(svec x);
 void svec_zero(svec x);
