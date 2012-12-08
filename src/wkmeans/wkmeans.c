@@ -5,7 +5,7 @@
  *  S. (2007). K-means++: the advantages of careful seeding.
  *  Proceedings of the eighteenth annual ACM-SIAM symposium on Discrete
  *  algorithms. pp. 1027-1035. 
- *  Last modified by Deniz Yuret and Enis Sert, 25-Mar-2012.
+ *  Last modified by Deniz Yuret, Enis Sert and Mehmet Ali Yatbaz, 25-Mar-2012.
  */
 
 const char *rcsid = "$Id$";
@@ -34,7 +34,7 @@ unsigned int saved_two=0, saved_three_one=0, saved_three_two=0, saved_three_thre
 enum opt_criteria {I=0, IO=1};
 int VERBOSE = 0;
 enum opt_criteria BEST_SELECT = I;
-
+int PRINT_CENTERS = 0;
 int main(int argc, char **argv) {
   int nof_clusters = 2;
   int nof_restarts = 0;
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
   int labels = 0;
   unsigned int seed = 0;
   int opt;
-  while((opt = getopt(argc, argv, "k:r:i:s:b:lwvh")) != -1) {
+  while((opt = getopt(argc, argv, "k:r:i:s:b:lwvch")) != -1) {
     switch(opt) {
     case 'k': nof_clusters = atoi(optarg); break;
     case 'r': nof_restarts = atoi(optarg); break;
@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
     case 'b': BEST_SELECT = strcmp("io", optarg) == 0 ? IO : I; break;
     case 'l': labels = 1; break;
     case 'w': weights = 1; break;
+    case 'c': PRINT_CENTERS = 1; break;
     case 'v': VERBOSE = 1; break;
     default: fputs(usage, stderr); exit(0);
     }
@@ -124,15 +125,24 @@ int main(int argc, char **argv) {
   assignment = calloc(nof_points, sizeof(unsigned int));
   CX = calloc(dims * nof_clusters, sizeof(PREC));
   PREC rms = kmeans(CX, X, W, assignment, dims, nof_points, nof_clusters, maxiter, nof_restarts);
-
-  for (int i = 0; i < nof_points; i++) {
-    if (labels) {
-      printf("%s\t", L[i]);
-      free(L[i]);
-    }
-    printf("%d\n", assignment[i]);
+  if (PRINT_CENTERS){
+       fprintf(stderr, "Printing %d cluster centers.\n",nof_clusters);
+       for (int i = 0; i < nof_clusters; i++) {
+            for (int j = 0; j < dims; j++) {
+                 printf("%f\t", CX[i * dims + j]);
+            }
+            printf("\n");
+       }
   }
-
+  else{
+       for (int i = 0; i < nof_points; i++) {
+            if (labels) {
+                 printf("%s\t", L[i]);
+                 free(L[i]);
+            }
+            printf("%d\n", assignment[i]);
+       }
+  }
   fprintf(stderr, "%f\n", rms);
 
   free(X);

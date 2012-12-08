@@ -177,6 +177,9 @@ rpart.%.scode.gz: rpart.%.pairs.gz
 	zcat $< | scode ${RPC_OPTIONS} | gzip > $@
 
 ### EXPERIMENTAL-KMEANS ###
+rparte.%.scode.gz: rpart.%.pairs.gz 
+	zcat $< | scode ${RPC_OPTIONS} -e 1 | gzip > $@
+
 REKM_OPTIONS=-k ${LANG_CL} -r 1 -s ${SEED} -v
 
 rparte.%.kmeans.gz: rpart.%.scode.gz

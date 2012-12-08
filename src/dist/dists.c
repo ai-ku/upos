@@ -1,6 +1,7 @@
 #include "dists.h"
 char * version = "v0.9";
 char * usage =  "\nUsage: dists [options] < input-stream\n"
+     "input-stream format sorted according to column ids (c_i)"
      "input-stream:<n:number of elements in the row> <c_i:column id> <c_i_v:column val> ... <c_n:column id> <c_n_v:column val>\n"
      "Options:\n"
      "\t-h \t\t\tDisplay this information\n"

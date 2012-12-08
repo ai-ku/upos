@@ -164,6 +164,7 @@ int main(int argc, char **argv) {
                          svec_mul_print(best_vec[t][q], EXPER);
                     }
                     else{
+                         putchar('\t');
                          svec_print(best_vec[t][q]);
                     }
                }

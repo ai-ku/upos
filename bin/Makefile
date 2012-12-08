@@ -5,8 +5,8 @@ eval.pl: check
 
 fastsubs: check
 	cd ../src/fastsubs; make
-	test -e $@ || ln -s ../src/fastsubs/fastsubs
-	test -e subs || ln -s ../src/fastsubs/subs
+	test -e $@ || ln -s ../src/fastsubs/fastsubs .
+	test -e subs || ln -s ../src/fastsubs/subs .
 	test -e wordsub || ln -s ../src/fastsubs/wordsub .
 
 dists: check
