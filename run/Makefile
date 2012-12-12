@@ -256,13 +256,38 @@ KM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
 bigram.%.pairs.gz: %.tok.gz
 	zcat $< | perl -lne 'for $$w (split) {print "$$p\t$$w" if defined $$p; $$p=$$w;}' | gzip > $@
 
-BSC_OPTIONS=-r 1 -i 100 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
+BSC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v
 
 bigram.%.scode.gz: bigram.%.pairs.gz
-	zcat $< | scode -m -i 50 ${BSC_OPTIONS} | gzip > $@
-
+	zcat $< | scode -m  ${BSC_OPTIONS} | gzip > $@
+BIKM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
 bigram.${LANGUAGE}.kmeans.gz: bigram.${LANGUAGE}.scode.gz
-	zcat $< | wkmeans ${KM_OPTIONS} | gzip > $@
+	zcat $< | wkmeans ${BIKM_OPTIONS} | gzip > $@
+
+### Frame Experiments
+
+frame.%.pairs.gz: enw.tok.gz
+	frame.py $* $< | gzip > $@
+
+FSC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED}
+
+frame.%.scode.gz: frame.%.pairs.gz
+	zcat $< | scode  ${FSC_OPTIONS} | gzip > $@
+
+frame.%.yscode.gz: frame.%.pairs.gz
+	zcat $< | scode  ${FSC_OPTIONS} -e 1 | gzip > $@
+
+FRKM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
+frame.%.kmeans.gz: framke.%.scode.gz
+	zcat $< | wkmeans ${FRKM_OPTIONS} | gzip > $@
+
+FRKME_OPTIONS=-k ${LANG_CL} -r 1 -s ${SEED}
+frame.%.ykmeans.gz: frame.%.yscode.gz
+	zcat $< | wkmeans ${FRKME_OPTIONS} | gzip > $@
+
+frame.%.yeval: frame.%.ykmeans.gz
+	zcat $< | eval.pl -m -v -g ${LANGUAGE}.pos.gz
+
 
 ### 3.1.4 WORDSUB+FEATURES options:
 
