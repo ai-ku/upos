@@ -1,8 +1,13 @@
 bin/*
 run/*
 src/*
+src/fastsubs
+src/dists
+src/wkmeans
+src/scode
 TODO
 data
 run.*
 .htaccess
 *~
+
