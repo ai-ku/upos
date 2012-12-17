@@ -34,18 +34,18 @@ mini.lm.gz: mini.vocab.gz train.${LANGUAGE}.tok.gz mini.tok.gz  ## LM_NGRAM=4, L
 
 #DISTANCE METRICS
 
-MINI_KNN=30 # number of nearest neighbors to compute
+MINI_KNN=1000 # number of nearest neighbors to compute
 #KNN_METRIC=2 # 0=euclid, 1=cosine 2=manhattan 3=maximum 4=jensen 5=zero-mean covariance
 #MINI_KNN_OPTIONS=-k ${KNN} -d ${KNN_METRIC} -p ${NCPU} -v
 
 mini.knnlog%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
-	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -g -d $* -p ${NCPU}| gzip > mini.knnlog$*.gz 2> knnlog$*.err 
+	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -g -d $* -p ${NCPU} 2> knnlog$*.err | gzip > mini.knnlog$*.gz 
 
 mini.knn%.gz: mini.allsub.gz  ## KNN=1000 KNN_METRIC=1 NCPU=24: time=21h40m, wc=1173766 2348705766 18877273290
-	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -d $* -p ${NCPU}| gzip > mini.knn$*.gz 2> knn$*.err 
+	zcat $< | preinput.py | dists -k ${MINI_KNN} -v -d $* -p ${NCPU}2> knn$*.err  | gzip > mini.knn$*.gz 
 
 ## DISTANCE TABLE
-SUP_KNN=1000
+SUP_KNN=30
 mini.dist: mini.knn0.gz mini.knn1.gz mini.knn2.gz mini.knn3.gz mini.knn4.gz mini.tok.gz
 	for label in 0 1 2 3 4 5 log0 log1 log2 log3; do \
 		echo "log0_logeuclid log1_logcosine log2_logmanhattan log3_logmaximum 0_euclid 1_cosine 2_manhattan 3_maximum 4_jensen 5_kl2" | sed "s/.*$${label}_\([a-z]*\).*/\1/" >> $@; \
@@ -57,6 +57,7 @@ mini.dist: mini.knn0.gz mini.knn1.gz mini.knn2.gz mini.knn3.gz mini.knn4.gz mini
 DIM_KNN_OPTIONS=-k ${KNN} -v -d 1 -p ${NCPU}
 
 MATLAB_PATH=/mnt/opt/matlab/linux64/R2011a/bin/matlab -nojvm -nodisplay
+## knn5 (KL2) is used since it is the best one on full matrix
 mini.spectral: mini.knn5.gz
 	${MATLAB_PATH} < ../../bin/runsc.m > mini.spectral 2> mini.spectral.err
 	gzip mini.spectral.c*
@@ -97,8 +98,9 @@ mini.iso.c%.knn.gz: mini.iso.c%.gz
 # A distance matrix is available. 
 # Top 500 entries of each nearest neighbor is used since it is the
 # best working threshold according to my previous experience
+# knn2 is used since it is the best on sparse inputs
 
-%.spectral: %.knn1.gz
+%.spectral: %.knn2.gz
 	${MATLAB_PATH} < ../../bin/runsc1M.m > $*.spectral 2> $*.spectral.err
 	gzip $*.spectral.c*
 
@@ -210,8 +212,9 @@ WSC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
+KM_OPTIONS=-k ${LANG_CL} -r 128 -l -w  -s ${SEED}
 wordsube.%.kmeans.gz: wordsub.%.scode.gz
-	zcat $< | wkmeans ${REKM_OPTIONS} | gzip > $@
+	zcat $< | wkmeans ${KM_OPTIONS} | gzip > $@
 
 wordsube.%.eval: wordsube.%.kmeans.gz
 	zcat $< | eval.pl -m -v -g $*.pos.gz
