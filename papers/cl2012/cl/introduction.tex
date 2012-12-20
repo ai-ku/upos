@@ -2,20 +2,19 @@
 \label{sec:intro}
 
 Grammar rules apply not to individual words (e.g. dog, eat) but to
-syntactic categories of words (e.g. noun, verb).  Thus constructing
-syntactic categories (also known as lexical or part of speech
+part-of-speech categories (e.g. noun, verb).  Thus learning
+part-of-speech categories (also known as lexical or syntactic
 categories) is one of the fundamental problems in language
 acquisition.
 
-Syntactic categories represent groups of words that can be substituted
-for one another without altering the grammaticality of a sentence.
-Linguists identify syntactic categories based on semantic, syntactic,
-and morphological properties of words.  There is also evidence that
-children use prosodic and phonological features to bootstrap syntactic
-category acquisition \cite{ambridge2011child}.  However there is as
-yet no satisfactory computational model that match human performance.
-Thus identifying the best set of features and best learning algorithms
-for syntactic category acquisition is still an open problem.
+Linguists identify part-of-speech categories based on semantic,
+syntactic, and morphological properties of words.  There is also
+evidence that children use prosodic and phonological features to
+bootstrap part-of-speech category acquisition
+\cite{ambridge2011child}.  However there is as yet no satisfactory
+computational model that match human performance.  Thus identifying
+the best set of features and best learning algorithms for
+part-of-speech induction is still an open problem.
 
 \begin{figure}[t] 
   \centering
@@ -34,96 +33,98 @@ Figure~\ref{fig:paradigmatic} illustrates the paradigmatic vs
 syntagmatic axes for words in a simple sentence and their possible
 substitutes.  
 
-In this study, we represent the paradigmatic axis directly by building
-{\em substitute vectors} for each word position in the text.  The
-dimensions of a substitute vector represent words in the vocabulary,
-and the magnitudes represent the probability of occurrence in the given
-position.  Note that the substitute vector for a word position (e.g.
-the second word in Fig.~\ref{fig:paradigmatic}) is a function of the
-context only (i.e. ``the \_\_\_ cried''), and does not depend on the
-word that does actually appear there (i.e. ``man'').  Thus substitute
-vectors represent {\em individual word contexts}, not word types.  We
-refer to the use of features based on substitute vectors as 
-{\em paradigmatic representations of word context}.
+Part-of-speech categories represent groups of words that can be
+substituted for one another without altering the grammaticality of a
+sentence.  In this paper we explore models of part-of-speech induction
+based on potential substitutes of words.  We build {\em substitute
+  word distributions} for each position in the text which specify the
+probability of every vocabulary word in that position.
+Table~\ref{tab:subdist} gives substitute distributions for an example
+sentence.
 
-% example substitute vectors (both syntactic and semantic)
+\begin{table}[b]
+\caption{The substitute word distributions (with probabilities in
+  parentheses) for some of the positions in the example sentence
+  \textit{``Pierre Vinken, 61 years old, will join the board as a
+    nonexecutive director Nov.~29.''} based on an n-gram language
+  model.}
+\label{tab:subdist}
+\begin{tabular}{|ll|} \hline
+\textbf{will:} & \textit{will} (0.9985), \textit{would} (0.0007), \textit{to} (0.0006), \textit{also} (0.0001), $\ldots$ \\
+\textbf{join:} & \textit{join} (0.6528), \textit{leave} (0.2140), \textit{oversee} (0.0559), \textit{head} (0.0262), \textit{rejoin} (0.0074), $\ldots$ \\
+\textbf{the:}  &\textit{its} (0.9011), \textit{the} (0.0981), \textit{a} (0.0006), $\ldots$ \\
+\textbf{board:} & \textit{board} (0.4288), \textit{company} (0.2584), \textit{firm} (0.2024), \textit{bank} (0.0731), \textit{strike} (0.0030), $\ldots$ \\
+\hline
+\end{tabular}
+\end{table}
 
-The two examples below illustrate the advantage of paradigmatic
-representations in uncovering similarities where no overt similarity
-that can be captured by a syntagmatic representation exists.  The word
-``board'' from the first sentence and the word ``council'' from the
-second sentence have no common neighbors except the determiner
-``the''.  The paradigmatic representation captures the similarity of
-these words by suggesting the same top substitutes for both (the
-numbers in parentheses give substitute probabilities):
-\begin{quote}
- (1) \noindent{\em ``Pierre Vinken, 61 years old, will join the {\bf board} as a nonexecutive director Nov.~29.''}\\
-% {\bf the:} its (.9011), the (.0981), a (.0006), $\ldots$\\
- {\bf board:} board (.4288), company (.2584), firm (.2024), bank (.0731), $\ldots$
-\end{quote}
+Note that the substitute word distribution for a position (e.g. the
+second position in Fig.~\ref{fig:paradigmatic}) is a function of the
+context only (i.e. \textit{``the \_\_\_ cried''}), and does not depend
+on the word that actually appears there (i.e. ``man'').  Thus
+substitute distributions represent {\em individual word contexts}, not
+word types.  We refer to the use of features based on substitute
+distributions as {\em paradigmatic representations of word context}.
 
-\begin{quote}
-%  (2) \noindent {\em ``Blacks and Hispanics currently make up 38 \% of the city 's population and hold only 25 \% of the seats on the {\bf council} .''}\\
-  (2) \noindent {\em ``$\ldots$ and hold only 25 \% of the seats on the {\bf council} .''}\\
- \noindent {\bf council:} board (.6591), company (.0795), firm (.0542), bank (.0154), $\ldots$
-\end{quote}
+We expect words used in similar contexts (with similar substitute
+distributions) to share the same part-of-speech.  Thus part-of-speech
+induction depends on which contexts are considered similar, and
+context similarity in turn is a function of the features used to
+represent word context.  Paradigmatic representations, using features
+of the substitute distribution, uncover latent similarities between
+contexts that on the surface seem to have little in common.  This
+makes paradigmatic representations more robust to data sparsity,
+compared to syntagmatic representations which use neighboring words as
+features.  Our empirical results demonstrate that paradigmatic
+representations significantly outperform syntagmatic ones when
+compared using similar part-of-speech induction algorithms on
+identical datasets.  Section~\ref{sec:representation} presents
+alternative representations of word context and discusses paradigmatic
+representations in more detail.
 
-The high probability substitutes reflect both semantic and syntactic
-properties of the context.  Top substitutes for ``board'' and
-``council'' are not only nouns, but specifically nouns compatible with
-the semantic context.  Top substitutes for the word ``the'' in the
-first example consist of words that can act as determiners: its
-(.9011), the (.0981), a (.0006), $\ldots$
+% talk about scode?
+% talk about type vs token
+% talk about the experiments
 
-There are two concerns inherent in all distributional methods: (i)
-words that are generally substitutable like ``the'' and ``its'' are
-placed in separate categories ({\sc dt} and {\sc prp\$}) by the gold
-standard, (ii) words that are generally not substitutable like ``do''
-and ``put'' are placed in the same category ({\sc vb}).  Freudenthal
-et al. \shortcite{freudenthal2005resolution} point out that categories
-with unsubstitutable words fail the standard linguistic definition of
-a syntactic category and children do not seem to make errors of
-substituting such words in utterances (e.g. {\em``What do you want?''}
-vs. {\em *``What put you want?''}).  Whether gold standard part of
-speech tags or distributional categories are better suited to
-applications like parsing or machine translation can be best decided
-using extrinsic evaluation.  In this study we evaluate our results by
-comparing them to gold standard part of speech tags and leave the
-extrinsic evaluation of the induced tags for future work.
+%% Part-of-speech induction can be performed on word types or word
+%% tokens.  Induction on word types associates each word type with a
+%% single category and cannot handle ambiguity: e.g. \textit{``join the
+%%   board(n)''} vs. \textit{``board(v) the plane''}.
 
-Our preliminary experiments on a subsection of 1M word Penn Treebank
-Wall Street Journal corpus (PTB) \cite{treebank3} indicate that using
-context information alone without the identity or the features of the
-target word (e.g. using dimensionality reduction and clustering on
-substitute vectors) has limited success and modeling the co-occurrence
-of word and context types is essential for inducing syntactic
-categories.  In order to do so, we combine paradigmatic
-representations of word context with features of co-occurring words
-within the co-occurrence data embedding (CODE) framework
-\cite{globerson2007euclidean,maron2010sphere}.  The resulting
-embeddings for word types are split into 45 clusters using k-means and
-the clusters are compared to the 45 gold tags in the PTB.  We obtain
-many-to-one accuracies up to .7680 using only distributional
-information (the identity of the word and a representation of its
-context) and .8023 by adding morphological and orthographic features
-of the words improving the state-of-the-art in unsupervised part of
-speech induction performance on the PTB.  We extend the experiments to
-19 corpora in 15 languages and achieve state-of-the-art many-to-one
-(\mto) scores on 17 of them.
 
-The next section gives a detailed review of related work.
-Section~\ref{sec:subthr} describes the construction of the substitute
-vectors and applies various distance metrics, dimensionality reduction
-and clustering methods on substitute vectors of the PTB.
-Section~\ref{sec:code} describes co-occurrence data embedding
-(i.e. the learning algorithm used in our later experiments),
-introduces possible usage scenarios of substitute vectors and
-determines the best setup on the PTB.  Section~\ref{sec:multilang}
-extends experiments to 15 languages and compares our results with the
-best published results.  Section~\ref{sec:discuss} gives a brief error
-analysis and Section~\ref{sec:contrib} summarizes our contributions.
-All the data and the code to replicate the results given in this paper
-is available from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
+%% Our preliminary experiments on a subsection of 1M word Penn Treebank
+%% Wall Street Journal corpus (PTB) \cite{treebank3} indicate that using
+%% context information alone without the identity or the features of the
+%% target word (e.g. using dimensionality reduction and clustering on
+%% substitute vectors) has limited success and modeling the co-occurrence
+%% of word and context types is essential for inducing syntactic
+%% categories.  In order to do so, we combine paradigmatic
+%% representations of word context with features of co-occurring words
+%% within the co-occurrence data embedding (CODE) framework
+%% \cite{globerson2007euclidean,maron2010sphere}.  The resulting
+%% embeddings for word types are split into 45 clusters using k-means and
+%% the clusters are compared to the 45 gold tags in the PTB.  We obtain
+%% many-to-one accuracies up to .7680 using only distributional
+%% information (the identity of the word and a representation of its
+%% context) and .8023 by adding morphological and orthographic features
+%% of the words improving the state-of-the-art in unsupervised part of
+%% speech induction performance on the PTB.  We extend the experiments to
+%% 19 corpora in 15 languages and achieve state-of-the-art many-to-one
+%% (\mto) scores on 17 of them.
+
+%% The next section gives a detailed review of related work.
+%% Section~\ref{sec:subthr} describes the construction of the substitute
+%% vectors and applies various distance metrics, dimensionality reduction
+%% and clustering methods on substitute vectors of the PTB.
+%% Section~\ref{sec:code} describes co-occurrence data embedding
+%% (i.e. the learning algorithm used in our later experiments),
+%% introduces possible usage scenarios of substitute vectors and
+%% determines the best setup on the PTB.  Section~\ref{sec:multilang}
+%% extends experiments to 15 languages and compares our results with the
+%% best published results.  Section~\ref{sec:discuss} gives a brief error
+%% analysis and Section~\ref{sec:contrib} summarizes our contributions.
+%% All the data and the code to replicate the results given in this paper
+%% is available from the authors' website at \mbox{\url{xxx.xxx.xxx}}.
 
 %% Computational models of syntactic category acquisition rely mainly on
 %% distributional analysis: Words that share the same distribution

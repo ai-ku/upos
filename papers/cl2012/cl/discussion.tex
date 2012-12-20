@@ -62,3 +62,18 @@ that emphasize homogeneity such as \mto\ are more appropriate in this
 context than metrics that average homogeneity and completeness such as
 \vm\ as long as the number of clusters is controlled.
 
+There are two concerns inherent in all distributional methods: (i)
+words that are generally substitutable like ``the'' and ``its'' are
+placed in separate categories ({\sc dt} and {\sc prp\$}) by the gold
+standard, (ii) words that are generally not substitutable like ``do''
+and ``put'' are placed in the same category ({\sc vb}).  Freudenthal
+et al. \shortcite{freudenthal2005resolution} point out that categories
+with unsubstitutable words fail the standard linguistic definition of
+a syntactic category and children do not seem to make errors of
+substituting such words in utterances (e.g. {\em``What do you want?''}
+vs. {\em *``What put you want?''}).  Whether gold standard part of
+speech tags or distributional categories are better suited to
+applications like parsing or machine translation can be best decided
+using extrinsic evaluation.  In this study we evaluate our results by
+comparing them to gold standard part of speech tags and leave the
+extrinsic evaluation of the induced tags for future work.
