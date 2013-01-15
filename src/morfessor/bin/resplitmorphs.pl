@@ -78,7 +78,7 @@ while ($arg = shift @ARGV) {
     }
 }
 
-$pplslope = 10/$pplthresh if ($pplslope < 0);
+$pplslope = $pplthresh if ($pplslope < 0);
 
 &usage() unless ($probsfile && $alphabetfile && $segfile);
 

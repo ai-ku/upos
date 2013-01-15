@@ -104,8 +104,6 @@ mini.iso.c%.knn.gz: mini.iso.c%.gz
 	${MATLAB_PATH} < ../../bin/runsc1M.m > $*.spectral 2> $*.spectral.err
 	gzip $*.spectral.c*
 
-
-
 ### SRILM options:
 LM_NGRAM=4 # n-gram order
 #LM_VOCAB=2 # words seen less than this in GETTRAIN will be replaced with <unk>
@@ -149,7 +147,7 @@ FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
 # -m for path to morfessor
 # -p for ppl threshold
 MORFESSOR=../../src/morfessor
-PPLTHRESH=10
+PPLTHRESH=1
 %.seg.gz: %.words.gz # time=32m56s wc=50069  182579 1059157
 	zcat $< | run-morfessor.pl -m ${MORFESSOR} -p ${PPLTHRESH}  | gzip > $@
 
@@ -191,7 +189,7 @@ rparte.%.eval: rparte.%.kmeans.gz
 	zcat $< | eval.pl -m -v -g $*.pos.gz
 
 ### WORDSUB options:
-WORDSUB=1 # Number of random substitutes per word
+WORDSUB=12 # Number of random substitutes per word
 WS_OPTIONS=-n ${WORDSUB} -s ${SEED}
 
 wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 809663253
@@ -208,7 +206,7 @@ wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-WSC_OPTIONS=-r 1 -i 50 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
+WSC_OPTIONS=-r 1 -i 9 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
@@ -398,6 +396,26 @@ dis+omplot-s.%.dat: dis+om.%.out
 
 dis+omplot-v.%.dat: dis+om.%.out
 	cat $< | plotdata.pl 1=x 2=25 3=0.166 9=y > $@
+
+### TYPE-TOKEN EXPERIMENTS
+
+### X experiments
+DISX_NARGS=10
+DISX_NSUB=64
+
+dis+x.%.out:  %.pos.gz %.words.gz %.sub.gz
+		disrun-args.pl ${LANG_CL} ${LANGUAGE} | perl -lane 'print if $$F[5] == ${DISX_NSUB}' |xargs -n${DISX_NARGS} -P${NCPU} disrun.pl > $@
+		paste type*.out | gzip > type.out.gz
+		-rm type*.out
+
+### X+Y experiments
+DISXY_NARGS=4
+DISXY_NSUB=64
+
+dis+xy.%.out: %.sub.gz %.words.gz %.pos.gz
+	dis+xy-args.pl ${LANG_CL} ${LANGUAGE} ${DISXY_NSUB} | xargs -n${DISXY_NARGS} -P${NCPU} dis+xy-run.pl > $@
+	paste token*.out | gzip > token.out.gz
+	-rm token*.out
 
 ### WKMEANS experiments:
 KMRUN_NARGS=4 # seed, file, weights, nstart => wkmeans-rms, m2o, homo, comp, vm, time
