@@ -10,7 +10,7 @@ our($opt_w, $opt_s, $opt_p);
 getopts('w:s:p');
 die $usage unless ($opt_w);
 $opt_w = "zcat $opt_w |" if $opt_w =~ /\.gz$/;
-$opt_p = $opt_p | 0;
+$opt_p = $opt_p || 0;
 my %feat;
 open(FP, $opt_w) or die $!;
 my $prev = ".";

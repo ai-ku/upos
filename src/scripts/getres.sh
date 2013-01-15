@@ -11,4 +11,4 @@ then
     SUBS="64"
 fi
 
-more */dis*+om*-$SCORE*.dat | perl -ane 'if($_ =~ /^(\w+)\//) {print "$1 ";}else{print if $_ =~ /^'$SUBS'\t/}'
+more */disp*-$SCORE*.dat | perl -ane 'if($_ =~ /^(\w+)\//) {print "$1 ";}else{print if $_ =~ /^'$SUBS'\t/}'

@@ -19,11 +19,11 @@ my $runid = 1;
 chomp($line);
 
 for my $nsub qw(1 2 3 4 6 8 10 12 16 25 32 45 64 90 128) {
+    $seed=10;
     for my $s (0 .. 9) {
-	print "$runid\t$line\t$lang\t$K\t$seed\t$nsub\t$ndim\t$Z\t$phi\t$nu\n";
-	$seed++;
+        print "$runid\t$line\t$lang\t$K\t$seed\t$nsub\t$ndim\t$Z\t$phi\t$nu\n";
+        $seed += 5;
     }
-    $seed=1;
     $runid++;
 }
 
