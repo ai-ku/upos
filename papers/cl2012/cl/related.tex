@@ -31,7 +31,7 @@ incorporate additional morphological and orthographic features.
 
 Distributional models can be further categorized into three subgroups
 based on the learning algorithm.  The first subgroup represents each
-word type with its context vector and clusters these vectors
+word type/token with its context vector and clusters these vectors
 accordingly \cite{Schutze:1995:DPT:976973.976994}.  Work in modeling
 child syntactic category acquisition has generally followed this
 clustering approach
@@ -44,31 +44,39 @@ types \cite{globerson2007euclidean}, which is covered in more detail
 in Section~\ref{sec:code}.
 
 \paragraph{Clustering}
-Clustering based methods represent context using neighboring words,
-typically a single word on the left and a single word on the right
-called a ``frame'' (e.g., {\em {\bf the} dog {\bf is}; {\bf the} cat
-  {\bf is}}).  They cluster word types rather than word tokens based
-on the frames they occupy thus employing one-tag-per-word assumption
-from the beginning (with the exception of some methods in
-\cite{Schutze:1995:DPT:976973.976994}).  They may suffer from data
-sparsity caused by infrequent words and infrequent contexts.  The
-solutions suggested either restrict the set of words and set of
+Clustering based methods represent the context using the neighboring
+words, typically a single word on the left and a single word on the
+right called a ``frame'' (e.g., {\em {\bf the} dog {\bf is}; {\bf the}
+  cat {\bf is}}).  They cluster word types rather than word tokens
+based on the frames they occupy thus employing one-tag-per-word
+assumption from the beginning (with the exception of
+\cite{mintz2003frequent,20674613} and some methods in
+\cite{Schutze:1995:DPT:976973.976994}).  They may suffer from the data
+sparsity caused by the infrequent words and the infrequent contexts.
+The solutions suggested either restrict the set of words and set of
 contexts to be clustered to the most frequently observed, or use
 dimensionality reduction.  Redington et
 al. \shortcite{redington1998distributional} define context similarity
 based on the number of common frames bypassing the data sparsity
-problem but achieve mediocre results.  Mintz
-\shortcite{mintz2003frequent} only uses the most frequent 45 frames
-and Biemann \shortcite{biemann2006unsupervised} clusters the most
-frequent 10,000 words using contexts formed from the most frequent
-150-200 words.  Sch\"utze \shortcite{Schutze:1995:DPT:976973.976994}
-and Lamar et al. \shortcite{lamar-EtAl:2010:Short} employ SVD to
-enhance similarity between less frequently observed words and
-contexts.  Lamar et al. \shortcite{Lamar:2010:LCU:1870658.1870736}
-represent each context by the currently assigned left and right tag
-(which eliminates data sparsity) and cluster word types using a soft
-k-means style iterative algorithm.  They report the best clustering
-result to date of .708 many-to-one accuracy on the PTB.
+problem but achieve lower scores than the best performing systems.
+Mintz \shortcite{mintz2003frequent} only uses the most frequent 45
+frames to cluster tokens and achieves 98\% unsupervised accuracy on
+the tokens observed in the most frequent 45 frames.  Similar to
+Mintz's work, St Clair et al. \shortcite{20674613} show that systems
+that model the left and right frames of tokens seperately perform
+better than the frequent frames both interms of token clustering
+accuracy and the token coverage.  Biemann
+\shortcite{biemann2006unsupervised} contructs a graph based view of
+the most frequent 10,000 words using contexts formed from the most
+frequent 150-200 words and clusters the tokens.  Sch\"utze
+\shortcite{Schutze:1995:DPT:976973.976994} and Lamar et
+al. \shortcite{lamar-EtAl:2010:Short} employ SVD to enhance similarity
+between less frequently observed word types and contexts.  Lamar et
+al. \shortcite{Lamar:2010:LCU:1870658.1870736} represent each context
+by the currently assigned left and right tag (which eliminates data
+sparsity) and cluster word types using a soft k-means style iterative
+algorithm.  They report the best clustering result to date of .708
+many-to-one accuracy on the PTB.
 % all except schutze cluster word types
 
 \paragraph{HMMs}
@@ -80,7 +88,7 @@ tendency to distribute probabilities equally and the resulting
 inability to model highly skewed word-tag distributions observed in
 hand-labeled data \cite{johnson:2007:EMNLP-CoNLL2007}.  To favor
 sparse word-tag distributions one can enforce a strict
-one-tag-per-word solution
+one-tag-per-word solution (type clustering)
 \cite{Brown:1992:CNG:176313.176316,Clark:2003:CDM:1067807.1067817},
 use sparse priors in a Bayesian setting
 \cite{goldwater-griffiths:2007:ACLMain,johnson:2007:EMNLP-CoNLL2007},
@@ -126,16 +134,25 @@ demonstrate significant improvements.
 \cite{Clark:2003:CDM:1067807.1067817,bergkirkpatrick-klein:2010:ACL,blunsom-cohn:2011:ACL-HLT2011}
 incorporate similar orthographic features and report improvements of
 3, 7, and 10\% respectively over the baseline Brown model.
+
+\cite{Clark:2003:CDM:1067807.1067817,blunsom-cohn:2011:ACL-HLT2011}
+cluster types by incorporating similar orthographic features and
+report improvements of 3 and 10\% respectively over the baseline Brown
+model.  Berg-Kirkpatrick et al. incorporate orthographic features into
+EM algorithm where they replace the multinomial components with
+miniature logistic regressions and cluster tokens while improving the
+Brown model by 7\%.
+
 Christodoulopoulos et
 al. \shortcite{Christodoulopoulos:2010:TDU:1870658.1870714} use
 prototype based features as described in
 \cite{Haghighi:2006:PLS:1220835.1220876} with automatically induced
-prototypes and report an 8\% improvement over the baseline Brown
-model.  Abend et al. \shortcite{Abend:2010:IUP:1858681.1858813} train
-a prototype-driven model with morphological features by first
-clustering the high frequency words as the landmarks and then
-assigning the remaining words to the landmark clusters.
-Christodoulopoulos et
+prototypes and report an 8\% improvement over the baseline Brown model
+by clustering tokens.  Abend et
+al. \shortcite{Abend:2010:IUP:1858681.1858813} train a
+prototype-driven model with morphological features by first clustering
+the high frequent types as the landmarks and then assigning the
+remaining types to these landmark clusters.  Christodoulopoulos et
 al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP}
 define a type-based Bayesian multinomial mixture model in which each
 word instance is generated from the corresponding word type mixture
@@ -149,9 +166,9 @@ acquisition.
 \subsection{Paradigmatic representations}
 
 Yatbaz et al. \shortcite{yatbaz-sert-yuret:2012:EMNLP-CoNLL} explore
-the paradigmatic representation of word contexts by modeling the
+the paradigmatic representation of the word contexts by modeling the
 co-occurrence of words and their substitutes within the CODE
-framework.  Their experiments on the PTB shows that paradigmatic
+framework.  Their experiments on the PTB types shows that paradigmatic
 representation improves the state-of-the-art \mto\ and V-measure (\vm)
 accuracies of both distributional models and models with additional
 word features.  This paper builds on that preliminary work by (1)
@@ -159,39 +176,6 @@ exploring clustering of substitute vectors, (2) improving the model
 for using additional features, and (3) experimenting with additional
 languages.
 
-Sahlgren \shortcite{sahlgren2006word} gives a detailed analysis of
-paradigmatic and syntagmatic relations in the context of word-space
-models used to represent word meaning.  Sahlgren's paradigmatic model
-represents word types using co-occurrence counts of their frequent
-neighbors, in contrast to his syntagmatic model that represents word
-types using counts of contexts (documents, sentences) they occur in.
-Our substitute vectors do not represent word types at all, but {\em
-  contexts of word tokens} using probabilities of likely substitutes.
-Sahlgren finds that in word-spaces built by frequent neighbor vectors,
-more nearest neighbors share the same part of speech compared to
-word-spaces built by context vectors.  
-
-Similarly, Sch{\"u}tze and Pedersen \shortcite{SchutzePe93} define the
-words that frequently co-occur together as the {\em syntagmatic
-  associates} and words that have similar left and right neighbors as
-the {\em paradigmatic parallels}.  Turney and Pantel
-\shortcite{DBLP:journals/jair/TurneyP10} give a broad overview of
-syntagmatic approaches and their applications within the Vector Space
-Modeling framework.  We find that representing the paradigmatic axis
-more directly using substitute vectors rather than frequent neighbors
-improves part of speech induction.
-
-Our paradigmatic representation is also related to the second order
-co-occurrences used in \cite{Schutze:1995:DPT:976973.976994}.
-Sch{\"u}tze concatenates the left and right context vectors for the
-target word type with the left context vector of the right neighbor
-and the right context vector of the left neighbor.  The vectors from
-the neighbors include potential substitutes.  Our method improves on
-his foundation by using a 4-gram language model rather than bigram
-statistics, using the whole 78,498 word vocabulary rather than the
-most frequent 250 words.  More importantly, rather than simply
-concatenating vectors that represent the target word with vectors that
-represent the context we use a co-occurrence modeling algorithm.
 
 %% This paper defines a new representation that models the features from
 %% different domains as separate variables and relates them to each other
