@@ -3,15 +3,16 @@
 
 In this section we combine the paradigmatic representation of the word
 context with the identity and features of the target word for part of
-speech induction using a co-occurrence modeling framework.  Our
-preliminary experiments in Section~\ref{sec:clustering} indicated that
-using the context information alone (e.g. clustering substitute
-vectors) without the target word identity and features had limited
-success.  Moreover incorporating word identities (i.e. the
-one-tag-per-word constraint) even in an ad-hoc manner by re-tagging
-the clustering output significantly improves the \mto\ accuracy.  It
-seems that the co-occurrence of a target word with a particular type
-of context may be a better predictor of the syntactic category.
+speech induction using a co-occurrence modeling framework.
+% no clustering section
+%% Our preliminary experiments in Section~\ref{sec:clustering} indicated
+%% that using the context information alone (e.g. clustering substitute
+%% vectors) without the target word identity and features had limited
+%% success.  Moreover incorporating word identities (i.e. the
+%% one-tag-per-word constraint) even in an ad-hoc manner by re-tagging
+%% the clustering output significantly improves the \mto\ accuracy.  It
+%% seems that the co-occurrence of a target word with a particular type
+%% of context may be a better predictor of the syntactic category.
 
 Section~\ref{sec:codethr} reviews the unsupervised methods we use to
 model co-occurrence statistics: the Co-occurrence Data Embedding
@@ -20,25 +21,30 @@ extension (S-CODE) introduced by \cite{maron2010sphere}.
 Section~\ref{sec:expset} describes the general experimental settings.
 The S-CODE algorithm works with discrete inputs.  The substitute
 vectors as described in Section~\ref{sec:subthr} are high dimensional
-and continuous.  We experimented with two approaches to use substitute
-vectors in a discrete setting.  Section~\ref{sec:rpart} presents an
-algorithm that partitions the high dimensional space of substitute
-vectors into small neighborhoods and uses the partition id as a
-discrete context representation.  Section~\ref{sec:wordsub} presents
-an even simpler model which pairs each word with random substitutes
-sampled from the substitute vector.  Section~\ref{sec:bigram}
-replicates the bigram based S-CODE results from \cite{maron2010sphere}
-as a direct comparison of paradigmatic vs syntagmatic representations
-of word context.  When the left-word -- right-word pairs used in the
-bigram model are replaced with word -- partition-id or word --
-substitute pairs we see significant gains in accuracy.  These results
-support our running hypothesis that paradigmatic features,
+and continuous.
+% no rpart section
+%% We experimented with two approaches to use substitute vectors in a
+%% discrete setting.  Section~\ref{sec:rpart} presents an algorithm that
+%% partitions the high dimensional space of substitute vectors into small
+%% neighborhoods and uses the partition id as a discrete context
+%% representation.
+We experimented with an approach to use substitute vectors in a
+discrete setting.  Section~\ref{sec:wordsub} presents the simple model
+which pairs each word with random substitutes sampled from the
+substitute vector.  Section~\ref{sec:bigram} replicates the bigram
+based S-CODE results from \cite{maron2010sphere} as a direct
+comparison of paradigmatic vs syntagmatic representations of word
+context.  When the left-word -- right-word pairs used in the bigram
+model are replaced with
+% word -- partition-id or
+word -- substitute pairs we see significant gains in accuracy.  These
+results support our running hypothesis that paradigmatic features,
 i.e. potential substitutes of a word, are better determiners of
 syntactic category compared to left and right neighbors (syntagmatic
 features).  Section~\ref{sec:feat} explores morphological and
 orthographic features as additional sources of information and its
-results improve the state-of-the-art in the field of unsupervised
-part of speech induction.
+results improve the state-of-the-art in the field of unsupervised part
+of speech induction.
 
 \subsection{The CODE Model}
 \label{sec:codethr}
@@ -62,7 +68,7 @@ a normalization term.  If we use the notation $\phi_x$ for the
 point corresponding to $x$ and $\psi_y$ for the point corresponding
 to $y$ then $d^2_{x,y} = \|\phi_x-\psi_y\|^2$.  The log-likelihood
 of a given embedding $\ell(\phi, \psi)$ can be expressed as:
-\begin{eqnarray} 
+\begin{eqnarray}
 &&\ell(\phi, \psi) = \sum_{x,y} \bar{p}(x,y) \log p(x,y) \label{eq:likelihood} \\
 &&= \sum_{x,y} \bar{p}(x,y) (-\log Z + \log \bar{p}(x)\bar{p}(y) - d^2_{x,y}) \nonumber \\
 &&= -\log Z + \mathit{const} - \sum_{x,y} \bar{p}(x,y) d^2_{x,y} \nonumber
