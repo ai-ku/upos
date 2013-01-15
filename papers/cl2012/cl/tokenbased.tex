@@ -1,2 +1,18 @@
 \section{POS Induction for Word Tokens}
 \label{sec:tokens}
+
+In this section, we extend the random-substitutes algorithm presented
+earlier to perform POS induction for the word tokens rather the than
+word types.  We use the same settings in the Section~\ref{sec:wordsub}
+and generate word ($X$) -- random-substitute ($Y$) pairs as the input
+to the S-CODE.  For each observed $X$ -- $Y$ pair in the S-CODE input,
+corresponding 25-dimensional $\phi_x$ and $\psi_y$ embedding vectors
+are concatenated to create a 50-dimensional representation.  The
+resulting 50-dimensional vectors are clustered using the instance
+weighted k-means algorithm (with fewer restarts to accomodate the
+input size).  The process yields 64 cluster-ids (for every pair
+generated from word token's context) for each word token's context.
+The word tokens' cluster-ids are predicted by the majority cluster-id
+of the corresponding pairs.  Ties for the majority are broken
+randomly.  The many-to-one accuracy is \wsxymto\ and the V-measure is
+\wsxyvm\ .

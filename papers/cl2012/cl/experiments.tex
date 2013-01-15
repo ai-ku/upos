@@ -15,17 +15,26 @@ smart initialization was used \cite{arthur2007k}, and (vi) the number
 of k-means restarts were set to 128 to improve clustering and reduce
 variance.
 
-Section~\ref{sec:dist} shows that low probability substitutes are
-relatively unimportant thus for computational efficiency only the top
-100 substitutes and their unnormalized probabilities were computed for
-each positions in the PTB (1,173,766 tokens, 49,206 types) using the
-{\sc fastsubs} algorithm \cite{yuret2012fastsub}\footnote{The
-  substitutes with unnormalized log probabilities can be downloaded
-  from \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors
-for each position were normalized to add up to 1.0 giving us the final
-substitute vectors used in the rest of this study.  We set the
-vocabulary threshold to 20 which increases the vocabulary size to
-78,498.
+For computational efficiency only the top 100 substitutes and their
+unnormalized probabilities were computed for each positions in the PTB
+(1,173,766 tokens, 49,206 types) using the {\sc fastsubs} algorithm
+\cite{yuret2012fastsub}\footnote{The substitutes with unnormalized log
+  probabilities can be downloaded from
+  \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors for
+each position were normalized to add up to 1.0 giving us the final
+substitute vectors used in the rest of this study.
+
+%% Section~\ref{sec:dist} shows that low probability substitutes are
+%% relatively unimportant thus for computational efficiency only the top
+%% 100 substitutes and their unnormalized probabilities were computed for
+%% each positions in the PTB (1,173,766 tokens, 49,206 types) using the
+%% {\sc fastsubs} algorithm \cite{yuret2012fastsub}\footnote{The
+%%   substitutes with unnormalized log probabilities can be downloaded
+%%   from \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors
+%% for each position were normalized to add up to 1.0 giving us the final
+%% substitute vectors used in the rest of this study.  We set the
+%% vocabulary threshold to 20 which increases the vocabulary size to
+%% 78,498.
 
 % \footnote{Reducing the vocabulary threshold to 20 from 500
 
@@ -36,7 +45,8 @@ the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this section and the ones we cite from the literature.
 
-\subsection{Random Partitions}\label{sec:rpart}
+\subsection{Random Substitutes}\label{sec:wordsub}
+%\subsection{Random Partitions}\label{sec:rpart}
 \begin{table*}[t] \footnotesize
 \caption{Summary of results in terms of the \mto\ and \vm\ scores.
   Standard errors are given in parentheses when available.  Starred
@@ -56,9 +66,10 @@ Brown et al. \shortcite{Brown:1992:CNG:176313.176316}* & .678 & .630\\
 Goldwater et al. \shortcite{goldwater-griffiths:2007:ACLMain}* & .632 & .562\\
 Ganchev et al. \shortcite{Ganchev:2010:PRS:1859890.1859918}* & .625 & .548\\
 Maron et al. \shortcite{maron2010sphere} & .688 (.0016)&-\\
+Substitutes(Tokens) (Sec.~\ref{sec:tokens}) & \wsxymto & \wsxyvm \\
 Bigrams (Sec.~\ref{sec:bigram}) & \bgmto & \bgvm \\
-Partitions (Sec.~\ref{sec:rpart}) & \rpmto & \rpvm \\
-Substitutes (Sec.~\ref{sec:wordsub}) & \wsmto & \wsvm \\
+%Partitions (Sec.~\ref{sec:rpart}) & \rpmto & \rpvm \\
+Substitutes(Types) (Sec.~\ref{sec:wordsub}) & \wsmto & \wsvm \\
 \hline
 \end{tabular}
 \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
@@ -79,39 +90,69 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 \end{table*}
 
 To obtain a discrete representation of the context, the
-random--partitions algorithm first designates a random subset of
-substitute vectors as centroids to partition the space, and then
-associates each context with the partition defined by the closest
-centroid in cosine distance.  Each partition thus defined gets a
-unique id, and word ($X$) -- partition-id ($Y$) pairs are given to
-S-CODE as input.  The algorithm uses stochastic gradient ascent to
-find the $\phi_x, \psi_y$ embeddings for word and partition-id in
-these pairs on a single 25-dimensional sphere.  The algorithm cycles
-through the data until we get approximately 50 million updates.  The
-resulting $\phi_x$ vectors are clustered using an instance weighted
-k-means algorithm and the resulting groups are compared to the correct
-part of speech tags.  Using default settings with 64K random
-partitions the many-to-one accuracy is \rpmto\ and the V-measure is
-\rpvm.
+random-substitutes algorithm pairs each word token with a substitute
+sampled from the pre-computed substitute vectors generated from the
+word token's context (see Section~\ref{sec:subthr}) and word ($X$) --
+random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
+possible (and beneficial, see below) to run the random-substitutes
+algorithm on the data more than once to generate more pairs from the
+same substitute vectors.  The S-CODE uses stochastic gradient ascent
+to find the $\phi_x, \psi_y$ embeddings for word and random-substitute
+in these pairs on a single 25-dimensional sphere.  The algorithm
+cycles through the data until we get approximately 50 million updates.
+The resulting $\phi_x$ vectors are clustered using an instance
+weighted k-means algorithm.  Cluster-id for each $\phi_x$ is assigned
+as the predicted cluster-id for word type $X$.  Using the default
+settings and sampling 64 substitutes for each token the many-to-one
+accuracy is \wsmto and the V-measure is \wsvm.
+
+%% To obtain a discrete representation of the context, the
+%% random--partitions algorithm first designates a random subset of
+%% substitute vectors as centroids to partition the space, and then
+%% associates each context with the partition defined by the closest
+%% centroid in cosine distance.  Each partition thus defined gets a
+%% unique id, and word ($X$) -- partition-id ($Y$) pairs are given to
+%% S-CODE as input.  The algorithm uses stochastic gradient ascent to
+%% find the $\phi_x, \psi_y$ embeddings for word and partition-id in
+%% these pairs on a single 25-dimensional sphere.  The algorithm cycles
+%% through the data until we get approximately 50 million updates.  The
+%% resulting $\phi_x$ vectors are clustered using an instance weighted
+%% k-means algorithm and the resulting groups are compared to the correct
+%% part of speech tags.  Using default settings with 64K random
+%% partitions the many-to-one accuracy is \rpmto\ and the V-measure is
+%% \rpvm.
 
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
 varied over a range of values.
 
+%% \begin{figure}[ht] \centering
+%% \includegraphics[width=0.5\linewidth]{plot-p.pdf}
+%% \caption{\mto\ is not sensitive to the number of partitions used to
+%%   discretize the substitute vector space within our experimental
+%%   range.}
+%% \label{plot-p}
+%% \end{figure}
+
+%% Figure~\ref{plot-p} gives results where the number of initial random
+%% partitions is varied over a large range and shows the results to be
+%% fairly stable across two orders of magnitude.
+
 \begin{figure}[ht] \centering
-\includegraphics[width=0.5\linewidth]{plot-p.pdf}
-\caption{\mto\ is not sensitive to the number of partitions used to
-  discretize the substitute vector space within our experimental
-  range.}
-\label{plot-p}
+%\includegraphics[width=0.5\linewidth]{plot-s.pdf}
+\includegraphics[width=0.5\linewidth]{plot-s-cl.pdf}
+\caption{\mto\ is not sensitive to the number of random substitutes
+  sampled per word token.}
+\label{plot-s}
 \end{figure}
 
-Figure~\ref{plot-p} gives results where the number of initial random
-partitions is varied over a large range and shows the results to be
-fairly stable across two orders of magnitude.
+Figure~\ref{plot-s} illustrates that the
+random-substitute result is fairly robust as long as the training
+algorithm can observe more than a few random substitutes per word.
 
 \begin{figure}[ht] \centering
-\includegraphics[width=0.5\linewidth]{plot-d.pdf}
+%\includegraphics[width=0.5\linewidth]{plot-d.pdf}
+\includegraphics[width=0.5\linewidth]{plot-d-cl.pdf}
 \caption{\mto\ falls sharply for less than 10 S-CODE dimensions, but
   more than 25 do not help.}
 \label{plot-d}
@@ -122,7 +163,8 @@ necessary to get within 1\% of the best result, but there is no
 significant gain from using more than 25 dimensions.
 
 \begin{figure}[ht] \centering
-\includegraphics[width=0.5\linewidth]{plot-z.pdf}
+%\includegraphics[width=0.5\linewidth]{plot-z.pdf}
+\includegraphics[width=0.5\linewidth]{plot-z-cl.pdf}
 \caption{\mto\ is fairly stable as long as the $\tilde{Z}$ constant is
   within an order of magnitude of the real $Z$ value.}
 \label{plot-z}
@@ -141,36 +183,40 @@ clusters from coalescing.
 %%% I have seen the first, but the second is pure guess, need to
 %%% look.  The distances seem to be decreasing on that end as well!
 
-We find the random partition algorithm to be fairly robust to
+We find the random substitute algorithm to be fairly robust to
 different parameter settings and the resulting many-to-one score
 significantly better than the state-of-the-art distributional models.
 
-\subsection{Random Substitutes}\label{sec:wordsub}
+%% We find the random partition algorithm to be fairly robust to
+%% different parameter settings and the resulting many-to-one score
+%% significantly better than the state-of-the-art distributional models.
 
-Another way to use substitute vectors in a discrete setting is simply
-to sample individual substitute words from them according to the
-corresponding probabilities.  The random-substitutes algorithm cycles
-through the test data and pairs each word with a random substitute
-picked from the pre-computed substitute vectors (see
-Section~\ref{sec:subthr}).  We ran the random-substitutes algorithm to
-generate 76 million word ($X$) -- random-substitute ($Y$) pairs (64
-substitutes for each token) as input to S-CODE.  Clustering the
-resulting $\phi_x$ vectors yields a many-to-one score of \wsmto\ and a
-V-measure of \wsvm.
+%% \subsection{Random Substitutes}\label{sec:wordsub}
 
-This result is close to the previous result by the random-partition
-algorithm, \rpmto, demonstrating that two very different discrete
-representations of context based on paradigmatic features give
-consistent results.  Figure~\ref{plot-s} illustrates that the
-random-substitute result is fairly robust as long as the training
-algorithm can observe more than a few random substitutes per word.
+%% Another way to use substitute vectors in a discrete setting is simply
+%% to sample individual substitute words from them according to the
+%% corresponding probabilities.  The random-substitutes algorithm cycles
+%% through the test data and pairs each word with a random substitute
+%% picked from the pre-computed substitute vectors (see
+%% Section~\ref{sec:subthr}).  We ran the random-substitutes algorithm to
+%% generate 76 million word ($X$) -- random-substitute ($Y$) pairs (64
+%% substitutes for each token) as input to S-CODE.  Clustering the
+%% resulting $\phi_x$ vectors yields a many-to-one score of \wsmto\ and a
+%% V-measure of \wsvm.
 
-\begin{figure}[ht] \centering
-\includegraphics[width=0.5\linewidth]{plot-s.pdf}
-\caption{\mto\ is not sensitive to the number of random substitutes
-  sampled per word token.}
-\label{plot-s}
-\end{figure}
+%% This result is close to the previous result by the random-partition
+%% algorithm, \rpmto, demonstrating that two very different discrete
+%% representations of context based on paradigmatic features give
+%% consistent results.  Figure~\ref{plot-s} illustrates that the
+%% random-substitute result is fairly robust as long as the training
+%% algorithm can observe more than a few random substitutes per word.
+
+%% \begin{figure}[ht] \centering
+%% \includegraphics[width=0.5\linewidth]{plot-s.pdf}
+%% \caption{\mto\ is not sensitive to the number of random substitutes
+%%   sampled per word token.}
+%% \label{plot-s}
+%% \end{figure}
 
 \subsection{Paradigmatic vs Syntagmatic Representations of Word Context}\label{sec:bigram}
 
@@ -190,5 +236,5 @@ report many-to-one scores of .6880 (.0016) for 45 clusters and .7150
 clustered without concatenation we found the performance drops
 significantly to about .62.  Using our default settings the bigram
 model achieves \bgmto\ \mto\ and \bgvm\ \vm\ accuracies.  Both results are
-significantly lower than the random partition and substitute \mto\ and
+significantly lower than the random substitute \mto\ and
 \vm\ accuracies.
