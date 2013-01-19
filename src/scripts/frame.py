@@ -7,13 +7,13 @@ frame = sys.argv[1]
 
 for line in gzip.open(sys.argv[2]):
     l = line.strip().split()
-    if frame == "ps":
+    if frame == "rbi":
         for i in range(len(l)):
             if i == len(l)-1:
                 print l[i]+"\t"+"<\s>"
             else:
                 print l[i]+"\t"+l[i+1]
-    elif frame == "pr":
+    elif frame == "lbi":
         for i in range(len(l)):
             if i == 0:
                 print l[i] + "\t<s>"

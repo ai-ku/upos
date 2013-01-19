@@ -2,28 +2,28 @@
 use strict;
 use File::Temp qw/tempdir/;
 
-my $usage = q{Usage: bgrun.pl seed
+my $usage = q{Usage: bgrun.pl seed langcl language
 Prints out inputs, output, number of seconds
 };
 
 my $seed = shift or die $usage;
-
+my $K = shift or die $usage;
+my $lang = shift or die $usage;
 my $ndim = 25;
 my $Z = 0.166;
 my $ntest = 1173766;
 my $sc_restart = 1;
-my $sc_niter = 50;
+my $sc_niter = 100;
 my $km_restart = 128;
-my $K = 45;
-my $test = 'wsj.words.gz';
-my $gold = 'wsj.pos.gz';
+my $test = "$lang.words.gz";
+my $gold = "$lang.pos.gz";
 
 my $tmp = tempdir("bgrun-XXXX", CLEANUP => 1);
 my $sc_err = "$tmp/scode";
 my $km_err = "$tmp/kmeans";
 my $ev_err = "$tmp/eval";
 
-my $input = 'zcat bigram.pairs.gz';
+my $input = 'zcat bigram.enw.pairs.gz';
 my $scode = "scode -m -r $sc_restart -i $sc_niter -d $ndim -z $Z -s $seed";
 my $kmeans = "wkmeans -k $K -r $km_restart -l -w -s $seed";
 my $kmeans2eval = "wkmeans2eval.pl -t $test";
@@ -38,4 +38,4 @@ my @sc = split(' ', `cat $sc_err`);
 my @km = split(' ', `cat $km_err`);
 my @ev = split(' ', `cat $ev_err`);
 
-print join("\t", $seed, @sc, @km, @ev, $tm)."\n";
+print join("\t", $seed, $ndim,$Z, @sc, @km, @ev, $tm)."\n";

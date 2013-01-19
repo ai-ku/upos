@@ -399,7 +399,111 @@ dis+omplot-v.%.dat: dis+om.%.out
 
 ### TYPE-TOKEN EXPERIMENTS
 
-### X experiments
+
+### FRAME:
+FRAME_NARGS=5
+###LEFT BIGRAM experiments
+%.lbi.gz: %.tok.gz 
+	frame.py lbi $< | gzip > $@
+
+### LEFT X+Y
+frame-lbi+xy.%.out: %.lbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} lbi token | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+lbi+xyplot-s.%.dat: frame-lbi+xy.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+lbi+xyplot-v.%.dat: frame-lbi+xy.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### LEFT X
+frame-lbi+x.%.out: %.lbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} lbi type | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+lbi+xplot-s.%.dat: frame-lbi+x.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+lbi+xplot-v.%.dat: frame-lbi+x.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+###RIGHT BIGRAM experiments
+%.rbi.gz: %.tok.gz
+	frame.py rbi $< | gzip > $@
+
+### RIGHT X+Y
+frame-rbi+xy.%.out: %.rbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} rbi token | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+rbi+xyplot-s.%.dat: frame-rbi+xy.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+rbi+xyplot-v.%.dat: frame-rbi+xy.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### RIGHT X
+frame-rbi+x.%.out: %.rbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} rbi type | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+rbi+xplot-s.%.dat: frame-rbi+x.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+rbi+xplot-v.%.dat: frame-rbi+x.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+###FLE BIGRAM experiments
+%.fle.gz: %.tok.gz
+	frame.py fle $< | gzip > $@
+
+### FLE X+Y
+frame-fle+xy.%.out: %.fle.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} fle token | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+fle+xyplot-s.%.dat: frame-fle+xy.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+fle+xyplot-v.%.dat: frame-fle+xy.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### FLE X
+frame-fle+x.%.out: %.fle.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} fle type | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+fle+xplot-s.%.dat: frame-fle+x.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+fle+xplot-v.%.dat: frame-fle+x.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+###FRE BIGRAM experiments
+%.fre.gz: %.tok.gz
+	frame.py fre $< | gzip > $@
+
+### FRE X+Y
+frame-fre+xy.%.out: %.fre.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} fre token | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+	paste fretoken*.out | gzip > fretoken.out.gz
+	-rm fretoken*.out
+
+fre+xyplot-s.%.dat:  frame-fre+xy.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+fre+xyplot-v.%.dat: frame-fre+xy.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### FRE X
+frame-fre+x.%.out: %.fre.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} fre type | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+	paste fretype*.out | gzip > fretype.out.gz
+	-rm fretype*.out
+
+fre+xplot-s.%.dat: frame-fre+x.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+fre+xplot-v.%.dat: frame-fre+x.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### SCODE
+### SCODE X experiments
 DISX_NARGS=10
 DISX_NSUB=64
 
@@ -408,7 +512,7 @@ dis+x.%.out:  %.pos.gz %.words.gz %.sub.gz
 		paste type*.out | gzip > type.out.gz
 		-rm type*.out
 
-### X+Y experiments
+### SCODE X+Y experiments
 DISXY_NARGS=4
 DISXY_NSUB=64
 
@@ -416,6 +520,13 @@ dis+xy.%.out: %.sub.gz %.words.gz %.pos.gz
 	dis+xy-args.pl ${LANG_CL} ${LANGUAGE} ${DISXY_NSUB} | xargs -n${DISXY_NARGS} -P${NCPU} dis+xy-run.pl > $@
 	paste token*.out | gzip > token.out.gz
 	-rm token*.out
+
+dis+xyplot-s.%.dat: dis+xy.%.out
+	cat $< | plotdata.pl 1=x 4=y > $@
+
+dis+xyplot-v.%.dat: dis+xy.%.out
+	cat $< | plotdata.pl 1=x 7=y > $@
+
 
 ### WKMEANS experiments:
 KMRUN_NARGS=4 # seed, file, weights, nstart => wkmeans-rms, m2o, homo, comp, vm, time
