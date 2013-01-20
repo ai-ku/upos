@@ -4,7 +4,7 @@ bin:
 
 ## ### GENERAL setup:
 SEED=1 # Random seed
-NCPU=40 # Number of threads/processes to use for parallel computations
+NCPU=20 # Number of threads/processes to use for parallel computations
 SRILM_PATH=/opt/srilm/bin/i686-m64
 export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 LM_DISCOUNT=-kndiscount
@@ -467,6 +467,8 @@ fle+xyplot-v.%.dat: frame-fle+xy.%.out
 ### FLE X
 frame-fle+x.%.out: %.fle.gz %.words.gz %.pos.gz
 	frame-args.pl ${LANG_CL} ${LANGUAGE} fle type | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+	paste fletype*.out | gzip > fletype.out.gz
+	-rm fletype*.out
 
 fle+xplot-s.%.dat: frame-fle+x.%.out
 		cat $< | plotdata.pl 1=x 4=y > $@

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  20 JAN 2013 15:03
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  20 JAN 2013 20:09
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -583,7 +583,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[4]) (./related.tex
+[4]
+
+LaTeX Warning: Citation `treebank3' on page 5 undefined on input line 266.
+
+) (./related.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -869,8 +873,8 @@ Overfull \hbox (17.82173pt too wide) in paragraph at lines 250--283
 
 ) (./tokenbased.tex
 ! Undefined control sequence.
-l.17 ...mly.  The many-to-one accuracy is \wsxymto
-                                                  \ and the V-measure is
+l.17 \wsxymto
+             \ and the V-measure is \wsxyvm\ .
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -878,13 +882,46 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.18 \wsxyvm
-            \ .
+l.17 \wsxymto\ and the V-measure is \wsxyvm
+                                           \ .
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[12]
+
+LaTeX Warning: Reference `sec:representations' on page 13 undefined on input li
+ne 59.
 
 ) (./features.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -914,10 +951,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[12]
-Underfull \vbox (badness 6188) has occurred while \output is active []
-
-
+[13]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -945,7 +979,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[13]) (./multibest.tex (./datatable.tex
+[14]) (./multibest.tex (./datatable.tex
 Overfull \vbox (12.15997pt too high) detected at line 11
  []
 
@@ -954,38 +988,7 @@ Overfull \hbox (4.90334pt too wide) in paragraph at lines 7--38
 [][]
  []
 
-
-Underfull \vbox (badness 1102) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[14])
+)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1079,7 +1082,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[16]) (./discussion.tex <hinton.png, id=105, 566.5968pt x 305.7021pt>
+[16]) (./discussion.tex <hinton.png, id=104, 566.5968pt x 305.7021pt>
 File: hinton.png Graphic file (type png)
 
 <use hinton.png>
@@ -1114,63 +1117,7 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[18 <./hinton.png>]) (./contribution.tex) (./posind_cl.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[19]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1596) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1200,35 +1147,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[20])
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[18]) (./contribution.tex
+Underfull \vbox (badness 8056) has occurred while \output is active []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[21]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1256,9 +1178,94 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[22
+[19 <./hinton.png>]) (./posind_cl.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] (./posind_cl.aux)
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[20]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[21])
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[22] (./posind_cl.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1267,13 +1274,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3864 strings out of 495061
- 47420 string characters out of 1182622
- 111783 words of memory out of 3000000
- 6891 multiletter control sequences out of 15000+50000
+ 3865 strings out of 495061
+ 47441 string characters out of 1182622
+ 121759 words of memory out of 3000000
+ 6892 multiletter control sequences out of 15000+50000
  60309 words of font info for 106 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,16n,25p,820b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,16n,25p,856b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/ty
 pe1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/public/
@@ -1294,7 +1301,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 392847 bytes).
+Output written on posind_cl.pdf (22 pages, 394693 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

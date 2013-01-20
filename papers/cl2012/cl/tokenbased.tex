@@ -2,20 +2,19 @@
 \label{sec:tokens}
 
 In this section, we extend the random-substitutes algorithm presented
-earlier to perform POS induction for the word tokens rather the than
+earlier to perform POS induction for the word tokens rather than the
 word types.  We use the same settings in the Section~\ref{sec:wordsub}
 and generate word ($X$) -- random-substitute ($Y$) pairs as the input
 to the S-CODE.  For each observed $X$ -- $Y$ pair in the S-CODE input,
 corresponding 25-dimensional $\phi_x$ and $\psi_y$ embedding vectors
 are concatenated to create a 50-dimensional representation.  The
 resulting 50-dimensional vectors are clustered using the instance
-weighted k-means algorithm (with fewer restarts to accommodate the
-input size).  The process yields 64 cluster-ids (for every pair
-generated from word token's context) for each word token's context.
-The word tokens' cluster-ids are predicted by the majority cluster-id
-of the corresponding pairs.  Ties for the majority are broken
-randomly.  The many-to-one accuracy is \wsxymto\ and the V-measure is
-\wsxyvm\ .
+weighted k-means algorithm with 128 restarts.  The process yields 64
+cluster-ids (for every pair generated from word token's context) for
+each word token's context.  The cluster-ids tokens are predicted by
+the majority cluster-id of the corresponding pairs.  Ties for the
+majority are broken randomly.  The many-to-one accuracy is
+\wsxymto\ and the V-measure is \wsxyvm\ .
 
 In order to demonstrate the merit in the token based POS induction, we
 first define the gold-tag perplexity for the word types as following:
@@ -37,6 +36,7 @@ Substitutes(Tokens) & .7322 (.0079) & .4671 (.0174)\\
 \end{tabular}
 \label{tab:bins}
 \end{table}
+
 Gold-tag perplexity ($GP$) is used to determine the POS ambiguity of
 the word types, relating how often a word type is associated with
 different POS tags in the test corpus.  A $GP$ of 1 for a word type
@@ -51,3 +51,44 @@ induction output and obtained the induced-tag -- gold-tag
 mappings. Using the mappings obtained over the test corpus, we
 evaluated the accuracy in the subsets.  Table~\ref{tab:bins} presents
 the evaluation over the subsets.
+
+\subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+
+In order to compare the paradigmatic and the syntagmatic context
+representations we feed four different syntagmatic representations
+defined in Section \ref{sec:representations} to the S-CODE.  The first
+model accepts word ($X$) - right word ($Y$) pairs as the input, the
+second model accepts word ($X$) - left word($Y$) pairs as the input,
+the third model accepts word ($X$) - concatenation of the left and
+right words ($Y$) pairs as the input \cite{mintz2003frequent} and the
+final model accepts words ($X$) - left word($Y_1$) and right word
+($Y_2$) tuples as the input to the S-CODE \cite{20674613}.
+
+Following the previous section we concatinate the 25-dimensional
+$\phi_x$ and $\psi_y$ embeddings of the corresponding observed pairs
+(tuples in the fourth model) and represent the first three models
+outputs with a 50-dimensional while represent the last model output
+with 75-dimensional vectors.  The resulting vectors are clustered
+using k-means algorithm with 128 restarts. 
+
+\begin{equation} \label{eq:tag-perp}
+GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
+\end{equation}
+Where $p_w$ is the gold POS tag distribution of the word type $w$ and
+$H(p_w)$ is the entropy of the $p_w$ distribution.
+\begin{table}[t] \footnotesize
+\caption{Accuracy in the gold-tag perplexity separated subsets.}
+\begin{tabular}{|l|l|l|}
+\hline
+Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
+\hline
+Model 1 & .6697 (.0051) & .4579 (.0005)\\
+Model 2 & .6239 (.0049) & .3075 (.0153)\\
+Model 3 & .7523 (.0065) & .4492 (.0240)\\
+Model 4 & .6697 (.0065) & .4579 (.0052)\\
+Substitutes(Tokens) & .7322 (.0079) & .4671 (.0174)\\
+\hline
+
+\end{tabular}
+\label{tab:bins}
+\end{table}
