@@ -35,5 +35,5 @@ for my $x (sort {$a<=>$b} keys %cnt) {
     my $n = $cnt{$x};
     my $m = $sum{$x} / $n;
     my $v = $sumsq{$x} / $n - $m * $m;
-    printf "%g\t%g\t%g\n", $x, $m, sqrt($v);
+    printf "%g\t%g\t%g\t%g\n", $x, $m, sqrt($v),sqrt($v)*$n/($n-1);
 }
