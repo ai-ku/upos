@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  20 JAN 2013 01:09
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.9.28)  20 JAN 2013 01:44
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -583,11 +583,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[4]
-
-LaTeX Warning: Citation `treebank3' on page 5 undefined on input line 267.
-
-) (./related.tex
+[4]) (./related.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -890,7 +886,7 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-
+) (./features.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -918,8 +914,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[12]) (./features.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[12]
+Underfull \vbox (badness 6188) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1272,8 +1268,8 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  3864 strings out of 495061
- 47420 string characters out of 1182622
- 111759 words of memory out of 3000000
+ 47420 string characters out of 1182621
+ 111783 words of memory out of 3000000
  6891 multiletter control sequences out of 15000+50000
  60309 words of font info for 106 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
@@ -1298,7 +1294,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 394215 bytes).
+Output written on posind_cl.pdf (22 pages, 392483 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

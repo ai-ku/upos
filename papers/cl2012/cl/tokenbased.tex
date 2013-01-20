@@ -17,7 +17,7 @@ of the corresponding pairs.  Ties for the majority are broken
 randomly.  The many-to-one accuracy is \wsxymto\ and the V-measure is
 \wsxyvm\ .
 
-In order to demonstrate the merit of the token based POS induction, we
+In order to demonstrate the merit in the token based POS induction, we
 first define the gold-tag perplexity for the word types as following:
 \begin{equation} \label{eq:tag-perp}
 GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
@@ -25,48 +25,29 @@ GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
 Where $p_w$ is the gold POS tag distribution of the word type $w$ and
 $H(p_w)$ is the entropy of the $p_w$ distribution.
 \begin{table}[t] \footnotesize
-\caption{Accuracy in the gold-tag perplexity bounded subsets. $GP = 1$
-  indicates all the types in the subset have $GP$ of 1. Percentages
-  below the $GP$ bounds indicate the ratio of subset to the test
-  corpus in terms of word tokens. }
-%\begin{tabular}{|l|l|l|l|l|l|l|}
-\begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
+\caption{Accuracy in the gold-tag perplexity separated subsets.}
+\begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
 \hline
-Algorithm & \specialcell{$GP = 1$\\$45.71\%$} & \specialcell{$GP > 1$\\$54.28\%$} & \specialcell{$GP \ge 1.5$\\$14.94\%$} & \specialcell{$GP \ge 2$\\$5.26\%$} & \specialcell{$GP \ge 2.5$\\$2.56\%$} & \specialcell{$GP \ge 3$\\$0.45\%$} \\
+Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
 \hline
-Substitutes(Type) & .7953 (.0080) & .7395 (.0080) & .4868 (.0065) & .4214 (.0164) & .4301 (.0310) &  .3784 (.0356) \\
+Substitutes(Type) & .8054 (.0065) & .4383 (.0104)\\
 \hline
-Substitutes(Tokens) & .7234 (.0084) & .6860 (.0069) & .4846 (.0096) & .4515 (.0126) & .4427 (.0231) & .4804 (.0285) \\
+Substitutes(Tokens) & .7322 (.0079) & .4671 (.0174)\\
 \hline
 \end{tabular}
 \label{tab:bins}
 \end{table}
-Gold-tag perplexity is used to determine how often a word type is
-associated with different POS tags in the test corpus.  $GP(w) = 1$
-means that the word type $w$ is observed with the same POS tag
-throughout the test corpus.  As the $GP$ of the word type $w$
-increases one-tag assumption for the type yields lower \mto\ score.
-We extracted six subsets of the test corpus according to the gold-tag
-perplexities of the words. We performed \mto\ evaluation on the the
-full clustering output and obtained the cluster -- gold-tag
-mappings. Using the mappings obtained over the full test corpus, we
+Gold-tag perplexity ($GP$) is used to determine the POS ambiguity of
+the word types, relating how often a word type is associated with
+different POS tags in the test corpus.  A $GP$ of 1 for a word type
+$w$ indicates $w$ is associated with same POS tag throughout the test
+corpus, meaning the word type $w$'s POS is unambiguous.  As the $GP$
+increases ambiguity for the word types increases and poses a handicap
+for induction models that limits tag variety for the word types.  To
+display the limitations, we split the test corpus in two subsets: word
+types with $GP$ less than 1.75 and word types with $GP$ equal or greater
+than 1.75.  We performed \mto\ evaluation on the the whole test corpus
+induction output and obtained the induced-tag -- gold-tag
+mappings. Using the mappings obtained over the test corpus, we
 evaluated the accuracy in the subsets.  Table~\ref{tab:bins} presents
-the evaluation over the gold-tag perplexity separated subsets.
-
-%% All      1173766        0.703076        0.00700834
-%% <=1        536541       0.723387        0.00844841
-%% >1         637225       0.685974        0.00685811
-%% >=1.5   175395  0.484562        0.00958399
-%% >=2          61733      0.451457        0.0125981
-%% >=2.5     30073 0.442746        0.0231384
-%% >=3            5330     0.480432        0.0284621
-
-%% Type(X) bins
-%% bin     tokens     m2o               std
-%% All     1173766   0.765002        0.00613244
-%% <=1     536541   0.795261        0.00804522
-%% >1       637225   0.739524        0.00795117
-%% >=1.5  175395   0.486808        0.00647458
-%% >=2       61733   0.421413        0.0164438
-%% >=2.5    30073   0.430133        0.0309678
-%% >=3        5330    0.378368        0.035568
+the evaluation over the subsets.
