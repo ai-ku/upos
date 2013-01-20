@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  21 JAN 2013 00:59
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  21 JAN 2013 01:02
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -925,12 +925,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [12]
-! Double subscript.
-l.61 $\psi_y$ ($\psi_y1$ and $\psi_y_
-                                     2$ in the fourth model) embeddings of
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1310,7 +1304,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 397458 bytes).
+Output written on posind_cl.pdf (22 pages, 397592 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
