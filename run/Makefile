@@ -4,7 +4,7 @@ bin:
 
 ## ### GENERAL setup:
 SEED=1 # Random seed
-NCPU=10 # Number of threads/processes to use for parallel computations
+NCPU=40 # Number of threads/processes to use for parallel computations
 SRILM_PATH=/opt/srilm/bin/i686-m64
 export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 LM_DISCOUNT=-kndiscount
