@@ -54,41 +54,35 @@ the evaluation over the subsets.
 
 \subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
 
-In order to compare the paradigmatic and the syntagmatic context
-representations we feed four different syntagmatic representations
-defined in Section \ref{sec:representations} to the S-CODE.  The first
-model accepts word ($X$) - right word ($Y$) pairs as the input, the
-second model accepts word ($X$) - left word($Y$) pairs as the input,
-the third model accepts word ($X$) - concatenation of the left and
-right words ($Y$) pairs as the input \cite{mintz2003frequent} and the
-final model accepts words ($X$) - left word($Y_1$) and right word
-($Y_2$) tuples as the input to the S-CODE \cite{20674613}.
-
-Following the previous section we concatinate the 25-dimensional
-$\phi_x$ and $\psi_y$ embeddings of the corresponding observed pairs
-(tuples in the fourth model) and represent the first three models
-outputs with a 50-dimensional while represent the last model output
-with 75-dimensional vectors.  The resulting vectors are clustered
-using k-means algorithm with 128 restarts. 
+In order to compare the token clustering performance of the
+paradigmatic and the syntagmatic context representations we use the
+same 4 models defined in Section~\ref{sec:bigram}.  Following the
+previous section we concatinate the 25-dimensional $\phi_x$ and
+$\psi_y$ ($\psi_y1$ and $\psi_y_2$ in the fourth model) embeddings of
+the corresponding observed pairs (tuples in the fourth model) and
+represent the first three models outputs with a 50-dimensional vectors
+(75-dimensional vectors in the fourth model).  The resulting vectors
+are clustered using k-means algorithm with 128 restarts.
 
 \begin{equation} \label{eq:tag-perp}
 GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
 \end{equation}
 Where $p_w$ is the gold POS tag distribution of the word type $w$ and
 $H(p_w)$ is the entropy of the $p_w$ distribution.
-\begin{table}[t] \footnotesize
-\caption{Accuracy in the gold-tag perplexity separated subsets.}
-\begin{tabular}{|l|l|l|}
+\begin{table}[t]
+\caption{Accuracies of the token based S-CODE models on the gold-tag
+  perplexity separated subsets.}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
+Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1.0$\\$100\%$}\\
 \hline
-Model 1 & .6697 (.0051) & .4579 (.0005)\\
-Model 2 & .6239 (.0049) & .3075 (.0153)\\
-Model 3 & .7523 (.0065) & .4492 (.0240)\\
-Model 4 & .6697 (.0065) & .4579 (.0052)\\
-Substitutes(Tokens) & .7322 (.0079) & .4671 (.0174)\\
+$X$ (word) - $Y$ (left bigram) & .5950 (.0051) & .4783 (.0005) & .5821 (.0041)\\
+$X$ (word) - $Y$ (right bigram) & .6239 (.0049) & .3075 (.0153) & .5891 (.0046)\\
+$X$ (word) - $Y$ (left and right bigram concatenation) & .7523 (.0065) & .4492 (.0240) & .7190 (.0049)\\
+$X$ (word) - $Y_1$, $Y_2$ (left and right bigrams) & .6697 (.0065) & .4579 (.0052) & .6464 (.0051)\\
+$X$ (word) - $Y$ (random substitutes) & .7322 (.0079) & .4671 (.0174) & .7030 (.0073)\\
 \hline
 
 \end{tabular}
-\label{tab:bins}
+\label{tab:tokens}
 \end{table}
