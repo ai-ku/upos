@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  21 JAN 2013 01:02
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.9.28)  21 JAN 2013 02:12
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -850,33 +850,9 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[11 <./plot-s-cl.pdf> <./plot-d-cl.pdf> <./plot-z-cl.pdf>]
+[11 <./plot-s-cl.pdf> <./plot-d-cl.pdf> <./plot-z-cl.pdf>]) (./tokenbased.tex
 ! Undefined control sequence.
-l.296 ...okens) (Sec.~\ref{sec:tokens}) & \wsxymto
-                                                   & \wsxyvm \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.296 ...c.~\ref{sec:tokens}) & \wsxymto & \wsxyvm
-                                                   \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Overfull \hbox (17.82173pt too wide) in paragraph at lines 284--317
-[][] []
- []
-
-) (./tokenbased.tex
-! Undefined control sequence.
-l.17 \wsxymto
+l.19 \wsxymto
              \ and the V-measure is \wsxyvm\ .
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -885,16 +861,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
-l.17 \wsxymto\ and the V-measure is \wsxyvm
+l.19 \wsxymto\ and the V-measure is \wsxyvm
                                            \ .
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -925,6 +898,14 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [12]
+Overfull \hbox (33.20512pt too wide) in paragraph at lines 74--87
+[][]
+ []
+
+) (./features.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -953,11 +934,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [13]
-Overfull \hbox (33.20512pt too wide) in paragraph at lines 75--88
-[][]
- []
-
-) (./features.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -994,10 +970,7 @@ Overfull \hbox (4.90334pt too wide) in paragraph at lines 7--38
 [][]
  []
 
-
-Underfull \vbox (badness 1102) has occurred while \output is active []
-
-
+)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1025,35 +998,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[15])
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[16] (./multitable.tex
+[15] (./multitable.tex
 Overfull \vbox (11.50397pt too high) detected at line 27
  []
 
@@ -1119,7 +1064,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[17]) (./discussion.tex <hinton.png, id=108, 566.5968pt x 305.7021pt>
+[16]) (./discussion.tex <hinton.png, id=104, 566.5968pt x 305.7021pt>
 File: hinton.png Graphic file (type png)
 
 <use hinton.png>
@@ -1153,7 +1098,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[18]
+[17]
+Underfull \vbox (badness 1596) has occurred while \output is active []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1181,7 +1129,38 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[19 <./hinton.png>]) (./contribution.tex) (./posind_cl.bbl
+[18]) (./contribution.tex
+Underfull \vbox (badness 8056) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[19 <./hinton.png>]) (./posind_cl.bbl
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1277,13 +1256,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3866 strings out of 495061
- 47449 string characters out of 1182622
- 111778 words of memory out of 3000000
- 6893 multiletter control sequences out of 15000+50000
+ 3867 strings out of 495061
+ 47465 string characters out of 1182621
+ 121778 words of memory out of 3000000
+ 6894 multiletter control sequences out of 15000+50000
  60309 words of font info for 106 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,16n,25p,856b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,25p,856b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/ty
 pe1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/public/
@@ -1304,7 +1283,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 397592 bytes).
+Output written on posind_cl.pdf (22 pages, 395760 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -1,6 +1,8 @@
 \section{POS Induction for Word Tokens}
 \label{sec:tokens}
 
+\subsection{Random Substitutes for Word Tokens}\label{sec:wordsub-xy}
+
 In this section, we extend the random-substitutes algorithm presented
 earlier to perform POS induction for the word tokens rather than the
 word types.  We use the same settings in the Section~\ref{sec:wordsub}
@@ -23,6 +25,7 @@ GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
 \end{equation}
 Where $p_w$ is the gold POS tag distribution of the word type $w$ and
 $H(p_w)$ is the entropy of the $p_w$ distribution.
+
 \begin{table}[t] \footnotesize
 \caption{Accuracy in the gold-tag perplexity separated subsets.}
 \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
@@ -57,18 +60,14 @@ the evaluation over the subsets.
 In order to compare the token clustering performance of the
 paradigmatic and the syntagmatic context representations we use the
 same 4 models defined in Section~\ref{sec:bigram}.  Following the
-previous section we concatinate the 25-dimensional $\phi_x$ and
-$\psi_y$ ($\psi_{y_{1}}$ and $\psi_{y_{2}}$ in the fourth model) embeddings of
-the corresponding observed pairs (tuples in the fourth model) and
-represent the first three models outputs with a 50-dimensional vectors
-(75-dimensional vectors in the fourth model).  The resulting vectors
-are clustered using k-means algorithm with 128 restarts.
+previous section we concatenate the 25-dimensional $\phi_x$ and
+$\psi_y$ ($\psi_{y_{1}}$ and $\psi_{y_{2}}$ in the fourth model)
+embeddings of the corresponding observed pairs (tuples in the fourth
+model) and represent the first three models outputs with a
+50-dimensional vectors (75-dimensional vectors in the fourth model).
+The resulting vectors are clustered using k-means algorithm with 128
+restarts.
 
-\begin{equation} \label{eq:tag-perp}
-GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
-\end{equation}
-Where $p_w$ is the gold POS tag distribution of the word type $w$ and
-$H(p_w)$ is the entropy of the $p_w$ distribution.
 \begin{table}[t]
 \caption{Accuracies of the token based S-CODE models on the gold-tag
   perplexity separated subsets.}
