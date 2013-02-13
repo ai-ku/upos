@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.5)  21 JAN 2013 18:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.2)  30 JAN 2013 14:40
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -459,6 +459,9 @@ File: paradigmatic.png Graphic file (type png)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 23.
 
+Underfull \vbox (badness 1484) has occurred while \output is active []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -525,6 +528,24 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [2 <./paradigmatic.png (PNG copy)>]
+
+LaTeX Warning: Citation `20674613' on page 3 undefined on input line 27.
+
+
+LaTeX Warning: Citation `macwhinney2000childes' on page 3 undefined on input li
+ne 43.
+
+
+LaTeX Warning: Citation `20674613' on page 3 undefined on input line 58.
+
+
+LaTeX Warning: Citation `20674613' on page 3 undefined on input line 74.
+
+
+LaTeX Warning: Citation `manning99foundations' on page 3 undefined on input lin
+e 77.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -612,7 +633,14 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [5]
-Underfull \vbox (badness 2913) has occurred while \output is active []
+
+LaTeX Warning: Citation `20674613' on page 6 undefined on input line 53.
+
+
+LaTeX Warning: Citation `20674613' on page 6 undefined on input line 65.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -712,8 +740,12 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [8]) (./experiments.tex
+
+LaTeX Warning: Citation `yuret2012fastsub' on page 9 undefined on input line 21
+.
+
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 23.
- (/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
+(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 Underfull \vbox (badness 1675) has occurred while \output is active []
@@ -791,6 +823,10 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [10]
+
+LaTeX Warning: Citation `20674613' on page 11 undefined on input line 232.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -822,6 +858,9 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [11 <./plot-s-cl.pdf> <./plot-d-cl.pdf> <./plot-z-cl.pdf>]) (./tokenbased.tex
+Underfull \vbox (badness 2726) has occurred while \output is active []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1208,10 +1247,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3867 strings out of 495061
- 47465 string characters out of 1182622
- 121842 words of memory out of 3000000
- 6894 multiletter control sequences out of 15000+50000
+ 3875 strings out of 495061
+ 47625 string characters out of 1182622
+ 121958 words of memory out of 3000000
+ 6902 multiletter control sequences out of 15000+50000
  60309 words of font info for 106 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,15n,25p,856b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1235,7 +1274,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 395771 bytes).
+Output written on posind_cl.pdf (22 pages, 396115 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
