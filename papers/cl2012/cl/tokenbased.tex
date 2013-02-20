@@ -1,12 +1,12 @@
-\section{POS Induction for Word Tokens}
-\label{sec:tokens}
+\subsection{POS Induction of Word Tokens}
+\label{sec:pos-token}
 
-\subsection{Random Substitutes for Word Tokens}\label{sec:wordsub-xy}
+\subsubsection{Random Substitutes}
+\label{sec:wordsub-token}
 
-In this section, we extend the random-substitutes algorithm presented
-earlier to perform POS induction for the word tokens rather than the
-word types.  We use the same settings in the Section~\ref{sec:wordsub}
-and generate word ($X$) -- random-substitute ($Y$) pairs as the input
+We extend the random-substitutes algorithm presented earlier to
+perform POS induction for the word tokens rather than the word types.
+We generate word ($X$) -- random-substitute ($Y$) pairs as the input
 to the S-CODE.  For each observed $X$ -- $Y$ pair in the S-CODE input,
 corresponding 25-dimensional $\phi_x$ and $\psi_y$ embedding vectors
 are concatenated to create a 50-dimensional representation.  The
@@ -55,11 +55,12 @@ mappings. Using the mappings obtained over the test corpus, we
 evaluated the accuracy in the subsets.  Table~\ref{tab:bins} presents
 the evaluation over the subsets.
 
-\subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+\subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+\label{sec:bigram-token}
 
 In order to compare the token clustering performance of the
 paradigmatic and the syntagmatic context representations we use the
-same 4 models defined in Section~\ref{sec:bigram}.  Following the
+same 4 models defined in Section~\ref{sec:bigram-type}.  Following the
 previous section we concatenate the 25-dimensional $\phi_x$ and
 $\psi_y$ ($\psi_{y_{1}}$ and $\psi_{y_{2}}$ in the fourth model)
 embeddings of the corresponding observed pairs (tuples in the fourth

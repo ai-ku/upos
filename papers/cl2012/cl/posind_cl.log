@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.2)  30 JAN 2013 14:40
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.9.28)  20 FEB 2013 19:04
 entering extended mode
  %&-line parsing enabled.
 **\nonstopmode\input posind_cl.tex
@@ -528,24 +528,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [2 <./paradigmatic.png (PNG copy)>]
-
-LaTeX Warning: Citation `20674613' on page 3 undefined on input line 27.
-
-
-LaTeX Warning: Citation `macwhinney2000childes' on page 3 undefined on input li
-ne 43.
-
-
-LaTeX Warning: Citation `20674613' on page 3 undefined on input line 58.
-
-
-LaTeX Warning: Citation `20674613' on page 3 undefined on input line 74.
-
-
-LaTeX Warning: Citation `manning99foundations' on page 3 undefined on input lin
-e 77.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -574,180 +556,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[4]) (./related.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[5]
-
-LaTeX Warning: Citation `20674613' on page 6 undefined on input line 53.
-
-
-LaTeX Warning: Citation `20674613' on page 6 undefined on input line 65.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[6]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[7]
-Underfull \hbox (badness 4120) in paragraph at lines 212--226
-\T1/ptm/m/n/10 We re-port many-to-one and V-measure scores for our ex-per-i-men
-ts as sug-gested in
- []
-
-) (./scode.tex
-
-LaTeX Warning: Reference `sec:subthr' on page 8 undefined on input line 23.
-
-
-Underfull \vbox (badness 4792) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (42.0pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (722.7pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (37.5pt too high) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (659.52pt too high) has occurred while \output is active []
-
-
-[8]) (./experiments.tex
-
-LaTeX Warning: Citation `yuret2012fastsub' on page 9 undefined on input line 21
-.
-
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 23.
-(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
 Underfull \vbox (badness 1675) has occurred while \output is active []
 
 
@@ -778,13 +586,183 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[9]
-Overfull \hbox (15.82173pt too wide) in paragraph at lines 58--90
-[][] []
+[4]) (./related.tex
+
+LaTeX Warning: Reference `sec:code' on page 5 undefined on input line 44.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[6]
+Underfull \hbox (badness 4120) in paragraph at lines 212--226
+\T1/ptm/m/n/10 We re-port many-to-one and V-measure scores for our ex-per-i-men
+ts as sug-gested in
  []
 
+) (./scode.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `sec:subthr' on page 10 undefined on input line 95.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[7]
+Underfull \vbox (badness 2818) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[8]) (./experiments.tex
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 63.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (42.0pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (722.7pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (37.5pt too high) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (659.52pt too high) has occurred while \output is active []
+
+
+[9]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 108.
+
+
+LaTeX Warning: Reference `sec:tokens' on page 10 undefined on input line 108.
+
+
+LaTeX Warning: Reference `sec:bigram' on page 10 undefined on input line 109.
+
+
+LaTeX Warning: Reference `sec:wordsub' on page 10 undefined on input line 111.
+
+
+Overfull \hbox (22.8458pt too wide) in paragraph at lines 97--129
+[][] []
+ []
 
 <plot-s-cl.pdf, id=46, 216.81pt x 144.54pt>
 File: plot-s-cl.pdf Graphic file (type pdf)
@@ -823,13 +801,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [10]
-
-LaTeX Warning: Citation `20674613' on page 11 undefined on input line 232.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -858,9 +829,6 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [11 <./plot-s-cl.pdf> <./plot-d-cl.pdf> <./plot-z-cl.pdf>]) (./tokenbased.tex
-Underfull \vbox (badness 2726) has occurred while \output is active []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -889,12 +857,12 @@ Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
 [12]
-Overfull \hbox (33.20512pt too wide) in paragraph at lines 74--87
+Overfull \hbox (33.20512pt too wide) in paragraph at lines 75--88
 [][]
  []
 
 ) (./features.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1092) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -952,7 +920,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[14]) (./multibest.tex (./datatable.tex
+[14]) (./multibest.tex
+
+LaTeX Warning: Reference `sec:code' on page 15 undefined on input line 14.
+
+(./datatable.tex
 Overfull \vbox (12.15997pt too high) detected at line 11
  []
 
@@ -1028,6 +1000,10 @@ Overfull \vbox (11.50397pt too high) detected at line 22
  []
 
 )
+
+LaTeX Warning: Reference `sec:wordsub' on page 16 undefined on input line 120.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1055,7 +1031,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Overfull \vbox (659.52pt too high) has occurred while \output is active []
 
 
-[16]) (./discussion.tex <hinton.png, id=104, 566.5968pt x 305.7021pt>
+[16]
+
+LaTeX Warning: Reference `sec:bigram' on page 17 undefined on input line 126.
+
+) (./discussion.tex <hinton.png, id=104, 566.5968pt x 305.7021pt>
 File: hinton.png Graphic file (type png)
 
 <use hinton.png>
@@ -1247,11 +1227,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3875 strings out of 495061
- 47625 string characters out of 1182622
- 121958 words of memory out of 3000000
+ 3876 strings out of 495061
+ 47602 string characters out of 1182621
+ 121875 words of memory out of 3000000
  6902 multiletter control sequences out of 15000+50000
- 60309 words of font info for 106 fonts, out of 3000000 for 9000
+ 63112 words of font info for 108 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,15n,25p,856b,303s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
@@ -1274,7 +1254,7 @@ circle1.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on posind_cl.pdf (22 pages, 396115 bytes).
+Output written on posind_cl.pdf (22 pages, 396652 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

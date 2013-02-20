@@ -1,52 +1,91 @@
-\section{POS Induction for Word Types}
-\label{sec:types}
+\section{Experiments}
+\label{sec:exp}
 
-%\subsection{S-Code and Substitute Vector Application}
+Section~\ref{sec:expset} details the test corpus to be induced and
+experiment parameters used in the rest of this work.
+
+The S-CODE algorithm (Section~\ref{sec:codethr}) works with discrete
+inputs.  The substitute vectors as described in
+Section~\ref{sec:subcomp} are high dimensional and continuous.
+Section~\ref{sec:wordsub-type} introduces a simple method to
+discretize the substitute vectors by randomly sampling from the
+distributions for the POS induction of the word types.
+Section~\ref{sec:wordsub-token} leverages the same random sampling
+idea and applies it to the POS induction of word tokens by adding a
+post--processing step to the output of the S-CODE algorithm.
+
+Section~\ref{sec:bigram-type} and Section~\ref{sec:bigram-token} aim
+to compare our paradigmatic representation of the word context to
+previously described syntagmatic representations of the word context
+for word types and word tokens, respectively.
+Section~\ref{sec:bigram-type} also replicates the bigram based S-CODE
+results from \cite{maron2010sphere}.
+
+Section~\ref{sec:feat} explores morphological and orthographic
+features as additional sources of information for POS induction of
+word types and its results improve the state-of-the-art in the field
+of POS induction.
+
 \subsection{Experimental Settings}\label{sec:expset}
 
-To make a meaningful comparison on the PTB we ran all the experiments
-using the following default settings (unless otherwise stated): (i)
-each word was kept with its original capitalization, (ii) the learning
-rate parameters were set to $\varphi_0=50$, $\eta_0=0.2$ for faster
-convergence in log likelihood, (iii) the number of S-CODE iterations
-were set to 50 million, (iv) the S-CODE dimensions and $Z$ were set to
-25 and 0.166, respectively, (v) a modified k-means algorithm with
-smart initialization was used \cite{arthur2007k}, and (vi) the number
-of k-means restarts were set to 128 to improve clustering and reduce
-variance.
+To make a meaningful comparison to the previous works
+% what is the test data
+the Wall Street Journal Section of the Penn Treebank (PTB) \cite{treebank3}
+was used as the test corpus (1,173,766 tokens, 49,206 types) to be
+induced.
+% what is the tag set
+The treebank uses 45 part-of-speech tags which is the set we used as
+the gold standard for comparison in our experiments.
+
+% what is the LM training data
+%Train => 5181717 126019973 690121813
+To compute substitute probabilities we trained a language model using
+approximately 126 million tokens of Wall Street Journal data
+(1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding
+sections of the PTB).
+% how is the language model trained
+We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
+Kneser-Ney discounting.
+% what is the vocabulary
+Words that were observed less than 20 times in the language model
+training data were replaced by \textsc{unk} tags, which gave us a
+vocabulary size of 78,498.
+% what is the test data
+% perplexity
+The perplexity of the 4-gram language model on the test corpus is 96.
 
 For computational efficiency only the top 100 substitutes and their
 unnormalized probabilities were computed for each positions in the PTB
-(1,173,766 tokens, 49,206 types) using the {\sc fastsubs} algorithm
+% (1,173,766 tokens, 49,206 types)
+using the {\sc fastsubs} algorithm
 \cite{yuret2012fastsub}\footnote{The substitutes with unnormalized log
   probabilities can be downloaded from
   \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors for
 each position were normalized to add up to 1.0 giving us the final
 substitute vectors used in the rest of this study.
 
-%% Section~\ref{sec:dist} shows that low probability substitutes are
-%% relatively unimportant thus for computational efficiency only the top
-%% 100 substitutes and their unnormalized probabilities were computed for
-%% each positions in the PTB (1,173,766 tokens, 49,206 types) using the
-%% {\sc fastsubs} algorithm \cite{yuret2012fastsub}\footnote{The
-%%   substitutes with unnormalized log probabilities can be downloaded
-%%   from \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors
-%% for each position were normalized to add up to 1.0 giving us the final
-%% substitute vectors used in the rest of this study.  We set the
-%% vocabulary threshold to 20 which increases the vocabulary size to
-%% 78,498.
-
-% \footnote{Reducing the vocabulary threshold to 20 from 500
-
-%  increases the vocabulary size to 78,498 from 12,672. }
+% To make a meaningful comparison on the PTB
+The experiments were run using the following default settings (unless
+otherwise stated): (i) each word was kept with its original
+capitalization, (ii) the learning rate parameters were set to
+$\varphi_0=50$, $\eta_0=0.2$ for faster convergence in log likelihood,
+(iii) the number of S-CODE iterations were set to 50 million, (iv) the
+S-CODE dimensions and $Z$ were set to 25 and 0.166, respectively, (v)
+a modified k-means algorithm with smart initialization was used
+\cite{arthur2007k}, and (vi) the number of k-means restarts were set
+to 128 to improve clustering and reduce variance.
 
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this section and the ones we cite from the literature.
 
-\subsection{Random Substitutes}\label{sec:wordsub}
-%\subsection{Random Partitions}\label{sec:rpart}
+\subsection{POS Induction of Word Types}
+\label{sec:pos-type}
+
+\subsubsection{Random Substitutes}
+\label{sec:wordsub-type}
+
 \begin{table*}[t] \footnotesize
 \caption{Summary of results in terms of the \mto\ and \vm\ scores.
   Standard errors are given in parentheses when available.  Starred
@@ -92,7 +131,7 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 To obtain a discrete representation of the context, the
 random-substitutes algorithm pairs each word token with a substitute
 sampled from the pre-computed substitute vectors generated from the
-word token's context (see Section~\ref{sec:subthr}) and word ($X$) --
+word token's context (see Section~\ref{sec:subcomp}) and word ($X$) --
 random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
 possible (and beneficial, see below) to run the random-substitutes
 algorithm on the data more than once to generate more pairs from the
@@ -218,8 +257,8 @@ significantly better than the state-of-the-art distributional models.
 %% \label{plot-s}
 %% \end{figure}
 
-\subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
-\label{sec:bigram}
+\subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+\label{sec:bigram-type}
 
 To get a direct comparison of the paradigmatic and syntagmatic context
 representations we feed 4 different co-occurrences defined in

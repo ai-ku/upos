@@ -182,70 +182,70 @@ first example consist of words that can act as determiners: its
 %% Section~\ref{sec:clustering} presents a comparison of clustering
 %% methods on the PTB.
 
-\subsection{Computation of Substitute Vectors}
-\label{sec:subcomp}
+%% \subsection{Computation of Substitute Vectors}
+%% \label{sec:subcomp}
 
-In this study, we predict the syntactic category of a word in a given
-context based on its substitute vector.  The dimensions of the
-substitute vector represent words in the vocabulary, and the entries
-in the substitute vector represent the probability of those words
-being used in the given context.  Note that the substitute vector is a
-function of the context only and is indifferent to the target word.
+%% In this study, we predict the syntactic category of a word in a given
+%% context based on its substitute vector.  The dimensions of the
+%% substitute vector represent words in the vocabulary, and the entries
+%% in the substitute vector represent the probability of those words
+%% being used in the given context.  Note that the substitute vector is a
+%% function of the context only and is indifferent to the target word.
 
-%This section details the choice of the data set, the vocabulary and
-%the estimation of substitute vector probabilities.
+%% %This section details the choice of the data set, the vocabulary and
+%% %the estimation of substitute vector probabilities.
 
-%% % what is the test data
-%% The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
-%% was used as the test corpus (1,173,766 tokens, 49,206 types).
-%% % what is the tag set
-%% The treebank uses 45 part of speech tags which is the set we used as
-%% the gold standard for comparison in our experiments.
-%% % what is the LM training data
-%% %Train => 5181717 126019973 690121813
-%% To compute substitute probabilities we trained a language model using
-%% approximately 126 million tokens of Wall Street Journal data
-%% (1987-1994) extracted from CSR-III Text \cite{csr3text} (we excluded
-%% the test corpus).
-%% % how is the language model trained
-%% We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
-%% Kneser-Ney discounting.
-%% % what is the vocabulary
-%% Words that were observed less than 20 times in the language model
-%% training data were replaced by \textsc{unk} tags, which gave us a
-%% vocabulary size of 78,498.
-%% % perplexity
-%% The perplexity of the 4-gram language model on the test corpus is 96.
+%% %% % what is the test data
+%% %% The Wall Street Journal Section of the Penn Treebank \cite{treebank3}
+%% %% was used as the test corpus (1,173,766 tokens, 49,206 types).
+%% %% % what is the tag set
+%% %% The treebank uses 45 part of speech tags which is the set we used as
+%% %% the gold standard for comparison in our experiments.
+%% %% % what is the LM training data
+%% %% %Train => 5181717 126019973 690121813
+%% %% To compute substitute probabilities we trained a language model using
+%% %% approximately 126 million tokens of Wall Street Journal data
+%% %% (1987-1994) extracted from CSR-III Text \cite{csr3text} (we excluded
+%% %% the test corpus).
+%% %% % how is the language model trained
+%% %% We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
+%% %% Kneser-Ney discounting.
+%% %% % what is the vocabulary
+%% %% Words that were observed less than 20 times in the language model
+%% %% training data were replaced by \textsc{unk} tags, which gave us a
+%% %% vocabulary size of 78,498.
+%% %% % perplexity
+%% %% The perplexity of the 4-gram language model on the test corpus is 96.
 
-% how are the substitutes computed
-It is best to use both the left and the right context when estimating the
-probabilities for potential lexical substitutes.  For example, in
-\emph{``He lived in San Francisco suburbs.''}, the token \emph{San}
-would be difficult to guess from the left context but it is almost
-certain looking at the right context.  We define $c_w$ as the $2n-1$
-word window centered around the target word position: $w_{-n+1} \ldots
-w_0 \ldots w_{n-1}$ ($n=4$ is the n-gram order).  The probability of a
-substitute word $w$ in a given context $c_w$ can be estimated as:
-\begin{eqnarray}
-  \label{eq:lm1}P(w_0 = w | c_w) & \propto & P(w_{-n+1}\ldots w_0\ldots w_{n-1})\\
-  \label{eq:lm2}& = & P(w_{-n+1})P(w_{-n+2}|w_{-n+1})\nonumber\\
-  &&\ldots P(w_{n-1}|w_{-n+1}^{n-2})\\
-  \label{eq:lm3}& \approx & P(w_0| w_{-n+1}^{-1})P(w_{1}|w_{-n+2}^0)\nonumber\\
-  &&\ldots P(w_{n-1}|w_0^{n-2})
-\end{eqnarray}
-where $w_i^j$ represents the sequence of words $w_i w_{i+1} \ldots
-w_{j}$.  In Equation \ref{eq:lm1}, $P(w|c_w)$ is proportional to
-$P(w_{-n+1}\ldots w_0 \ldots w_{n-1})$ because the words of the
-context are fixed.  Terms without $w_0$ are identical for each
-substitute in Equation \ref{eq:lm2} therefore they have been dropped
-in Equation \ref{eq:lm3}.  Finally, because of the Markov property of
-n-gram language model, only the closest $n-1$ words are used in the
-experiments.
+%% % how are the substitutes computed
+%% It is best to use both the left and the right context when estimating the
+%% probabilities for potential lexical substitutes.  For example, in
+%% \emph{``He lived in San Francisco suburbs.''}, the token \emph{San}
+%% would be difficult to guess from the left context but it is almost
+%% certain looking at the right context.  We define $c_w$ as the $2n-1$
+%% word window centered around the target word position: $w_{-n+1} \ldots
+%% w_0 \ldots w_{n-1}$ ($n=4$ is the n-gram order).  The probability of a
+%% substitute word $w$ in a given context $c_w$ can be estimated as:
+%% \begin{eqnarray}
+%%   \label{eq:lm1}P(w_0 = w | c_w) & \propto & P(w_{-n+1}\ldots w_0\ldots w_{n-1})\\
+%%   \label{eq:lm2}& = & P(w_{-n+1})P(w_{-n+2}|w_{-n+1})\nonumber\\
+%%   &&\ldots P(w_{n-1}|w_{-n+1}^{n-2})\\
+%%   \label{eq:lm3}& \approx & P(w_0| w_{-n+1}^{-1})P(w_{1}|w_{-n+2}^0)\nonumber\\
+%%   &&\ldots P(w_{n-1}|w_0^{n-2})
+%% \end{eqnarray}
+%% where $w_i^j$ represents the sequence of words $w_i w_{i+1} \ldots
+%% w_{j}$.  In Equation \ref{eq:lm1}, $P(w|c_w)$ is proportional to
+%% $P(w_{-n+1}\ldots w_0 \ldots w_{n-1})$ because the words of the
+%% context are fixed.  Terms without $w_0$ are identical for each
+%% substitute in Equation \ref{eq:lm2} therefore they have been dropped
+%% in Equation \ref{eq:lm3}.  Finally, because of the Markov property of
+%% n-gram language model, only the closest $n-1$ words are used in the
+%% experiments.
 
-Near the sentence boundaries the appropriate terms were truncated in
-Equation \ref{eq:lm3}.  Specifically, at the beginning of the sentence
-shorter n-gram contexts were used and at the end of the sentence terms
-beyond the end-of-sentence token were dropped.  
+%% Near the sentence boundaries the appropriate terms were truncated in
+%% Equation \ref{eq:lm3}.  Specifically, at the beginning of the sentence
+%% shorter n-gram contexts were used and at the end of the sentence terms
+%% beyond the end-of-sentence token were dropped.  
 
 %% Rest of this section details the choice of the data set, the
 %% vocabulary and the estimation of substitute probabilities.
@@ -262,26 +262,26 @@ beyond the end-of-sentence token were dropped.
 %% position were normalized to add up to 1.0 giving us the final
 %% substitute vectors used in the rest of this study.
 
-% what is the test data
-The Wall Street Journal Section of the Penn Treebank (PTB) \cite{treebank3}
-was used as the test corpus (1,173,766 tokens, 49,206 types) to be
-induced.
-% what is the tag set
-The treebank uses 45 part-of-speech tags which is the set we used as
-the gold standard for comparison in our experiments.
-% what is the LM training data
-%Train => 5181717 126019973 690121813
-To compute substitute probabilities we trained a language model using
-approximately 126 million tokens of Wall Street Journal data
-(1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding
-sections of the PTB).
-% how is the language model trained
-We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
-Kneser-Ney discounting.
-% what is the vocabulary
-Words that were observed less than 20 times in the language model
-training data were replaced by \textsc{unk} tags, which gave us a
-vocabulary size of 78,498.
-% what is the test data
-% perplexity
-The perplexity of the 4-gram language model on the test corpus is 96.
+%% % what is the test data
+%% The Wall Street Journal Section of the Penn Treebank (PTB) \cite{treebank3}
+%% was used as the test corpus (1,173,766 tokens, 49,206 types) to be
+%% induced.
+%% % what is the tag set
+%% The treebank uses 45 part-of-speech tags which is the set we used as
+%% the gold standard for comparison in our experiments.
+%% % what is the LM training data
+%% %Train => 5181717 126019973 690121813
+%% To compute substitute probabilities we trained a language model using
+%% approximately 126 million tokens of Wall Street Journal data
+%% (1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding
+%% sections of the PTB).
+%% % how is the language model trained
+%% We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
+%% Kneser-Ney discounting.
+%% % what is the vocabulary
+%% Words that were observed less than 20 times in the language model
+%% training data were replaced by \textsc{unk} tags, which gave us a
+%% vocabulary size of 78,498.
+%% % what is the test data
+%% % perplexity
+%% The perplexity of the 4-gram language model on the test corpus is 96.
