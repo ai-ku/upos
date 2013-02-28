@@ -4,7 +4,7 @@ bin:
 
 ## ### GENERAL setup:
 SEED=1 # Random seed
-NCPU=20 # Number of threads/processes to use for parallel computations
+NCPU=10 # Number of threads/processes to use for parallel computations
 SRILM_PATH=/opt/srilm/bin/i686-m64
 export PATH := ../../bin:.:${SRILM_PATH}:${PATH} # Binaries in the bin directory
 LM_DISCOUNT=-kndiscount
@@ -520,8 +520,8 @@ DISXY_NSUB=64
 
 dis+xy.%.out: %.sub.gz %.words.gz %.pos.gz
 	dis+xy-args.pl ${LANG_CL} ${LANGUAGE} ${DISXY_NSUB} | xargs -n${DISXY_NARGS} -P${NCPU} dis+xy-run.pl > $@
-	paste token*.out | gzip > token.out.gz
-	-rm token*.out
+	paste xytoken*.out | gzip > xytoken.out.gz
+	-rm xytoken*.out
 
 dis+xyplot-s.%.dat: dis+xy.%.out
 	cat $< | plotdata.pl 1=x 4=y > $@
@@ -529,6 +529,23 @@ dis+xyplot-s.%.dat: dis+xy.%.out
 dis+xyplot-v.%.dat: dis+xy.%.out
 	cat $< | plotdata.pl 1=x 7=y > $@
 
+### SCODE X+Y Featuresexperiments
+DISFXY_NARGS=5
+DISFXY_NSUB=64
+DISFXY_FEAT=test.$*.dis+omxyfeat.gz
+
+dis+omxy.%.out: %.seg.gz %.sub.gz %.words.gz %.pos.gz 
+	feature-table.pl ${DIS_FEAT_OPT} -s $< -w $*.words.gz | gzip > ${DISFXY_FEAT}
+	dis+omxy-args.pl ${LANG_CL} ${LANGUAGE} ${DISFXY_NSUB} ${DISFXY_FEAT} | xargs -n${DISFXY_NARGS} -P${NCPU} dis+omxy-run.pl > $@
+	paste token*.out | gzip > token.out.gz
+	-rm token*.out
+	-rm ${DISFXY_FEAT}
+
+dis+omxyplot-s.%.dat: dis+omxy.%.out
+	cat $< | plotdata.pl 1=x 4=y > $@
+
+dis+omxyplot-v.%.dat: dis+omxy.%.out
+	cat $< | plotdata.pl 1=x 7=y > $@
 
 ### WKMEANS experiments:
 KMRUN_NARGS=4 # seed, file, weights, nstart => wkmeans-rms, m2o, homo, comp, vm, time

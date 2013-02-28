@@ -23,7 +23,7 @@ my $subf = "$lang.sub.gz";
 my $tmp = tempdir("dis+xyrun-XXXX", CLEANUP => 1);
 my $pairs = "$tmp/pairs.gz";
 my $sc_err = "$tmp/scode";
-my $km_out = "token$seed.out";
+my $km_out = "xytoken$seed.out";
 my $km_err = "$tmp/kmeans";
 my $ev_err = "$tmp/eval";
 
