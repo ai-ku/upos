@@ -1,9 +1,16 @@
 \section{Algorithm}
-This section describes the flow of our algorithm. 
-\begin{enumerate}
-  \item We sample substitute words from subsitute word distribution of contexts
-  \item We use S-CODE to find embeddings \todo{draw figures}
-  \item We have W and S embeddings
-  \item We cluster embeddings
-\end{enumerate}
+
+In this section we describe the components of our algorithm and their
+relationship with each other.  The algorithm predicts the syntactic
+category of a word in a given context based on its substitutes.  In
+other words first we construct the co-occurrence representation of
+words and their substitutes with the help of a language model and then
+map each value in the co-occurrence data to a corresponding embedding
+on a $n$ dimensional sphere using the S-CODE algorithm.  After that we
+apply k-means clustering to categorize the word embeddings by which we
+induced the word categories.  In the next subsection we detail the
+construction of co-occurrence representation of the input, in
+Subsection~\ref{??} we explain the embedding calculation and finally
+in Subsection~\ref{??} we describe the different ways of embedding
+clustering.\todo{do we need subsections?}
 
