@@ -16,28 +16,32 @@ clustering.\todo{do we need subsections?}
 
 \subsection{Co-occurences}
 
+% How we represent the context?
+% How we relate the word and the context?
+
 Word contexts are represented by substitutes sampled from the
 corresponding substitute word distributions.  Substitute words are
 sampled with replacement according to the substitute distributions
 that are calculated based on an n-gram language model.  The sample set
 of the substitute word distribution is the vocabulary of the language
-model therefore in some cases sampled substitutes include
-``unk'' \footnote{Sampled substitutes of proper nouns usually include
-  ``unk'' as a substitute.}.  To capture the relation between each
-word and their contexts we pair the words and their substitutes to
-construct a co-occurrence representation.  Table~\ref{tab:samples}
-shows sampled substitutes of each word and their co-occurrence
-representation on an example sentence.  \todo{should we write the
-  probabilities on the left table?}
+model.\footnote{Sampled substitutes might include the unknown word tag
+  ``unk'' since it is in the language model vocabulary.  For example
+  substitutes of proper nouns usually include ``unk'' as a
+  substitute.}  To capture the relation between each word and their
+contexts we construct a co-occurrence representation by pairing the
+words and their substitutes.  Table~\ref{tab:samples} shows sampled
+substitutes of each word and their co-occurrence representation on an
+example sentence.
+
 \begin{table}[h]
-\caption{The left table shows three sampled substitutes for each of
-  the positions in the example sentence \textit{``Pierre Vinken, 61
-    years old, will join the board as a nonexecutive director Nov.~29
-    .''} based on a 4-gram language model and the one on the right
-  represents the input sentence as a co-occurrences of words and their
-  substitutes.  To distinguish between words and their substitutes we
-  concatenate ``w'' and ``s'',respectively, on the co-occurrence
-  data.}
+\caption{The table on the left shows possible three substitutes
+  sampled for each of the positions in the example sentence
+  \textit{``Pierre Vinken, 61 years old, will join the board as a
+    nonexecutive director Nov.~29 .''} based on a 4-gram language
+  model and the one on the right represents the input sentence as a
+  co-occurrences of words and their substitutes.  To distinguish
+  between words and their substitutes we concatenate ``w'' and ``s'',
+  respectively, on the co-occurrence data.}
 \begin{tabular}{|ll|} \hline
 \textbf{Word} & \textbf{Sampled Substitutes}\\
 \hline
