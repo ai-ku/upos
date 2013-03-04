@@ -107,20 +107,51 @@ W:director & \textit{S:director}\\
 \subsection{Co-occurence Embedding}
 
 The S-CODE algotirhm maps each word and substitute value in the
-co-occurence data to an embedding on an $n$ dimensional sphere.  The
-basic idea of the mapping is that words and substitutes that are
-frequently observed as pairs in the co-occurence data will have close
-embeddings while unobserved pairs will have embeddings that are apart
-from each other.
+co-occurence data to an embedding on an $n$ dimensional sphere as
+detailed in Appendix~\ref{sec:codethr}.  The basic idea of the mapping
+is that words and substitutes that are frequently observed as pairs in
+the co-occurence data will have close embeddings while unobserved
+pairs will have embeddings that are apart from each other.
+Table~\ref{fig:scodeexample} illustrates the final output of the
+S-CODE for the given example co-occurence data.
 
-\begin{figure}[t] 
-  \centering
-  \includegraphics[height=0.5\textwidth]{scode-ex.png}
-  \caption{Final output of the S-CODE algorithm on the example
-    sentences.  Dashed circles represents the possible groupings of
-    the embeddings on the sphere.}
+\begin{table}[ht]
+  \begin{minipage}[t]{.3\textwidth}
+    \small
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Word} & \textbf{Substite} \\
+        \hline
+        \hdots&\\
+        W:director & S:chairman \\
+        W:chief & S:chairman \\
+        \hdots&\\
+        W:Pierre & S:Mr. \\
+        W:Frank & S:Mr. \\
+        \hdots&\\
+        \hline
+    \end{tabular}
+  \end{minipage}
+  \begin{minipage}[t]{.7\textwidth}
+    \centering
+    \includegraphics[height=.70\textwidth]{scode-ex.png}\\
+    \vspace{-10 mm}
+  \end{minipage}
+  \caption{The table on the left is a sample co-occurence data that is
+    input to the S-CODE algorithm.  The figure on the right is the
+    embeddings on the sphere after S-CODE converges.  Dashed circles
+    represent the possible groupings of the embeddings on the sphere.}
   \label{fig:scodeexample}
-\end{figure}
+\end{table}
+
+The sample co-occurence data in Table~\ref{fig:scodeexample} consists
+of pairs such as (\textit{W:director}, \textit{S:chairman}) and
+(\textit{W:chief}, \textit{S:chairman}) therefore S-CODE forces the
+embeddings of \textit{W:director} and \textit{W:chief} to be close to
+the embeddings of \textit{S:chairman}.  As a results on the output of
+S-CODE the embeddings of \textit{W:director} and \textit{W:chief} will
+be close to each other due to the shared subsitute
+\textit{S:chairman}.
 
 
 \subsection{Co-occurence Embedding Clustering}
