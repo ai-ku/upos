@@ -10,59 +10,70 @@ on a $n$ dimensional sphere using the S-CODE algorithm.  Finally, we
 apply k-means clustering to categorize the word embeddings by which we
 induced the word categories.  In the next subsection we detail the
 construction of co-occurrence representation of the input, in
-Subsection~\ref{??} we explain the embedding calculation and finally
-in Subsection~\ref{??} we describe the different ways of embedding
-clustering.\todo{do we need subsections?}
+Subsection~\ref{sec:cooc} we explain the embedding calculation and
+finally in Subsection~\ref{??} we describe the different ways of
+embedding clustering.\todo{do we need subsections?}
 
 \subsection{Co-occurences}
-
+\label{sec:cooc}
 % How we represent the context?
 % How we relate the word and the context?
 
 Word contexts are represented by substitutes sampled from the
 corresponding substitute word distributions.  Substitute words are
-sampled with replacement according to the substitute distributions
-that are calculated based on an n-gram language model.  The sample set
-of the substitute word distribution is the vocabulary of the language
-model.\footnote{Sampled substitutes might include the unknown word tag
-  ``unk'' since it is in the language model vocabulary.  For example
-  substitutes of proper nouns usually include ``unk'' as a
-  substitute.}  To capture the relation between each word and their
-contexts we construct a co-occurrence representation by pairing the
-words and their substitutes.  Table~\ref{tab:samples} shows sampled
-substitutes of each word and their co-occurrence representation on an
-example sentence.
+sampled with replacement from the substitute distributions that are
+calculated based on an n-gram language model.  The calculation of
+substitute distributions and substitute sampling are detailed in
+Appendix~\ref{sec:subcomp}.\todo{appendix section requires edit} The
+sample space of the substitute word distributions is the vocabulary of
+the language model.\footnote{Sampled substitutes might include the
+  unknown word tag ``unk'' since it is in the language model
+  vocabulary.  For example substitutes of proper nouns usually include
+  ``\_unk\_'' as a substitute.}  To capture the relation between each
+word and its context we construct a co-occurrence representation by
+pairing the words with their sampled substitutes.
+Table~\ref{tab:samples} shows sampled substitutes of each word and
+their co-occurrence representation on an example sentence.  A word
+might appear as a target word or a sampled substitute therefore to
+clarify this ambiguity we concatenate ``W'' and ``S'' to words and
+substitutes, respectively, on the co-occurrence data.
+
+The next section explains the S-CODE algorithm which takes the
+co-occurrence data as its input and calculates the embeddings of the
+words and their substitutes on an $n$ dimensional sphere.  In the rest
+of paper we use the term ``substitutes'' to refer ``sampled
+substitutes''.
 
 \begin{table}[h]
-\caption{The table on the left shows possible three substitutes
-  sampled for each of the positions in the example sentence
-  \textit{``Pierre Vinken, 61 years old, will join the board as a
-    nonexecutive director Nov.~29 .''} based on a 4-gram language
-  model and the one on the right represents the input sentence as a
-  co-occurrences of words and their substitutes.  To distinguish
-  between words and their substitutes we concatenate ``w'' and ``s'',
-  respectively, on the co-occurrence data.}
+\caption{The left table shows three possible substitutes, seperated
+  with ``/'', sampled for each of the positions in the example
+  sentence \textit{``Pierre Vinken, 61 years old, will join the board
+    as a nonexecutive director Nov.~29 .''} based on a 4-gram language
+  model.  The right table represents the input sentence as a
+  co-occurrences of words and their substitutes.  Thus words on the
+  left column represents the target word while words on the right
+  column represents the context of the correponding target word.}
 \begin{tabular}{|ll|} \hline
 \textbf{Word} & \textbf{Sampled Substitutes}\\
 \hline
-\textbf{Pierre} & \textit{Mr.}  \textit{Pierre}  \textit{Mr.}\\
-\textbf{Vinken} & \textit{unk}  \textit{Beregovoy}  \textit{Cardin}\\
-\textbf{,} & \textit{,}  \textit{,}  \textit{,}\\
-\textbf{61} & \textit{48}  \textit{52}  \textit{41}\\
-\textbf{years} & \textit{years}  \textit{years}  \textit{years}\\
-\textbf{old} & \textit{old}  \textit{old}  \textit{old}\\
-\textbf{,} & \textit{,}  \textit{,}  \textit{,}\\
-\textbf{will} & \textit{will}  \textit{will}  \textit{will}\\
-\textbf{join} & \textit{head}  \textit{join}  \textit{leave}\\
-\textbf{the}  & \textit{its}  \textit{its}  \textit{the}\\
-\textbf{board} & \textit{board}  \textit{company}  \textit{firm}\\
-\textbf{as} & \textit{as}  \textit{as}  \textit{as}\\
-\textbf{a} & \textit{a}  \textit{a}  \textit{a}\\
-\textbf{nonexecutive} & \textit{nonexecutive}  \textit{non-executive}  \textit{nonexecutive}\\
-\textbf{director} & \textit{chairman}  \textit{chairman}  \textit{director}\\
-\textbf{Nov.} & \textit{April}  \textit{May}  \textit{of}\\
-\textbf{29} & \textit{16}  \textit{29}  \textit{9}\\
-\textbf{.} & \textit{.}  \textit{.}  \textit{.}\\
+Pierre & \textit{Mr.}  / \textit{Pierre} /  \textit{Mr.}\\
+Vinken & \textit{\_unk\_} / \textit{Beregovoy} / \textit{Cardin}\\
+, & \textit{,} / \textit{,} / \textit{,}\\
+61 & \textit{48} / \textit{52} / \textit{41}\\
+years & \textit{years} /  \textit{years} /  \textit{years}\\
+old & \textit{old} /  \textit{old} /  \textit{old}\\
+, & \textit{,} /  \textit{,} /  \textit{,}\\
+will & \textit{will} /  \textit{will} /  \textit{will}\\
+join & \textit{head} /  \textit{join} /  \textit{leave}\\
+the  & \textit{its} /  \textit{its} /  \textit{the}\\
+board & \textit{board} /  \textit{company} / \textit{firm}\\
+as & \textit{as} / \textit{as} / \textit{as}\\
+a & \textit{a} / \textit{a} / \textit{a}\\
+nonexecutive & \textit{nonexecutive} / \textit{non-executive} / \textit{nonexecutive}\\
+director & \textit{chairman} / \textit{chairman} / \textit{director}\\
+Nov. & \textit{April} / \textit{May} / \textit{of}\\
+29 & \textit{16} /  \textit{29} / \textit{9}\\
+. & \textit{.}  / \textit{.} / \textit{.}\\
 \hline
 \end{tabular}
 \quad
@@ -70,64 +81,48 @@ example sentence.
 \hline
 \textbf{Word} & \textbf{Substitute}\\
 \hline
-\textbf{w:Pierre} & \textit{s:Mr.}\\
-\textbf{w:Pierre} & \textit{s:Pierre}\\
-\textbf{w:Pierre} & \textit{s:Mr.}\\
-\textbf{w:Vinken} & \textit{s:unk}\\
-\textbf{w:Vinken} & \textit{s:Beregovoy}\\
-\textbf{w:Vinken} & \textit{s:Cardin}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{61} & \textit{48}\\
-%% \textbf{61} & \textit{52}\\
-%% \textbf{61} & \textit{41}\\
-%% \textbf{years} & \textit{years}\\
-%% \textbf{years} & \textit{years}\\
-%% \textbf{years} & \textit{years}\\
-%% \textbf{old} & \textit{old}\\
-%% \textbf{old} & \textit{old}\\
-%% \textbf{old} & \textit{old}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{,} & \textit{,}\\
-%% \textbf{will} & \textit{will}\\
-%% \textbf{will} & \textit{will}\\
-%% \textbf{will} & \textit{will}\\
+W:Pierre & \textit{S:Mr.}\\
+W:Pierre & \textit{S:Pierre}\\
+W:Pierre & \textit{S:Mr.}\\
+W:Vinken & \textit{S:unk}\\
+W:Vinken & \textit{S:Beregovoy}\\
+W:Vinken & \textit{S:Cardin}\\
 \hdots&\\
-\textbf{w:join} & \textit{s:head}\\
-\textbf{w:join} & \textit{s:join}\\
-\textbf{w:join} & \textit{s:leave}\\
-\textbf{w:the} & \textit{s:its}\\
-\textbf{w:the} & \textit{s:its}\\
-\textbf{w:the} & \textit{s:the}\\
+W:join & \textit{S:head}\\
+W:join & \textit{S:join}\\
+W:join & \textit{S:leave}\\
+W:the & \textit{S:its}\\
+W:the & \textit{S:its}\\
+W:the & \textit{S:the}\\
 \hdots&\\
-%% \textbf{board} & \textit{board}\\
-%% \textbf{board} & \textit{company}\\
-%% \textbf{board} & \textit{firm}\\
-%% \textbf{as} & \textit{as}\\
-%% \textbf{as} & \textit{as}\\
-%% \textbf{as} & \textit{as}\\
-%% \textbf{a} & \textit{a}\\
-%% \textbf{a} & \textit{a}\\
-%% \textbf{a} & \textit{a}\\
-%% \textbf{nonexecutive} & \textit{nonexecutive}\\
-%% \textbf{nonexecutive} & \textit{non-executive}\\
-%% \textbf{nonexecutive} & \textit{nonexecutive}\\
-\textbf{w:director} & \textit{s:chairman}\\
-\textbf{w:director} & \textit{s:chairman}\\
-\textbf{w:director} & \textit{s:director}\\
+W:director & \textit{S:chairman}\\
+W:director & \textit{S:chairman}\\
+W:director & \textit{S:director}\\
 \hdots&\\
-%% \textbf{Nov.} & \textit{April}\\
-%% \textbf{Nov.} & \textit{May}\\
-%% \textbf{Nov.} & \textit{of}\\
-%% \textbf{29} & \textit{16}\\
-%% \textbf{29} & \textit{29}\\
-%% \textbf{29} & \textit{9}\\
-%% \textbf{.} & \textit{.}\\
-%% \textbf{.} & \textit{.}\\
-%% \textbf{.} & \textit{.}\\
 \hline
 \end{tabular}
 \label{tab:samples}
 \end{table}
+
+\subsection{Co-occurence Embedding}
+
+The S-CODE algotirhm maps each word and substitute value in the
+co-occurence data to an embedding on an $n$ dimensional sphere.  The
+basic idea of the mapping is that words and substitutes that are
+frequently observed as pairs in the co-occurence data will have close
+embeddings while unobserved pairs will have embeddings that are apart
+from each other.
+
+\begin{figure}[t] 
+  \centering
+  \includegraphics[height=0.5\textwidth]{scode-ex.png}
+  \caption{Final output of the S-CODE algorithm on the example
+    sentences.  Dashed circles represents the possible groupings of
+    the embeddings on the sphere.}
+  \label{fig:scodeexample}
+\end{figure}
+
+
+\subsection{Co-occurence Embedding Clustering}
+
+
