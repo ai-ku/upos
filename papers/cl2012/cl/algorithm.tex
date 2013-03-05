@@ -12,7 +12,7 @@ induced the word categories.  In the next subsection we detail the
 construction of co-occurrence representation of the input, in
 Subsection~\ref{sec:cooc} we explain the embedding calculation and
 finally in Subsection~\ref{??} we describe the different ways of
-embedding clustering.\todo{do we need subsections?}
+embedding clustering.
 
 \subsection{Co-occurences}
 \label{sec:cooc}
@@ -24,19 +24,19 @@ corresponding substitute word distributions.  Substitute words are
 sampled with replacement from the substitute distributions that are
 calculated based on an n-gram language model.  The calculation of
 substitute distributions and substitute sampling are detailed in
-Appendix~\ref{sec:subcomp}.\todo{appendix section requires edit} The
-sample space of the substitute word distributions is the vocabulary of
-the language model.\footnote{Sampled substitutes might include the
-  unknown word tag ``unk'' since it is in the language model
-  vocabulary.  For example substitutes of proper nouns usually include
-  ``\_unk\_'' as a substitute.}  To capture the relation between each
-word and its context we construct a co-occurrence representation by
-pairing the words with their sampled substitutes.
-Table~\ref{tab:samples} shows sampled substitutes of each word and
-their co-occurrence representation on an example sentence.  A word
-might appear as a target word or a sampled substitute therefore to
-clarify this ambiguity we concatenate ``W'' and ``S'' to words and
-substitutes, respectively, on the co-occurrence data.
+Appendix~\ref{sec:subcomp}.  The sample space of the substitute word
+distributions is the vocabulary of the language
+model.\footnote{Sampled substitutes might include the unknown word tag
+  ``\_unk\_'' since it is in the language model vocabulary.  For example
+  substitutes of proper nouns usually include ``\_unk\_'' as a
+  substitute.}  To capture the relation between each word and its
+context we construct a co-occurrence representation by pairing the
+words with their sampled substitutes.  Table~\ref{tab:samples} shows
+sampled substitutes of each word and their co-occurrence
+representation on an example sentence.  A word might appear as a
+target word or a sampled substitute therefore to clarify this
+ambiguity we concatenate ``W'' and ``S'' to words and substitutes,
+respectively, on the co-occurrence data.
 
 The next section explains the S-CODE algorithm which takes the
 co-occurrence data as its input and calculates the embeddings of the
@@ -44,7 +44,7 @@ words and their substitutes on an $n$ dimensional sphere.  In the rest
 of paper we use the term ``substitutes'' to refer ``sampled
 substitutes''.
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{The left table shows three possible substitutes, seperated
   with ``/'', sampled for each of the positions in the example
   sentence \textit{``Pierre Vinken, 61 years old, will join the board
@@ -87,18 +87,18 @@ W:Pierre & \textit{S:Mr.}\\
 W:Vinken & \textit{S:unk}\\
 W:Vinken & \textit{S:Beregovoy}\\
 W:Vinken & \textit{S:Cardin}\\
-\hdots&\\
+$\hdots$&\\
 W:join & \textit{S:head}\\
 W:join & \textit{S:join}\\
 W:join & \textit{S:leave}\\
 W:the & \textit{S:its}\\
 W:the & \textit{S:its}\\
 W:the & \textit{S:the}\\
-\hdots&\\
+$\hdots$&\\
 W:director & \textit{S:chairman}\\
 W:director & \textit{S:chairman}\\
 W:director & \textit{S:director}\\
-\hdots&\\
+$\hdots$&\\
 \hline
 \end{tabular}
 \label{tab:samples}
@@ -106,54 +106,74 @@ W:director & \textit{S:director}\\
 
 \subsection{Co-occurence Embedding}
 
-The S-CODE algotirhm maps each word and substitute value in the
-co-occurence data to an embedding on an $n$ dimensional sphere as
+The S-CODE algorithm maps each word and substitute value in the
+co-occurrence data to an embedding on an $n$ dimensional sphere as
 detailed in Appendix~\ref{sec:codethr}.  The basic idea of the mapping
 is that words and substitutes that are frequently observed as pairs in
-the co-occurence data will have close embeddings while unobserved
+the co-occurrence data will have close embeddings while unobserved
 pairs will have embeddings that are apart from each other.
-Table~\ref{fig:scodeexample} illustrates the final output of the
-S-CODE for the given example co-occurence data.
 
-\begin{table}[ht]
-  \begin{minipage}[t]{.3\textwidth}
-    \small
+\begin{figure}[htb]
+\centering
+  \begin{minipage}[c]{0.38\textwidth}
     \begin{tabular}{|l|l|}
-        \hline
-        \textbf{Word} & \textbf{Substite} \\
-        \hline
-        \hdots&\\
-        W:director & S:chairman \\
-        W:chief & S:chairman \\
-        \hdots&\\
-        W:Pierre & S:Mr. \\
-        W:Frank & S:Mr. \\
-        \hdots&\\
-        \hline
-    \end{tabular}
+    \hline
+    \textbf{Word} & \textbf{Substitute} \\
+    \hline
+    $\hdots$&$\hdots$\\
+    W:director & S:chairman \\
+    W:chief & S:chairman \\
+    $\hdots$&$\hdots$\\
+    W:Pierre & S:Mr. \\
+    W:Frank & S:Mr. \\
+    $\hdots$&$\hdots$\\
+    \hline
+  \end{tabular}
   \end{minipage}
-  \begin{minipage}[t]{.7\textwidth}
-    \centering
-    \includegraphics[height=.70\textwidth]{scode-ex.png}\\
-    \vspace{-10 mm}
+  \begin{minipage}[c]{0.48\textwidth}
+    \includegraphics[height=\textwidth]{scode-ex.png}
   \end{minipage}
-  \caption{The table on the left is a sample co-occurence data that is
-    input to the S-CODE algorithm.  The figure on the right is the
-    embeddings on the sphere after S-CODE converges.  Dashed circles
-    represent the possible groupings of the embeddings on the sphere.}
-  \label{fig:scodeexample}
-\end{table}
+  \caption{The figure on the right is the final embeddings of the
+    input co-occurrence data given on the left table after S-CODE
+    converges.  Dashed circles represent the possible groupings of the
+    embeddings on the sphere.}
+\end{figure}
 
-The sample co-occurence data in Table~\ref{fig:scodeexample} consists
+%% \begin{figure}
+%% \begin{floatrow}
+%% \capbtabbox{%
+%% }
+%% {%
+%%   \caption{A co-occurrence data that
+%%  is input to the S-CODE algorithm.}%
+%% }
+%% \hspace{1cm}
+%% \ffigbox{%
+%%   \includegraphics[height=.45\textwidth]{scode-ex.png}\\  
+%% }
+%% {%
+%%   \caption{}  
+%%   \label{fig:scodeexample}
+%% }
+%% \end{floatrow}
+%% \end{figure}
+
+The sample co-occurrence data in Table~\ref{fig:scodeexample} consists
 of pairs such as (\textit{W:director}, \textit{S:chairman}) and
 (\textit{W:chief}, \textit{S:chairman}) therefore S-CODE forces the
 embeddings of \textit{W:director} and \textit{W:chief} to be close to
-the embeddings of \textit{S:chairman}.  As a results on the output of
-S-CODE the embeddings of \textit{W:director} and \textit{W:chief} will
-be close to each other due to the shared subsitute
-\textit{S:chairman}.
+the embedding of \textit{S:chairman}.  Similar to the former case the
+embeddings of \textit{W:Pierre} and \textit{W:Frank} will be close to
+the embedding \textit{S:Mr.} due to the frequent observed pairs.  As a
+results the final embeddings of \textit{W:director} and
+\textit{W:chief} will be close to each other due to the common
+substitute \textit{S:chairman} and will be apart from \textit{W:Pierre}
+and \textit{W:Frank} due to the lack of common substitute as shown on
+Table~\ref{fig:scodeexample} (similarly the embeddings of
+\textit{W:Pierre} and \textit{W:Frank} will be close to each other due
+to \textit{S:Mr.}).
 
 
-\subsection{Co-occurence Embedding Clustering}
+\subsection{Co-occurrence Embedding Clustering}
 
 
