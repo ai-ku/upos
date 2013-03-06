@@ -1,4 +1,4 @@
-\section{Algorithm}
+\section{Abstract Algorithm}
 
 In this section we describe the components of our algorithm and their
 relationship with each other.  The algorithm predicts the syntactic
@@ -10,8 +10,8 @@ on a $n$ dimensional sphere using the S-CODE algorithm.  Finally, we
 apply k-means clustering to categorize the word embeddings by which we
 induced the word categories.  In the next subsection we detail the
 construction of co-occurrence representation of the input, in
-Subsection~\ref{sec:cooc} we explain the embedding calculation and
-finally in Subsection~\ref{??} we describe the different ways of
+Subsection~\ref{sec:embedding} we explain the embedding calculation and
+finally in Subsection~\ref{sec:clustering} we describe the different ways of
 embedding clustering.
 
 \subsection{Co-occurences}
@@ -108,7 +108,7 @@ $\hdots$&\\
 \end{table}
 
 \subsection{Co-occurence Embedding}
-
+\label{sec:embedding}
 The S-CODE algorithm maps each word and substitute value in the
 co-occurrence data to an embedding on an $n$ dimensional sphere as
 detailed in Appendix~\ref{sec:codethr}.  The basic idea of the mapping
@@ -188,7 +188,7 @@ k-means clustering to these three representation and analyze the
 characteristic of final clusters.
 
 \subsection{Co-occurrence Embedding Clustering}
-
+\label{sec:clustering}
 %% In Section~\ref{sec:cooc} we decribe the tranformation of an input
 %% sentence to a co-occurrence data and we represent each target word
 %% with the word--substitute pair(s).  In the previous section we

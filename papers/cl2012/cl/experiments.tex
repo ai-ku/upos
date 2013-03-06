@@ -128,22 +128,24 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 \label{tab:results}
 \end{table*}
 
-To obtain a discrete representation of the context, the
-random-substitutes algorithm pairs each word token with a substitute
-sampled from the pre-computed substitute vectors generated from the
-word token's context (see Section~\ref{sec:subcomp}) and word ($X$) --
-random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
-possible (and beneficial, see below) to run the random-substitutes
-algorithm on the data more than once to generate more pairs from the
-same substitute vectors.  The S-CODE uses stochastic gradient ascent
-to find the $\phi_x, \psi_y$ embeddings for word and random-substitute
-in these pairs on a single 25-dimensional sphere.  The algorithm
-cycles through the data until we get approximately 50 million updates.
-The resulting $\phi_x$ vectors are clustered using an instance
-weighted k-means algorithm.  Cluster-id for each $\phi_x$ is assigned
-as the predicted cluster-id for word type $X$.  Using the default
-settings and sampling 64 substitutes for each token the many-to-one
-accuracy is \wsmto and the V-measure is \wsvm.
+%% Moved to appendix
+%% To obtain a discrete representation of the context, the
+%% random-substitutes algorithm pairs each word token with a substitute
+%% sampled from the pre-computed substitute vectors generated from the
+%% word token's context (see Section~\ref{sec:subcomp}) and word ($X$) --
+%% random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
+%% possible (and beneficial, see below) to run the random-substitutes
+%% algorithm on the data more than once to generate more pairs from the
+%% same substitute vectors. 
+The S-CODE uses stochastic gradient ascent to find the $\phi_x,
+\psi_y$ embeddings for word and random-substitute in these pairs on a
+single 25-dimensional sphere.  The algorithm cycles through the data
+until we get approximately 50 million updates.  The resulting $\phi_x$
+vectors are clustered using an instance weighted k-means algorithm.
+Cluster-id for each $\phi_x$ is assigned as the predicted cluster-id
+for word type $X$.  Using the default settings and sampling 64
+substitutes for each token the many-to-one accuracy is \wsmto and the
+V-measure is \wsvm.
 
 %% To obtain a discrete representation of the context, the
 %% random--partitions algorithm first designates a random subset of

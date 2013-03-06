@@ -2,33 +2,35 @@
 %% \label{sec:code}
 
 \appendix
-\appendixsection{Algorithm}
-\label{sec:algorithm}
+%%\appendixsection{Algorithm}
+%%\label{sec:algorithm}
+%% [!! remove this part]
+%% In this section, we briefly describe the components of our algorithm.
+%% Section~\ref{sec:subcomp} presents the motive and the method for
+%% computation of substitute vectors, our paradigmatic representations
+%% for the word contexts.  We combine the substitute vectors with the
+%% identity and features of the target word for part of speech induction
+%% using the a co-occurrence modeling framework.
 
-In this section, we briefly describe the components of our algorithm.
-Section~\ref{sec:subcomp} presents the motive and the method for
-computation of substitute vectors, our paradigmatic representations
-for the word contexts.  We combine the substitute vectors with the
-identity and features of the target word for part of speech induction
-using the a co-occurrence modeling framework.
-Section~\ref{sec:codethr} reviews the unsupervised methods we use to
-model co-occurrence statistics: the Co-occurrence Data Embedding
-(CODE)\ \cite{globerson2007euclidean} method and its spherical
-extension (S-CODE) introduced by \cite{maron2010sphere}.
-
-\subsection{Computation of Substitute Vectors}
+\appendixsection{Computation of Substitute Distributions}
 \label{sec:subcomp}
 
 In this study, we predict the syntactic category of a word in a given
-context based on its substitute vector.  The dimensions of the
-substitute vector represent words in the vocabulary, and the entries
-in the substitute vector represent the probability of those words
-being used in the given context.  Note that the substitute vector is a
-function of the context only and is indifferent to the target word.
+context based on its substitute distribution.  The sample space of the
+substitute distribution is the vocabulary of the language model
+including the unknow word tag ``\_unk\_''.  Note that the substitute
+distribution is a function of the context only and is indifferent to
+the target word.
+
+%% The dimensions of the
+%% substitute distribution represent words in the vocabulary of the
+%% language model, and the entries in the substitute distribution
+%% represent the probability of those words being used in the given
+%% context.  
 
 % how are the substitutes computed
-It is best to use both the left and the right context when estimating the
-probabilities for potential lexical substitutes.  For example, in
+It is best to use both the left and the right context when estimating
+the probabilities for potential lexical substitutes.  For example, in
 \emph{``He lived in San Francisco suburbs.''}, the token \emph{San}
 would be difficult to guess from the left context but it is almost
 certain looking at the right context.  We define $c_w$ as the $2n-1$
@@ -56,55 +58,65 @@ Equation \ref{eq:lm3}.  Specifically, at the beginning of the sentence
 shorter n-gram contexts were used and at the end of the sentence terms
 beyond the end-of-sentence token were dropped.
 
-\subsection{The CODE Model}
+To obtain a discrete representation of the context, the
+random-substitutes algorithm pairs each word token with a substitute
+sampled from the pre-computed substitute distribution generated from
+the word token's context and then word ($W$) -- random-substitute
+($S$) pairs are fed to the S-CODE as input.
+
+\appendixsection{The CODE Model}
 \label{sec:codethr}
 
-Let $X$ and $Y$ be two categorical variables with finite cardinalities
-$|X|$ and $|Y|$.  We observe a set of pairs $\{x_i, y_i\}_{i=1}^n$
-drawn IID from the joint distribution of $X$ and $Y$.  The basic idea
+This Section~\ref{sec:codethr} reviews the unsupervised method that we
+use to model co-occurrence statistics: the Co-occurrence Data
+Embedding (CODE)\ \cite{globerson2007euclidean} method and its
+spherical extension (S-CODE) introduced by \cite{maron2010sphere}.
+
+Let $W$ and $S$ be two categorical variables with finite cardinalities
+$|W|$ and $|S|$.  We observe a set of pairs $\{w_i, s_i\}_{i=1}^n$
+drawn IID from the joint distribution of $W$ and $S$.  The basic idea
 behind CODE and related methods is to represent (embed) each value of
-$X$ and each value of $Y$ as points in a common low dimensional
-Euclidean space $\mathbf{R}^d$ such that values that frequently
-co-occur lie close to each other.  There are several ways to formalize
-the relationship between the distances and co-occurrence statistics, in
-this paper we use the following:
+$W$ and each value of $S$ as points in a common Euclidean space
+$\mathbf{R}^d$ such that values that frequently co-occur lie close to
+each other.  There are several ways to formalize the relationship
+between the distances and co-occurrence statistics, in this paper we
+use the following:
 \begin{equation} \label{eq:probability}
-p(x,y) = \frac{1}{Z} \bar{p}(x) \bar{p}(y) e^{-d^2_{x,y}}
+p(w,s) = \frac{1}{Z} \bar{p}(w) \bar{p}(s) e^{-d^2_{w,s}}
 \end{equation}
-\noindent where $d^2_{x,y}$ is the squared distance between the
-embeddings of $x$ and $y$, $\bar{p}(x)$ and $\bar{p}(y)$ are empirical
-probabilities, and $Z=\sum_{x,y} \bar{p}(x) \bar{p}(y) e^{-d^2_{x,y}}$ is
-a normalization term.  If we use the notation $\phi_x$ for the
-point corresponding to $x$ and $\psi_y$ for the point corresponding
-to $y$ then $d^2_{x,y} = \|\phi_x-\psi_y\|^2$.  The log-likelihood
-of a given embedding $\ell(\phi, \psi)$ can be expressed as:
+\noindent where $d^2_{w,s}$ is the squared distance between the
+embeddings of $w$ and $s$, $\bar{p}(w)$ and $\bar{p}(s)$ are empirical
+probabilities, and $Z=\sum_{w,s} \bar{p}(w) \bar{p}(w) e^{-d^2_{w,s}}$
+is a normalization term.  If we use the notation $\phi_w$ for the
+point corresponding to $w$ and $\psi_s$ for the point corresponding to
+$s$ then $d^2_{w,s} = \|\phi_w-\psi_s\|^2$.  The log-likelihood of a
+given embedding $\ell(\phi, \psi)$ can be expressed as:
 \begin{eqnarray}
-&&\ell(\phi, \psi) = \sum_{x,y} \bar{p}(x,y) \log p(x,y) \label{eq:likelihood} \\
-&&= \sum_{x,y} \bar{p}(x,y) (-\log Z + \log \bar{p}(x)\bar{p}(y) - d^2_{x,y}) \nonumber \\
-&&= -\log Z + \mathit{const} - \sum_{x,y} \bar{p}(x,y) d^2_{x,y} \nonumber
+&&\ell(\phi, \psi) = \sum_{w,s} \bar{p}(w,s) \log p(w,s) \label{eq:likelihood} \\
+&&= \sum_{w,s} \bar{p}(w,s) (-\log Z + \log \bar{p}(w)\bar{p}(s) - d^2_{w,s}) \nonumber \\
+&&= -\log Z + \mathit{const} - \sum_{w,s} \bar{p}(w,s) d^2_{w,s} \nonumber
 \end{eqnarray}
 The likelihood is not convex in $\phi$ and $\psi$.  We use gradient
-ascent to find an approximate solution for a set of $\phi_x$, $\psi_y$
-that maximize the likelihood.  The gradient of the $d^2_{x,y}$ term
+ascent to find an approximate solution for a set of $\phi_w$, $\psi_s$
+that maximize the likelihood.  The gradient of the $d^2_{w,s}$ term
 pulls neighbors closer in proportion to the empirical joint
 probability:
 \begin{equation}
-\frac{\partial}{\partial\phi_x} \sum_{x,y} -\bar{p}(x,y) d^2_{x,y} =
-\sum_y 2 \bar{p}(x,y) (\psi_y - \phi_x) \label{eq:attract}
+\frac{\partial}{\partial\phi_w} \sum_{w,s} -\bar{p}(w,s) d^2_{w,s} =
+\sum_y 2 \bar{p}(w,s) (\psi_s - \phi_w) \label{eq:attract}
 \end{equation}
 The gradient of the $Z$ term pushes neighbors apart in proportion to the
 estimated joint probability:
 \begin{equation}
-\frac{\partial}{\partial\phi_x} (-\log Z) = \sum_y 2 p(x,y) (\phi_x -
-\psi_y) \label{eq:repulse}
+\frac{\partial}{\partial\phi_x} (-\log Z) = \sum_y 2 p(w,s) (\phi_w -
+\psi_s) \label{eq:repulse}
 \end{equation}
 Thus the net effect is to pull pairs together if their estimated
 probability is less than the empirical probability and to push them
-apart otherwise.  The gradients with respect to $\psi_y$ are
-similar.
+apart otherwise.  The gradients with respect to $\psi_s$ are similar.
 
-S-CODE \cite{maron2010sphere} additionally restricts all $\phi_x$ and
-$\psi_y$ to lie on the unit sphere.  With this restriction, $Z$ stays
+S-CODE \cite{maron2010sphere} additionally restricts all $\phi_w$ and
+$\psi_s$ to lie on the unit sphere.  With this restriction, $Z$ stays
 around a fixed value during gradient ascent.  This allows S-CODE to
 substitute an approximate constant $\tilde{Z}$ in gradient
 calculations for the real $Z$ for computational efficiency.  In our
