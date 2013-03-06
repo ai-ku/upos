@@ -203,25 +203,24 @@ original input.  We run instance weighted k-means algorithm to cluster
 the final embeddings constructed by S-CODE.  The target words can be
 represented in three ways as described in the previous section.
 
-\paragraph{Word embeddings (${\bf W}$)}  In this representation all
-instances of the target word in the data is represented with the same
-embedding thus clustering based on these embeddings employ the
-one-tag-per-word assumption from the beginning.  For example, in
+\paragraph{Word embeddings (${\bf W}$)} All instances of the target
+word in the data is represented with the same embedding thus
+clustering based on these embeddings employ the one-tag-per-word
+assumption from the beginning.  For example, in
 Table~\ref{tab:samples} eventhough we sample three substitutes per
 target word, each unique target word has only one embedding in ${\bf
   W}$.
 
-\paragraph{Substitute embeddings (${\bf S}$)}  In this representation 
-each target word instance is represented with its substitutes
-embeddings thus clustering them does not employ or force the
-one-tag-per-word assumption.  For example, in Table~\ref{tab:samples}
-the word \textit{W:Pierre} will be represented with the embeddings of
-{\it S:Mr.} {\it S:Pierre} and {\it Mr.}.  K-means might cluster
-substitute embeddings into different clusters which creates an
-ambiguity on the final cluster of the target word.  To solve this
-issue the target word is assigned to the cluster in which the majority
-of its substitute embeddings are present\footnote{Ties are broken
-  randomly}.
+\paragraph{Substitute embeddings (${\bf S}$)} Each target word instance
+is represented with its substitutes embeddings thus clustering them
+does not employ or force the one-tag-per-word assumption.  For
+example, in Table~\ref{tab:samples} the word \textit{W:Pierre} will be
+represented with the embeddings of {\it S:Mr.}, {\it S:Pierre} and
+{\it Mr.}.  K-means might cluster substitute embeddings into different
+clusters which creates an ambiguity on the final cluster of the target
+word.  To solve this issue the target word is assigned to the cluster
+in which the majority of its substitute embeddings are
+present\footnote{Ties are broken randomly}.
 
 %% For example each unique target word in our example sentence given on
 %% Table\ref{tab:samples} has only one correponding embedding in ${\bf
