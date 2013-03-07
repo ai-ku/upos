@@ -26,19 +26,20 @@ the rest of this section we refer to the MULTEXT-East and CONLL-X
 corpora as the testing corpora and the language model training corpora
 as the training corpora.
 
-\subsection{Substitute Vectors and Features}
+\subsection{Random Substitute and Features}
 \label{sec:multivecfeat}
 \input{datatable.tex} 
-To calculate the top 100 substitutes of each position, we train a
-4-gram language model with the corresponding training corpora of each
-language as described in Section~\ref{sec:expset}.
-Table~\ref{tab:lmstatistics} presents statistics related to the
-language model training and testing corpora.  For all languages
-except Serbian, English and Turkish, we train the language models by
-using the corresponding Wikipedia dump files\footnote{Latest Wikipedia
-  dump files are freely available at \url{http://dumps.wikimedia.org/}
-  and the text in the dump files can be extracted using WP2TXT
-  (\url{http://wp2txt.rubyforge.org/})}.
+
+To sample substitutes we calculate the probabilities of top 100
+substitutes of each position, we train a 4-gram language model with
+the corresponding training corpora of each language as described in
+Section~\ref{sec:expset}.  Table~\ref{tab:lmstatistics} presents
+statistics related to the language model training and testing corpora.
+For all languages except Serbian, English and Turkish, we train the
+language models by using the corresponding Wikipedia dump
+files\footnote{Latest Wikipedia dump files are freely available at
+  \url{http://dumps.wikimedia.org/} and the text in the dump files can
+  be extracted using WP2TXT (\url{http://wp2txt.rubyforge.org/})}.
 
 Serbian shares a common basis with Croatian and Bosnian therefore we
 trained 3 different language models using Wikipedia dump files of
@@ -60,7 +61,7 @@ vocabulary threshold to 2 for all languages except English.  English
 has relatively low unknown word ratio therefore we set the threshold
 to 20 instead of 2.
 
-%\subsection{Features}
+% Features paragraphs
 We use the same set of orthographic features described in
 Section~\ref{sec:feat} except we add an ``Only-Punctuation'' feature
 to the languages of MULTEXT-East corpora.  The ``Only-Punctuation''
@@ -126,8 +127,8 @@ As a baseline model we chose the syntagmatic bigram version of S-CODE
 described in Section~\ref{sec:bigram} which is a very strong baseline
 compared to the ones used in
 \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
-Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of our
-models together with the syntagmatic bigram baseline and the best
+Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of
+our models together with the syntagmatic bigram baseline and the best
 published accuracies on each language corpus.
 
 DIS significantly outperforms the syntagmatic bigram baseline in both
