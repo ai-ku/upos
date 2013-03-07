@@ -32,14 +32,14 @@ beneficial, see Section~\ref{sec:exp}) to sample more than one
 substitutes and generate more pairs from the same substitute
 distribution as in Table~\ref{tab:samples}.  The calculation of
 substitute distributions and random substitute sampling are detailed
-in Appendix~\ref{sec:subcomp}.  To capture the relation between each
-word and its context we construct a co-occurrence representation by
-pairing the words with their random substitutes.
-Table~\ref{tab:samples} shows random substitutes of each word and
-their co-occurrence representation on an example sentence.  A target
-word might appear as a word or a random substitute therefore to
-clarify this ambiguity we concatenate ``W'' and ``S'' to words and
-random substitutes, respectively, in the co-occurrence data.
+in Appendix~A.  To capture the relation between each word and its
+context we construct a co-occurrence representation by pairing the
+words with their random substitutes.  Table~\ref{tab:samples} shows
+random substitutes of each word and their co-occurrence representation
+on an example sentence.  A target word might appear as a word or a
+random substitute therefore to clarify this ambiguity we concatenate
+``W'' and ``C'' to words and contexts (i.e., random substitutes),
+respectively, in the co-occurrence data.
 
 The next section explains the S-CODE algorithm which takes the
 co-occurrence data as its input and calculates the embeddings of the
@@ -82,25 +82,25 @@ Nov. & \textit{April} / \textit{May} / \textit{of}\\
 \quad
 \begin{tabular}{|ll|}
 \hline
-\textbf{Word} & \textbf{Substitute}\\
+\textbf{Word} & \textbf{Context}\\
 \hline
-W:Pierre & \textit{S:Mr.}\\
-W:Pierre & \textit{S:Pierre}\\
-W:Pierre & \textit{S:Mr.}\\
-W:Vinken & \textit{S:unk}\\
-W:Vinken & \textit{S:Beregovoy}\\
-W:Vinken & \textit{S:Cardin}\\
+W:Pierre & \textit{C:Mr.}\\
+W:Pierre & \textit{C:Pierre}\\
+W:Pierre & \textit{C:Mr.}\\
+W:Vinken & \textit{C:unk}\\
+W:Vinken & \textit{C:Beregovoy}\\
+W:Vinken & \textit{C:Cardin}\\
 $\hdots$&\\
-W:join & \textit{S:head}\\
-W:join & \textit{S:join}\\
-W:join & \textit{S:leave}\\
-W:the & \textit{S:its}\\
-W:the & \textit{S:its}\\
-W:the & \textit{S:the}\\
+W:join & \textit{C:head}\\
+W:join & \textit{C:join}\\
+W:join & \textit{C:leave}\\
+W:the & \textit{C:its}\\
+W:the & \textit{C:its}\\
+W:the & \textit{C:the}\\
 $\hdots$&\\
-W:director & \textit{S:chairman}\\
-W:director & \textit{S:chairman}\\
-W:director & \textit{S:director}\\
+W:director & \textit{C:chairman}\\
+W:director & \textit{C:chairman}\\
+W:director & \textit{C:director}\\
 $\hdots$&\\
 \hline
 \end{tabular}
@@ -111,23 +111,23 @@ $\hdots$&\\
 \label{sec:embedding}
 The S-CODE algorithm maps each word and substitute value in the
 co-occurrence data to an embedding on an $n$-dimensional sphere as
-detailed in Appendix~\ref{app:codethr}.  The basic idea of the mapping
-is that words and substitutes that are frequently observed as pairs in
-the co-occurrence data will have close embeddings while unobserved
-pairs will have embeddings that are apart from each other.
+detailed in Appendix~B.  The basic idea of the mapping is that words
+and substitutes that are frequently observed as pairs in the
+co-occurrence data will have close embeddings while unobserved pairs
+will have embeddings that are apart from each other.
 \begin{figure}[ht]
 \centering
   \begin{minipage}[c]{0.38\textwidth}
     \begin{tabular}{|l|l|}
     \hline
-    \textbf{Word} & \textbf{Substitute} \\
+    \textbf{Word} & \textbf{Context} \\
     \hline
     $\hdots$&$\hdots$\\
-    W:director & S:chairman \\
-    W:chief & S:chairman \\
+    W:director & C:chairman \\
+    W:chief & C:chairman \\
     $\hdots$&$\hdots$\\
-    W:Pierre & S:Mr. \\
-    W:Frank & S:Mr. \\
+    W:Pierre & C:Mr. \\
+    W:Frank & C:Mr. \\
     $\hdots$&$\hdots$\\
     \hline
   \end{tabular}
@@ -162,32 +162,32 @@ pairs will have embeddings that are apart from each other.
 %% \end{figure}
 
 The co-occurrence data in Figure~\ref{fig:scodeexample} consists of
-pairs such as (\textit{W:director}, \textit{S:chairman}) and
-(\textit{W:chief}, \textit{S:chairman}) therefore S-CODE forces the
+pairs such as (\textit{W:director}, \textit{C:chairman}) and
+(\textit{W:chief}, \textit{C:chairman}) therefore S-CODE forces the
 embeddings of \textit{W:director} and \textit{W:chief} to be close to
-the embedding of \textit{S:chairman}.  Similar to the former case the
+the embedding of \textit{C:chairman}.  Similar to the former case the
 embeddings of \textit{W:Pierre} and \textit{W:Frank} will be close to
-the embedding \textit{S:Mr.} becouse of the frequently observed pairs.
+the embedding \textit{C:Mr.} becouse of the frequently observed pairs.
 As a results the final embeddings of \textit{W:director} and
 \textit{W:chief} will be close to each other due to the common
-substitute \textit{S:chairman} and will be apart from
+substitute \textit{C:chairman} and will be apart from
 \textit{W:Pierre} and \textit{W:Frank} due to the lack of common
 substitute as shown on Figure~\ref{fig:scodeexample} (similarly the
 embeddings of \textit{W:Pierre} and \textit{W:Frank} will be close to
-each other due to \textit{S:Mr.}).
+each other due to \textit{C:Mr.}).
 
 % How we relate final embeddings and the input pairs?
 S-CODE constructs embeddings on $n$-dimensional sphere for each unique
 value of words and substitutes.  Thus each pair in the co-occurrence
 data can be represented in three different ways by using the output of
 S-CODE: (1) word embedding (${\bf W}$) which represents the word type
-information, (2) substitute embedding (${\bf S}$) which represents the
+information, (2) substitute embedding (${\bf C}$) which represents the
 context information, and (3) word and substitute embeddings
-concatenated (${\bf W}\oplus{\bf S}$).  In the next section we apply
+concatenated (${\bf W}\oplus{\bf C}$).  In the next section we apply
 k-means clustering to these three representation and analyze the
 characteristic of final clusters.
 
-\subsection{Co-occurrence Embedding Clustering}
+\subsection{Embedding Clustering}
 \label{sec:clustering}
 %% In Section~\ref{sec:cooc} we decribe the tranformation of an input
 %% sentence to a co-occurrence data and we represent each target word
@@ -219,7 +219,7 @@ performance on the ambiguous words (words that have more than one tag)
 degrades due to the one-tag-per-word assumption.  For example the word
 ``thought'' has two possible ... . [!! ask volkan for this case]
 
-\paragraph{Substitute embeddings (${\bf S}$)} 
+\paragraph{Context embeddings (${\bf C}$)} 
 Each target word instance is represented with its substitutes
 embeddings instead of its word embedding therefore clustering them
 does not employ or force the one-tag-per-word assumption.  For
@@ -234,7 +234,7 @@ To solve this issue the target word is assigned to the cluster in
 which the majority of its substitute embeddings are
 present\footnote{Ties are broken randomly.}.
 
-\paragraph{Word and substitute concatenation (${\bf W\oplus S}$)} 
+\paragraph{Concatenation word and context embeddings (${\bf W\oplus C}$)} 
 This representation concatenates the word and its substitute
 embeddings such that each target word is represented with $r$ vectors
 where $r$ is the number of random substitutes per target word.
@@ -242,7 +242,7 @@ Therefore it explicitly forces the one-tag-per-word assumption while
 handling the ambiguity.  For instance, the target word ``Pierre'' in
 Table~\ref{tab:samples} will be represented with three vectors that
 will be the concatenation of the embedding of {\it W:Pierre} with the
-embeddings of {\it S:Mr.}, {\it S:Pierre} and {\it S:Mr.}, seperately.
+embeddings of {\it C:Mr.}, {\it C:Pierre} and {\it C:Mr.}, seperately.
 Similar to the former case we run k-means clustering on these
 concatenated vectors and use majority voting to assign the target word
 cluster.
@@ -256,10 +256,3 @@ embeddings therefore it forces the one-tag-per-word assumption while
 handling the ambiguity.  Section~\ref{sec:exp} compares the
 performance of these three representations on the word category
 induction problem.
-
-%% For example each unique target word in our example sentence given on
-%% Table\ref{tab:samples} has only one corresponding embedding in ${\bf
-%%   W}$ thus clustering the correponding embeddings of the target words
-%% means clustering the target words.  However the situation is a little
-%% bit trickier when we represent the target word with ${\bf S}$ or ${\bf
-%%   W}\oplus{\bf S}$
