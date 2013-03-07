@@ -82,11 +82,11 @@ each other.  There are several ways to formalize the relationship
 between the distances and co-occurrence statistics, in this paper we
 use the following:
 \begin{equation} \label{eq:probability}
-p(w,s) = \frac{1}{Z} \bar{p}(w) \bar{p}(c) e^{-d^2_{w,c}}
+p(w,c) = \frac{1}{Z} \bar{p}(w) \bar{p}(c) e^{-d^2_{w,c}}
 \end{equation}
 \noindent where $d^2_{w,c}$ is the squared distance between the
 embeddings of $w$ and $c$, $\bar{p}(w)$ and $\bar{p}(c)$ are empirical
-probabilities, and $Z=\sum_{w,s} \bar{p}(w) \bar{p}(c) e^{-d^2_{w,c}}$
+probabilities, and $Z=\sum_{w,c} \bar{p}(w) \bar{p}(c) e^{-d^2_{w,c}}$
 is a normalization term.  If we use the notation $\phi_w$ for the
 point corresponding to $w$ and $\psi_c$ for the point corresponding to
 $c$ then $d^2_{w,c} = \|\phi_w-\psi_c\|^2$.  The log-likelihood of a
@@ -102,7 +102,7 @@ that maximize the likelihood.  The gradient of the $d^2_{w,c}$ term
 pulls neighbors closer in proportion to the empirical joint
 probability:
 \begin{equation}
-\frac{\partial}{\partial\phi_w} \sum_{w,c} -\bar{p}(w,s) d^2_{w,c} =
+\frac{\partial}{\partial\phi_w} \sum_{w,c} -\bar{p}(w,c) d^2_{w,c} =
 \sum_y 2 \bar{p}(w,c) (\psi_c - \phi_w) \label{eq:attract}
 \end{equation}
 The gradient of the $Z$ term pushes neighbors apart in proportion to the
