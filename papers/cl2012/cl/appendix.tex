@@ -122,33 +122,47 @@ calculations for the real $Z$ for computational efficiency.  In our
 experiments, we used S-CODE with its sampling based stochastic
 gradient ascent algorithm and smoothly decreasing learning rate.
 
-%% \subsection{S-Code with More than Two Variables}
+\appendixsection{S-Code with More than Two Variables}
 
-%% In order to accommodate multiple feature types the CODE model needs to
-%% be extended to handle more than two variables.
-%% \cite{globerson2007euclidean} suggest the following likelihood
-%% function:
+In order to accommodate multiple feature types the CODE model in the
+previous section needs to be extended to handle more than two
+variables.  Globerson et. al\shortcite{globerson2007euclidean} suggest
+the following likelihood function:
 
-%% \begin{eqnarray}
-%% &\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multicode}\\
-%% &&\sum_k w_k \sum_{x,y^{(k)}} \bar{p}(x,y^{(k)}) \log p(x,y^{(k)}) \nonumber
-%% \end{eqnarray}
+\begin{eqnarray}
+&\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multicode}
+  \bar{p}(w,c) \log p(w,c) + \sum_i^K \sum_{w,f^{(i)}} \bar{p}(w,f^{(i)}) \log p(w,f^{(i)})
+\end{eqnarray}
 
-%% \noindent where $Y^{(1)}, \ldots, Y^{(K)}$ are $K$ different variables
-%% whose empirical joint distributions with $X$,
-%% $\bar{p}(x,y^{(1)})\ldots\bar{p}(x,y^{(K)})$, are known.
-%% Eq.~\ref{eq:multicode} then represents a set of CODE models
-%% $p(x,y^{(k)})$ where each $Y^{(k)}$ has an embedding $\psi_y^{(k)}$
-%% but all models share the same $\phi_x$ embedding.  The weights $w_k$
-%% reflect the relative importance of each $Y^{(k)}$.
+\noindent where $\bar{p}(w,c)$ is the emprical joint distribution 
+of context $C$ with $W$, $F^{(1)}, \ldots, F^{(K)}$ are extra $K$
+different variables whose empirical joint distributions with $W$,
+$\bar{p}(w,f^{(1)})\ldots\bar{p}(w,f^{(K)})$, are known.
+Eq.~\ref{eq:multicode} then represents a set of CODE models
+$p(w,f^{(k)})$ where each $F^{(k)}$ has an embedding $\psi_f^{(k)}$
+but all models share the same $\phi_w$ embedding.
 
-%% We adopt this likelihood function, set all $w_k=1$, let $X$
-%% represent a word, $Y^{(1)}$ represent a random substitute and
-%% $Y^{(2)}, \ldots, Y^{(K)}$ stand for various morphological and
-%% orthographic features of the word.  With this setup, the training
-%% procedure needs to change little: each time a word --
-%% random-substitute pair is sampled, the relevant word -- feature pairs
-%% are also generated and input to the gradient ascent algorithm.
+We adopt this likelihood function, let $W$ represents a word, $C$
+represents a context (i.e., random substitute), and $F^{(1)}, \ldots,
+F^{(K)}$ stand for morphological and orthographic features of the word
+thus each word is a (K+1)-tuple, $(W, C, F^{(1)}, \hdots F^{(K)})$.
+With this setup, the training procedure needs to change little:
+instead of sampling a word ($w$) -- context ($c$), the word ($w$) --
+context ($c$) -- features ($f_1,\hdots,f_K$) tuple is sampled and
+input to the gradient ascent algorithm.  The gradient search algorithm
+updates the embeddings according to $p(w,c)$ and $p(w,f^{(i)})$ where
+$i=1\hdots k$ and no updates are performed between $c$ and $f^{(i)}$s
+since they do not have any co-occurrence statistics and $w$ is the
+only shared variable.
+
+Tuples might have null values due to the unobserved features.  For
+example in the case of POS induction, the word ``\textbf{car}'' has no
+morphological or orthographic features therefore all the elements of
+the tuple have null value except the word type ($w$) and the context
+($c$).  We do not perform any pull or push updates on embeddings
+during the gradient search if the corresponding $f^{(k)}$ is
+null\footnote{In the POS induction problem $w$ and $c$ represents the
+word type and context therefore they are always observed.}.
 
 %% S-CODE handles two variables, whereas underlying syntactic categories
 %% can be captured by more than two different variables such as
