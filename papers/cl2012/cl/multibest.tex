@@ -28,7 +28,6 @@ as the training corpora.
 
 \subsection{Random Substitute and Features}
 \label{sec:multivecfeat}
-\input{datatable.tex} 
 
 To sample substitutes we calculate the probabilities of top 100
 substitutes of each position, we train a 4-gram language model with
@@ -73,7 +72,9 @@ Section~\ref{sec:feat} using the training sections of each language in
 MULTEXT-East and CoNLL-X corpora\footnote{We don't use the language
   model corpora to extract morphological features.}.  Language
 specific morphological feature statistics are summarized in
-Table~\ref{tab:lmstatistics}.
+Appendix~D.
+%Table~\ref{tab:lmstatistics}.
+
 %% \begin{table}[h]
 %% \small
 %% \caption{Number of induced suffix parts and word types with these suffix parts after the morfological feature extraction.}
@@ -114,14 +115,14 @@ Table~\ref{tab:lmstatistics}.
 \subsection{Results}
 \label{sec:multires}
 
-For each language we report results of three models: (1)
-distributional (DIS), (2) distributional with orthographic features
-(DIS+O) and (3) distributional with both orthographic and
-morphological features (DIS+O+M).  Similar to the settings used in
-Section~\ref{sec:wordsub}, we use the 25 dimensional sphere with 64
-substitutes for all languages.  For each language the number of induced
-clusters is set to the number of tags in the gold-set as presented in
-Table~\ref{tab:multiresults}.
+For each language we report results of three models: (1) word
+embeddings ($W$), (2) word embeddings with orthographic features
+($W+O$) and (3) word embeddings with both orthographic and
+morphological features ($W+O+M$).  Similar to the settings used in
+Section~\ref{sec:clustering-w}, we use the 25 dimensional sphere with 64
+substitutes for all languages.  For each language the number of
+induced clusters is set to the number of tags in the gold-set as
+presented in Table~\ref{tab:multiresults}.
 
 As a baseline model we chose the syntagmatic bigram version of S-CODE
 described in Section~\ref{sec:bigram} which is a very strong baseline
@@ -131,10 +132,10 @@ Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of
 our models together with the syntagmatic bigram baseline and the best
 published accuracies on each language corpus.
 
-DIS significantly outperforms the syntagmatic bigram baseline in both
-\mto\ and \vm\ scores on 14 languages.  DIS+O+M has the
-state-of-the-art \mto\ and \vm\ accuracy on the PTB.  DIS+O and
-DIS+O+M achieve the highest \mto\ scores on all languages of
+$W$ significantly outperforms the syntagmatic bigram baseline in both
+\mto\ and \vm\ scores on 14 languages.  $W+O+M$ has the
+state-of-the-art \mto\ and \vm\ accuracy on the PTB.  $W+O$ and
+$W+O+M$ achieve the highest \mto\ scores on all languages of
 MULTEXT-East corpora while scoring the highest \vm\ accuracies on
 English and Romanian.  On the CoNLL-X languages our models perform
 better than the best published \mto\ or \vm\ accuracies on 10

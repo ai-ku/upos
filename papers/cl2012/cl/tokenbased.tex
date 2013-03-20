@@ -1,14 +1,15 @@
-\subsection{POS Induction of Word Tokens}
-\label{sec:pos-token}
+\subsection{Clustering Concatenation of Word and Context Embeddings (${\bf W}\oplus{\bf C}$)}
+\label{sec:clustering-concatenation}
 
-\subsubsection{Random Substitutes}
-\label{sec:wordsub-token}
+%useless
+%\subsubsection{Random Substitutes}
+%\label{sec:wordsub-token}
 
 We extend the random-substitutes algorithm presented earlier to
 perform POS induction for the word tokens rather than the word types.
-We generate word ($X$) -- random-substitute ($Y$) pairs as the input
-to the S-CODE.  For each observed $X$ -- $Y$ pair in the S-CODE input,
-corresponding 25-dimensional $\phi_x$ and $\psi_y$ embedding vectors
+We generate word ($W$) -- random-substitute ($C$) pairs as the input
+to the S-CODE.  For each observed $W$ -- $C$ pair in the S-CODE input,
+corresponding 25-dimensional $\phi_w$ and $\psi_c$ embedding vectors
 are concatenated to create a 50-dimensional representation.  The
 resulting 50-dimensional vectors are clustered using the instance
 weighted k-means algorithm with 128 restarts.  The process yields 64
@@ -21,12 +22,13 @@ majority are broken randomly.  The many-to-one accuracy is
 In order to demonstrate the merit in the token based POS induction, we
 first define the gold-tag perplexity for the word types as following:
 \begin{equation} \label{eq:tag-perp}
-GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
+GP(w) = 2^{H(p_w)} = 2^{-\sum_{t} p_w(t)log_2 p_w(t)}
 \end{equation}
-Where $p_w$ is the gold POS tag distribution of the word type $w$ and
-$H(p_w)$ is the entropy of the $p_w$ distribution.
+\noindent where $p_w$ is the gold POS tag distribution of the word
+type $w$ and $H(p_w)$ is the entropy of the $p_w$ distribution.
 
 \begin{table}[t] \footnotesize
+\centering
 \caption{Accuracy in the gold-tag perplexity separated subsets.}
 \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
 \hline
@@ -69,7 +71,9 @@ model) and represent the first three models outputs with a
 The resulting vectors are clustered using k-means algorithm with 128
 restarts.
 
-\begin{table}[t]
+\begin{table}[ht]
+\centering
+\small
 \caption{Accuracies of the token based S-CODE models on the gold-tag
   perplexity separated subsets.}
 \begin{tabular}{|l|l|l|l|}

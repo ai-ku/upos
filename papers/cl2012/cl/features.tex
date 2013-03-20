@@ -6,7 +6,7 @@ using morphological and orthographic features significantly improves
 part of speech induction with an HMM based model.
 Section~\ref{sec:related} describes a number of other approaches that
 show similar improvements.  We integrate additional features together
-with substitutes by using the model decsribed in Appendix~C.
+with substitutes by using the model described in Appendix~C.
 
 %% In order to accommodate multiple feature types the CODE model in
 %% Appendix~\ref{sec:codethr} needs to be extended to handle more than
@@ -81,7 +81,49 @@ feature\footnote{We extracted the stem part by concatenating the
   splits until including the first ``STM'' labeled split and the
   suffix part by concatenating rest of the splits.}.  The program
 induced 5575 suffix types that are present in a total of 19223 word
-types.
+types.  Table~\ref{tab:sampleswithfeatures} presents the co-occurrence
+tuples of the example sentence after incorporating the orthographic
+and morphological features.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{The table below represents the input sentence
+  \textit{``Pierre Vinken, 61 years old, will join the board as a
+    nonexecutive director Nov.~29 .''} as tuples of words, their
+  substitutes and features.  Words on the left column presents the
+  target word, words on the second column represents the context and
+  tokens on the rest of the columns are the features of the
+  correponding target word.  Features without values are unobserved
+  therefore set to null.}
+\begin{tabular}{|lllllll|}
+\hline
+\textbf{Word} & {\bf Context} & {\bf Morphology} &
+\specialcell{{\bf Initial}\\{\bf Capital}} & {\bf Number} &
+\specialcell{{\bf Contains}\\{\bf Hypen}} &
+\specialcell{{\bf Initial}\\{\bf Apostrophe}}
+\\
+\hline
+W:Pierre & \textit{C:Mr.} & & {\it F:IC} &&&\\
+W:Vinken & \textit{C:\_unk\_} & & {\it F:IC} &&&\\
+W:, & \texit{C:,} & & &&&\\
+W:61 & \texti{C:48} & & & {\it F:N}&&\\
+W:years & \text{C:years} & {\it F:s} &&&&\\
+W:old & \text{C:old} & & &&&\\
+W:join & \textit{C:head} &&&&&\\
+W:the & \textit{C:its} &&&&&\\
+W:board & \textit{C:company} &&&&&\\
+W:as & \textit{C:as} &&&&&\\
+W:a & \textit{C:a} &&&&&\\
+W:nonexecutive & \textit{C:non-executive} &&&&&\\
+W:director & \textit{C:chairman} & {\it F:or}&&&&\\
+W:Nov. & \textit{C:May} &&{\it F:IC}&&&\\
+W:29 & \textit{C:9} &&&{\it F:N}&&\\
+W. & \texit{C:.} & &&&&\\
+\hline
+\end{tabular}
+\label{tab:sampleswithfeatures}
+\end{table}
 
 %% These suffixes were input to S-CODE as morphological features whenever
 %% the associated word types were sampled.  In order to incorporate

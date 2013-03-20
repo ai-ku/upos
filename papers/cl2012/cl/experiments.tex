@@ -80,7 +80,7 @@ bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this section and the ones we cite from the literature.
 
 \subsection{Clustering Word Embeddings ({\bf W})}
-\label{sec:wordsub-type}
+\label{sec:clustering-w}
 
 The S-CODE uses stochastic gradient ascent (see
 Appendix~\ref{sec:codethr}) to find the $\phi_w, \psi_s$ embeddings
@@ -258,7 +258,7 @@ significantly better than the state-of-the-art distributional models.
 %% \end{figure}
 
 \subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
-\label{sec:bigram-type}
+\label{sec:pvss}
 
 To get a direct comparison of the paradigmatic and syntagmatic context
 representations we feed 4 different co-occurrences defined in
@@ -273,6 +273,7 @@ the end we cluster the word types ($X$) with k-means algorithm and
 report the results on Table \ref{tab:syntagmatic}.
 
 \begin{table}[ht]
+\centering
 \caption{Summary of results in terms of the \mto\ and \vm\ scores of
   the S-CODE algorithm when the paradigmatic or syntagmatic
   representations are feed as an input.  Standard errors are given in
