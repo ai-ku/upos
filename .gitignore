@@ -5,6 +5,7 @@ src/fastsubs
 src/dists
 src/wkmeans
 src/scode
+run/test
 TODO
 data
 run.*

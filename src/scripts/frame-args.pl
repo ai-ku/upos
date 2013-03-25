@@ -8,5 +8,5 @@ my $type =  shift or die("missing frame");
 
 for my $seed (1 .. 10) {
     print "$seed $langcl $lang $frame $type\n";
-    $seed += 5
+    $seed += 5;
 }

@@ -139,7 +139,7 @@ FS_NSUB=100 # go until you have this many substitutes
 FS_PSUB=1.0 # or this much cumulative probability
 FS_OPTIONS=-n ${FS_NSUB} -p ${FS_PSUB}
 
-%.sub.gz: %.tok.gz %.lm.gz %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
+%.sub.gz: %.tok.gz %.lm.gz  %.ppl.gz %.unk ## FS_NSUB=100 FS_PSUB=1: time=4h47m, wc=1222974 245817774 2350067125	
 	zcat $< | fastsubs ${FS_OPTIONS} $*.lm.gz | gzip > $@
 
 ### 2.5.1 MORFESSOR:
@@ -194,6 +194,7 @@ WS_OPTIONS=-n ${WORDSUB} -s ${SEED}
 
 wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 809663253
 	perl -le 'print "$<" for 1..${WORDSUB}' | xargs zcat | grep -v '^</s>' | wordsub -s ${SEED} | gzip > $@
+
 
 ### SCODE options:
 # -r RESTART: number of restarts (default 1)                    
@@ -399,7 +400,6 @@ dis+omplot-v.%.dat: dis+om.%.out
 
 ### TYPE-TOKEN EXPERIMENTS
 
-
 ### FRAME:
 FRAME_NARGS=5
 ###LEFT BIGRAM experiments
@@ -426,6 +426,16 @@ lbi+xplot-s.%.dat: frame-lbi+x.%.out
 lbi+xplot-v.%.dat: frame-lbi+x.%.out
 		cat $< | plotdata.pl 1=x 7=y > $@
 
+### LEFT Y
+frame-lbi+y.%.out: %.lbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} lbi ytoken | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+lbi+yplot-s.%.dat: frame-lbi+y.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+lbi+yplot-v.%.dat: frame-lbi+y.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
 ###RIGHT BIGRAM experiments
 %.rbi.gz: %.tok.gz
 	frame.py rbi $< | gzip > $@
@@ -448,6 +458,16 @@ rbi+xplot-s.%.dat: frame-rbi+x.%.out
 		cat $< | plotdata.pl 1=x 4=y > $@
 
 rbi+xplot-v.%.dat: frame-rbi+x.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
+### RIGHT Y
+frame-rbi+y.%.out: %.rbi.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} rbi ytoken | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+
+rbi+yplot-s.%.dat: frame-rbi+y.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+rbi+yplot-v.%.dat: frame-rbi+y.%.out
 		cat $< | plotdata.pl 1=x 7=y > $@
 
 ###FLE BIGRAM experiments
@@ -504,6 +524,19 @@ fre+xplot-s.%.dat: frame-fre+x.%.out
 fre+xplot-v.%.dat: frame-fre+x.%.out
 		cat $< | plotdata.pl 1=x 7=y > $@
 
+### FRE Y
+
+frame-fre+y.%.out: %.fre.gz %.words.gz %.pos.gz
+	frame-args.pl ${LANG_CL} ${LANGUAGE} fre ytoken | xargs -n${FRAME_NARGS} -P${NCPU} frame-run.pl > $@
+	paste freytoken*.out | gzip > freytoken.out.gz
+	-rm freytoken*.out
+
+fre+yplot-s.%.dat: frame-fre+y.%.out
+		cat $< | plotdata.pl 1=x 4=y > $@
+
+fre+yplot-v.%.dat: frame-fre+y.%.out
+		cat $< | plotdata.pl 1=x 7=y > $@
+
 ### SCODE
 ### SCODE X experiments
 DISX_NARGS=10
@@ -513,6 +546,27 @@ dis+x.%.out:  %.pos.gz %.words.gz %.sub.gz
 		disrun-args.pl ${LANG_CL} ${LANGUAGE} | perl -lane 'print if $$F[5] == ${DISX_NSUB}' |xargs -n${DISX_NARGS} -P${NCPU} disrun.pl > $@
 		paste type*.out | gzip > type.out.gz
 		-rm type*.out
+
+dis+xplot-s.%.dat: dis+x.%.out
+	cat $< | plotdata.pl 1=x 4=y > $@
+
+dis+xplot-v.%.dat: dis+x.%.out
+	cat $< | plotdata.pl 1=x 7=y > $@
+
+### SCODE Y experiments
+DISY_NARGS=4
+DISY_NSUB=64
+
+dis+y.%.out:  %.pos.gz %.words.gz %.sub.gz
+		dis+y-args.pl ${LANG_CL} ${LANGUAGE} ${DISY_NSUB} | xargs -n${DISY_NARGS} -P${NCPU} dis+y-run.pl > $@
+		paste context*.out | gzip > context.out.gz
+		-rm context*.out
+
+dis+yplot-s.%.dat: dis+y.%.out
+	cat $< | plotdata.pl 1=x 4=y > $@
+
+dis+yplot-v.%.dat: dis+y.%.out
+	cat $< | plotdata.pl 1=x 7=y > $@
 
 ### SCODE X+Y experiments
 DISXY_NARGS=4

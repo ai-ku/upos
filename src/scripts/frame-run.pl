@@ -37,7 +37,12 @@ if ($type eq "token"){
     $scodeflag = " -e 1 ";
     $wkmeansflag = "";
     $scode2kmeans = "";
+}elsif ($type eq "ytoken"){
+    $scodeflag = " -a ";
+    $kmeans2eval = " | y2eval.py -s $seed -p $lang.$frame.gz -n 1";
+    $scode2kmeans = "perl -ne 'print if s/^1://' | ";
 }
+
 my $scode = "scode $scodeflag -r $sc_restart -i $sc_niter -d $ndim -z $Z -s $seed 2> $sc_err | gzip > $sc_out";
 my $kmeans = "wkmeans $wkmeansflag -k $K -r $km_restart -s $seed  2> $km_err $kmeans2eval > $km_out";
 my $score = "eval.pl -m -v -g $gold";
