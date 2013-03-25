@@ -36,21 +36,23 @@ mappings obtained over the test corpus, we evaluated the accuracy in
 the subsets. 
 \begin{table}[h]
 \centering
-\caption{The \mto\ accuracy of ${\bf W}$, ${\bf C}$ and ${\bf W}\oplus{\bf C}$ based
-  models on two subsets that consist of words with $GP$ smaller and
-  larger than 1.75, respectively.  The variance of each score reported in 
-  pharantesis.  The percentage of each subset in the
-  test data is reported in the title bar.
+\caption{
+The \mto\ accuracy of ${\bf W}$, ${\bf C}$ and ${\bf W}\oplus{\bf C}$
+based models on two subsets that consist of words with $GP$ smaller
+and larger than 1.75, respectively.  The variance of each score
+reported in pharantesis while statistically best score of each subset is
+reported in bold.  The percentage of each subset in the test data is
+reported in the title bar.
 }
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
   \hline
-  Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
+  Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1$ \\ $100\%$}\\
   \hline
-  \specialcell{Clustering ${\bf W}$ embeddings\\(Type based)} & .8054 (.0065) & .4383 (.0104)\\
+  \specialcell{Clustering ${\bf W}$ embeddings\\(Type based)} & {\bf .8054 (.0065)} & .4383 (.0104) & {\bf \wsmto}\\
   \hline
-  \specialcell{Clustering ${\bf W} \oplus {\bf C}$ embeddings\\(Token based)}& .7322 (.0079) & .4671 (.0174)\\
+  \specialcell{Clustering ${\bf W} \oplus {\bf C}$ embeddings\\(Token based)}& .7322 (.0079) & {\bf .4671 (.0174)} & \wsxymto\\
   \hline
-  \specialcell{Clustering ${\bf C}$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093)\\
+  \specialcell{Clustering ${\bf C}$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093) & \wsymto\\
   \hline  
 \end{tabular}
 \label{tab:bins}
