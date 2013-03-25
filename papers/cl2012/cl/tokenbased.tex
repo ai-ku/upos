@@ -5,7 +5,7 @@ In the previous section we group word types rather than word tokens by
 clustering the word embeddings.  In this section we remove the
 one-tag-per-word assumption and group word tokens according to
 embeddings of their substitutes.  We generate 64 substitutes for each
-word token and input them to S-CODE as word($W$) -- substitute ($C$)
+word token and input them to S-CODE as word($W$) -- substitute (${\bf C}$)
 pairs.  The resulting embeddings of the context (i.e., substitutes)
 are clustered using the instance weighted k-means algorithm with 128
 restarts.  The process yields 64 cluster-ids (for every pair generated
@@ -34,92 +34,68 @@ greater than 1.75.  We performed \mto\ evaluation on our induction
 output and obtained the induced-tag -- gold-tag mappings. Using the
 mappings obtained over the test corpus, we evaluated the accuracy in
 the subsets. 
-
 \begin{table}[h]
 \centering
-\caption{Accuracy in the gold-tag perplexity on two subsets that consist of words with
-  $GP$ smaller and larger than 1.75, respectively.  The percentage of each subsets in
-  the test data is reported in the title bar of the table.  
+\caption{The \mto\ accuracy of ${\bf W}$, ${\bf C}$ and ${\bf W}\oplus{\bf C}$ based
+  models on two subsets that consist of words with $GP$ smaller and
+  larger than 1.75, respectively.  The variance of each score reported in 
+  pharantesis.  The percentage of each subset in the
+  test data is reported in the title bar.
 }
 \begin{tabular}{|c|c|c|}
   \hline
   Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
   \hline
-  \specialcell{Clustering $W$ embeddings\\(Type based)} & .8054 (.0065) & .4383 (.0104)\\
+  \specialcell{Clustering ${\bf W}$ embeddings\\(Type based)} & .8054 (.0065) & .4383 (.0104)\\
   \hline
-  \specialcell{Clustering $C$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093)\\
+  \specialcell{Clustering ${\bf W} \oplus {\bf C}$ embeddings\\(Token based)}& .7322 (.0079) & .4671 (.0174)\\
   \hline
+  \specialcell{Clustering ${\bf C}$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093)\\
+  \hline  
 \end{tabular}
 \label{tab:bins}
 \end{table}
 
-The performance of our algorithm on $C$ embeddings is summarized in
+The performance of our algorithm on ${\bf C}$ embeddings is summarized in
 Table~\ref{tab:bins}.  Due to the one-tag-per-word nature of POS
-induction, type based modeloutperforms the token based one on the
+induction, type based model outperforms the token based one on the
 unambiguous words.  However the token based model achieves
 statistically comparable results with the type based model on the
 ambiguous words.  Type base model clearly handles unambiguous words
 better than the token based model however it can not handle words with
 ambiguity while the token based model can.  In order to take advantage
-of both type based and token based model we apply our algorithm on
-concatenation of $W$ and $C$ embeddings in the next section.
+of both models we apply our algorithm on concatenation of ${\bf W}$ and ${\bf C}$
+embeddings in the next section.
 
 \subsection{Clustering Concatenation of Word and Context Embeddings (${\bf W}\oplus{\bf C}$)}
 \label{sec:clustering-concatenation}
 
-We extend the random-substitutes algorithm presented earlier to
-perform POS induction for the word tokens rather than the word types.
-We generate word ($W$) -- random-substitute ($C$) pairs as the input
-to the S-CODE.  For each observed $W$ -- $C$ pair in the S-CODE input,
-corresponding 25-dimensional $\phi_w$ and $\psi_c$ embedding vectors
-are concatenated to create a 50-dimensional representation.  The
-resulting 50-dimensional vectors are clustered using the instance
-weighted k-means algorithm with 128 restarts.  The process yields 64
-cluster-ids (for every pair generated from word token's context) for
-each word token's context.  The cluster-ids tokens are predicted by
-the majority cluster-id of the corresponding pairs.  Ties for the
-majority are broken randomly.  The many-to-one accuracy is
-\wsxymto\ and the V-measure is \wsxyvm\ .
+Two models presented in earlier sections perform POS induction either
+by assuming (Section~\ref{sec:clustering-w} or discarding the
+one-tag-per-word assumption (Section~\ref{sec:clustering-c}).  In this
+section we define a hybrid model which clusters the concatenation of
+${\bf W}$ and ${\bf C}$ embeddings.  This model not only forces the
+one-tag-per-word assumption but also performs token based clustering
+by incorporating the word type and context information together.
 
-In order to demonstrate the merit in the token based POS induction, we
-first define the gold-tag perplexity for the word types as following:
-\begin{equation} \label{eq:tag-perp}
-GP(w) = 2^{H(p_w)} = 2^{-\sum_{t} p_w(t)log_2 p_w(t)}
-\end{equation}
-\noindent where $p_w$ is the gold POS tag distribution of the word
-type $w$ and $H(p_w)$ is the entropy of the $p_w$ distribution.
-\begin{table}[h]
-%% <1.75 1044611 0.662081  0.00516808
-%% >=1.75  129155  0.43096 0.00936676
-%% All 1173766 0.63665 0.0048844
-\centering
-\caption{Accuracy in the gold-tag perplexity separated subsets.}
-\begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
-\hline
-Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
-\hline
-Substitutes(Type) & .8054 (.0065) & .4383 (.0104)\\
-\hline
-Substitutes(Tokens) & .7322 (.0079) & .4671 (.0174)\\
-\hline
-\end{tabular}
-\label{tab:bins}
-\end{table}
+Similar to the previous models, we generate ${\bf W}$ -- ${\bf C}$
+pairs as the input to the S-CODE.  For each observed ${\bf W}$ --
+${\bf C}$ pair in the S-CODE input, corresponding 25-dimensional
+$\phi_w$ and $\psi_c$ embeddings are concatenated to create a
+50-dimensional representation.  We used the same experimental setting
+of the previous section and predict the token clusters according to
+the majority cluster-id of the corresponding pairs.  The many-to-one
+accuracy is \wsxymto\ and the V-measure is \wsxyvm\ .
 
-Gold-tag perplexity ($GP$) is used to determine the POS ambiguity of
-the word types, relating how often a word type is associated with
-different POS tags in the test corpus.  A $GP$ of 1 for a word type
-$w$ indicates $w$ is associated with same POS tag throughout the test
-corpus, meaning the word type $w$'s POS is unambiguous.  As the $GP$
-increases ambiguity of the word types increases and poses a handicap
-for induction models that limits tag variety for the word types.  To
-display the limitations, we split the test corpus in two subsets: word
-types with $GP$ less than 1.75 and word types with $GP$ equal or
-greater than 1.75.  We performed \mto\ evaluation on our induction
-output and obtained the induced-tag -- gold-tag mappings. Using the
-mappings obtained over the test corpus, we evaluated the accuracy in
-the subsets.  Table~\ref{tab:bins} presents the evaluation over the
-subsets.
+Table~\ref{tab:bins} presents the performance of the hybrid model over
+the subsets.  The hybrid model perfoms statistically better than both
+${\bf W}$ and ${\bf C}$ based models on ambiguous words in terms of
+\mto\.  Forcing the one-tag-per-word assumption on hybrid model
+statistically improves the \mto\ accuracy on unambiguous words
+compared to the ${\bf C}$ based model but it still can not achieve the
+performance of the ${\bf W}$ based model.
+
+
 
 %% We don't really need this part
 %% \subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
