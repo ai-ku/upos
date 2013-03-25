@@ -88,10 +88,10 @@ and morphological features.
 \begin{table}[ht]
 \centering
 \small
-\caption{The table below represents the input sentence
-  \textit{``Pierre Vinken, 61 years old, will join the board as a
-    nonexecutive director Nov.~29 .''} as tuples of words, their
-  substitutes and features.  Words on the left column presents the
+\caption{The words of input sentence \textit{``Pierre Vinken, 61 years old, 
+    will join the board as a nonexecutive director Nov.~29 .''} is represented 
+  with their substitutes and features.  Words on the left 
+  column presents the
   target word, words on the second column represents the context and
   tokens on the rest of the columns are the features of the
   correponding target word.  Features without values are unobserved
@@ -106,10 +106,10 @@ and morphological features.
 \hline
 W:Pierre & \textit{C:Mr.} & & {\it F:IC} &&&\\
 W:Vinken & \textit{C:\_unk\_} & & {\it F:IC} &&&\\
-W:, & \texit{C:,} & & &&&\\
-W:61 & \texti{C:48} & & & {\it F:N}&&\\
-W:years & \text{C:years} & {\it F:s} &&&&\\
-W:old & \text{C:old} & & &&&\\
+W:, & \textit{C:,} & & &&&\\
+W:61 & \textit{C:48} & & & {\it F:N}&&\\
+W:years & \textit{C:years} & {\it F:s} &&&&\\
+W:old & \textit{C:old} & & &&&\\
 W:join & \textit{C:head} &&&&&\\
 W:the & \textit{C:its} &&&&&\\
 W:board & \textit{C:company} &&&&&\\
@@ -119,7 +119,7 @@ W:nonexecutive & \textit{C:non-executive} &&&&&\\
 W:director & \textit{C:chairman} & {\it F:or}&&&&\\
 W:Nov. & \textit{C:May} &&{\it F:IC}&&&\\
 W:29 & \textit{C:9} &&&{\it F:N}&&\\
-W. & \texit{C:.} & &&&&\\
+W. & \textit{C:.} & &&&&\\
 \hline
 \end{tabular}
 \label{tab:sampleswithfeatures}

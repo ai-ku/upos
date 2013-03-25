@@ -47,19 +47,22 @@
 \newcommand{\bgvm}{.6554 (.0039)}
 \newcommand{\rpmto}{.7554 (.0055)}
 \newcommand{\rpvm}{.6703 (.0037)}
-\newcommand{\wsmto}{.7667 (.0056)}
-\newcommand{\wsvm}{.6819 (.0029)}
-\newcommand{\ftmto}{.8002 (.0070)} %updated to new scode
-\newcommand{\ftvm}{.7163 (.0040)}
-\newcommand{\wsxymto}{.7030 (.0070)} %token based x+y
-\newcommand{\wsxyvm}{.6006 (.0071)} %token based x+y
+\newcommand{\wsmto}{.7667 (.0056)} %type based one-tag restricted
+\newcommand{\wsvm}{.6819 (.0029)} %type based one-tag restricted
+\newcommand{\ftmto}{.8002 (.0070)} %type based + feature one-tag restricted
+\newcommand{\ftvm}{.7163 (.0040)} %type based + feature one-tag restricted
+\newcommand{\wsxymto}{.7030 (.0070)} %token based one-tag forced x+y
+\newcommand{\wsxyvm}{.6006 (.0071)} %token based one-tag forced x+y
+\newcommand{\wsymto}{.6366 (.0023)} %token based y
+\newcommand{\wsyvm}{.4865 (.0051)} %token based y
+
+
 
 \newcommand{\specialcell}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
 \title{Unsupervised Part of Speech Induction Using\\Paradigmatic Representations of Word Context}
-\author{
-Mehmet Ali Yatbaz
+\author{Mehmet Ali Yatbaz
 \thanks{Artificial Intelligence Laboratory, Ko\c{c}
   University, 34450 Sar{\i}yer, \.Istanbul, Turkey. E-mail:
   myatbaz@ku.edu.tr, esert@ku.edu.tr, dyuret@ku.edu.tr}
@@ -98,6 +101,7 @@ Mehmet Ali Yatbaz
 \input{experiments.tex}
 \input{tokenbased.tex}
 \input{features.tex}
+\input{paradigma.tex}
 \input{multibest.tex}
 \input{discussion.tex}
 \input{contribution.tex}

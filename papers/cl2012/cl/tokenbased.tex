@@ -1,5 +1,69 @@
 \subsection{Clustering Context Embeddings (${\bf C}$)}
 \label{sec:clustering-c}
+
+In the previous section we group word types rather than word tokens by
+clustering the word embeddings.  In this section we remove the
+one-tag-per-word assumption and group word tokens according to
+embeddings of their substitutes.  We generate 64 substitutes for each
+word token and input them to S-CODE as word($W$) -- substitute ($C$)
+pairs.  The resulting embeddings of the context (i.e., substitutes)
+are clustered using the instance weighted k-means algorithm with 128
+restarts.  The process yields 64 cluster-ids (for every pair generated
+from word token's context) for each word token's context.  The
+cluster-ids tokens are predicted by the majority cluster-id of the
+corresponding pairs.  Ties for the majority are broken randomly.  The
+many-to-one accuracy is \wsymto\ and the V-measure is \wsyvm\ .
+
+In order to demonstrate the merit in the token based POS induction, we
+first define the gold-tag perplexity for the word types as following:
+\begin{equation} \label{eq:tag-perp}
+GP(w) = 2^{H(p_w)} = 2^{-\sum_{t} p_w(t)log_2 p_w(t)}
+\end{equation}
+\noindent where $p_w$ is the gold POS tag distribution of the word
+type $w$ and $H(p_w)$ is the entropy of the $p_w$ distribution.
+Gold-tag perplexity ($GP$) is used to determine the POS ambiguity of
+the word types, relating how often a word type is associated with
+different POS tags in the test corpus.  A $GP$ of 1 for a word type
+$w$ indicates $w$ is associated with same POS tag throughout the test
+corpus, meaning the word type $w$'s POS is unambiguous.  As the $GP$
+increases ambiguity of the word types increases and poses a handicap
+for induction models that limits tag variety for the word types.  To
+display the limitations, we split the test corpus in two subsets: word
+types with $GP$ less than 1.75 and word types with $GP$ equal or
+greater than 1.75.  We performed \mto\ evaluation on our induction
+output and obtained the induced-tag -- gold-tag mappings. Using the
+mappings obtained over the test corpus, we evaluated the accuracy in
+the subsets. 
+
+\begin{table}[h]
+\centering
+\caption{Accuracy in the gold-tag perplexity on two subsets that consist of words with
+  $GP$ smaller and larger than 1.75, respectively.  The percentage of each subsets in
+  the test data is reported in the title bar of the table.  
+}
+\begin{tabular}{|c|c|c|}
+  \hline
+  Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$}\\
+  \hline
+  \specialcell{Clustering $W$ embeddings\\(Type based)} & .8054 (.0065) & .4383 (.0104)\\
+  \hline
+  \specialcell{Clustering $C$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093)\\
+  \hline
+\end{tabular}
+\label{tab:bins}
+\end{table}
+
+The performance of our algorithm on $C$ embeddings is summarized in
+Table~\ref{tab:bins}.  Due to the one-tag-per-word nature of POS
+induction, type based modeloutperforms the token based one on the
+unambiguous words.  However the token based model achieves
+statistically comparable results with the type based model on the
+ambiguous words.  Type base model clearly handles unambiguous words
+better than the token based model however it can not handle words with
+ambiguity while the token based model can.  In order to take advantage
+of both type based and token based model we apply our algorithm on
+concatenation of $W$ and $C$ embeddings in the next section.
+
 \subsection{Clustering Concatenation of Word and Context Embeddings (${\bf W}\oplus{\bf C}$)}
 \label{sec:clustering-concatenation}
 
@@ -24,8 +88,10 @@ GP(w) = 2^{H(p_w)} = 2^{-\sum_{t} p_w(t)log_2 p_w(t)}
 \end{equation}
 \noindent where $p_w$ is the gold POS tag distribution of the word
 type $w$ and $H(p_w)$ is the entropy of the $p_w$ distribution.
-
-\begin{table}[t] \footnotesize
+\begin{table}[h]
+%% <1.75 1044611 0.662081  0.00516808
+%% >=1.75  129155  0.43096 0.00936676
+%% All 1173766 0.63665 0.0048844
 \centering
 \caption{Accuracy in the gold-tag perplexity separated subsets.}
 \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
@@ -55,6 +121,7 @@ mappings obtained over the test corpus, we evaluated the accuracy in
 the subsets.  Table~\ref{tab:bins} presents the evaluation over the
 subsets.
 
+%% We don't really need this part
 %% \subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
 %% \label{sec:bigram-token}
 %% In order to compare the token clustering performance of the
