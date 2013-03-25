@@ -1,14 +1,13 @@
-\subsection{POS Induction of Word Tokens}
-\label{sec:pos-token}
-
-\subsubsection{Random Substitutes}
-\label{sec:wordsub-token}
+\subsection{Clustering Context Embeddings (${\bf C}$)}
+\label{sec:clustering-c}
+\subsection{Clustering Concatenation of Word and Context Embeddings (${\bf W}\oplus{\bf C}$)}
+\label{sec:clustering-concatenation}
 
 We extend the random-substitutes algorithm presented earlier to
 perform POS induction for the word tokens rather than the word types.
-We generate word ($X$) -- random-substitute ($Y$) pairs as the input
-to the S-CODE.  For each observed $X$ -- $Y$ pair in the S-CODE input,
-corresponding 25-dimensional $\phi_x$ and $\psi_y$ embedding vectors
+We generate word ($W$) -- random-substitute ($C$) pairs as the input
+to the S-CODE.  For each observed $W$ -- $C$ pair in the S-CODE input,
+corresponding 25-dimensional $\phi_w$ and $\psi_c$ embedding vectors
 are concatenated to create a 50-dimensional representation.  The
 resulting 50-dimensional vectors are clustered using the instance
 weighted k-means algorithm with 128 restarts.  The process yields 64
@@ -21,12 +20,13 @@ majority are broken randomly.  The many-to-one accuracy is
 In order to demonstrate the merit in the token based POS induction, we
 first define the gold-tag perplexity for the word types as following:
 \begin{equation} \label{eq:tag-perp}
-GP(w) = 2^{H(p_w)} = 2^{-\sum_{x} p_w(x)log_2 p_w(x)}
+GP(w) = 2^{H(p_w)} = 2^{-\sum_{t} p_w(t)log_2 p_w(t)}
 \end{equation}
-Where $p_w$ is the gold POS tag distribution of the word type $w$ and
-$H(p_w)$ is the entropy of the $p_w$ distribution.
+\noindent where $p_w$ is the gold POS tag distribution of the word
+type $w$ and $H(p_w)$ is the entropy of the $p_w$ distribution.
 
 \begin{table}[t] \footnotesize
+\centering
 \caption{Accuracy in the gold-tag perplexity separated subsets.}
 \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
 \hline
@@ -45,44 +45,43 @@ the word types, relating how often a word type is associated with
 different POS tags in the test corpus.  A $GP$ of 1 for a word type
 $w$ indicates $w$ is associated with same POS tag throughout the test
 corpus, meaning the word type $w$'s POS is unambiguous.  As the $GP$
-increases ambiguity for the word types increases and poses a handicap
+increases ambiguity of the word types increases and poses a handicap
 for induction models that limits tag variety for the word types.  To
 display the limitations, we split the test corpus in two subsets: word
-types with $GP$ less than 1.75 and word types with $GP$ equal or greater
-than 1.75.  We performed \mto\ evaluation on the the whole test corpus
-induction output and obtained the induced-tag -- gold-tag
-mappings. Using the mappings obtained over the test corpus, we
-evaluated the accuracy in the subsets.  Table~\ref{tab:bins} presents
-the evaluation over the subsets.
+types with $GP$ less than 1.75 and word types with $GP$ equal or
+greater than 1.75.  We performed \mto\ evaluation on our induction
+output and obtained the induced-tag -- gold-tag mappings. Using the
+mappings obtained over the test corpus, we evaluated the accuracy in
+the subsets.  Table~\ref{tab:bins} presents the evaluation over the
+subsets.
 
-\subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
-\label{sec:bigram-token}
-
-In order to compare the token clustering performance of the
-paradigmatic and the syntagmatic context representations we use the
-same 4 models defined in Section~\ref{sec:bigram-type}.  Following the
-previous section we concatenate the 25-dimensional $\phi_x$ and
-$\psi_y$ ($\psi_{y_{1}}$ and $\psi_{y_{2}}$ in the fourth model)
-embeddings of the corresponding observed pairs (tuples in the fourth
-model) and represent the first three models outputs with a
-50-dimensional vectors (75-dimensional vectors in the fourth model).
-The resulting vectors are clustered using k-means algorithm with 128
-restarts.
-
-\begin{table}[t]
-\caption{Accuracies of the token based S-CODE models on the gold-tag
-  perplexity separated subsets.}
-\begin{tabular}{|l|l|l|l|}
-\hline
-Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1.0$\\$100\%$}\\
-\hline
-$X$ (word) - $Y$ (left bigram) & .5950 (.0051) & .4783 (.0005) & .5821 (.0041)\\
-$X$ (word) - $Y$ (right bigram) & .6239 (.0049) & .3075 (.0153) & .5891 (.0046)\\
-$X$ (word) - $Y$ (left and right bigram concatenation) & .7523 (.0065) & .4492 (.0240) & .7190 (.0049)\\
-$X$ (word) - $Y_1$, $Y_2$ (left and right bigrams) & .6697 (.0065) & .4579 (.0052) & .6464 (.0051)\\
-$X$ (word) - $Y$ (random substitutes) & .7322 (.0079) & .4671 (.0174) & .7030 (.0073)\\
-\hline
-
-\end{tabular}
-\label{tab:tokens}
-\end{table}
+%% \subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+%% \label{sec:bigram-token}
+%% In order to compare the token clustering performance of the
+%% paradigmatic and the syntagmatic context representations we use the
+%% same 4 models defined in Section~\ref{sec:bigram-type}.  Following the
+%% previous section we concatenate the 25-dimensional $\phi_x$ and
+%% $\psi_y$ ($\psi_{y_{1}}$ and $\psi_{y_{2}}$ in the fourth model)
+%% embeddings of the corresponding observed pairs (tuples in the fourth
+%% model) and represent the first three models outputs with a
+%% 50-dimensional vectors (75-dimensional vectors in the fourth model).
+%% The resulting vectors are clustered using k-means algorithm with 128
+%% restarts.
+%% \begin{table}[ht]
+%% \centering
+%% \small
+%% \caption{Accuracies of the token based S-CODE models on the gold-tag
+%%   perplexity separated subsets.}
+%% \begin{tabular}{|l|l|l|l|}
+%% \hline
+%% Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1.0$\\$100\%$}\\
+%% \hline
+%% $X$ (word) - $Y$ (left bigram) & .5950 (.0051) & .4783 (.0005) & .5821 (.0041)\\
+%% $X$ (word) - $Y$ (right bigram) & .6239 (.0049) & .3075 (.0153) & .5891 (.0046)\\
+%% $X$ (word) - $Y$ (left and right bigram concatenation) & .7523 (.0065) & .4492 (.0240) & .7190 (.0049)\\
+%% $X$ (word) - $Y_1$, $Y_2$ (left and right bigrams) & .6697 (.0065) & .4579 (.0052) & .6464 (.0051)\\
+%% $X$ (word) - $Y$ (random substitutes) & .7322 (.0079) & .4671 (.0174) & .7030 (.0073)\\
+%% \hline
+%% \end{tabular}
+%% \label{tab:tokens}
+%% \end{table}

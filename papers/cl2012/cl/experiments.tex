@@ -4,15 +4,15 @@
 Section~\ref{sec:expset} details the test corpus to be induced and
 experiment parameters used in the rest of this work.
 
-The S-CODE algorithm (Section~\ref{sec:codethr}) works with discrete
-inputs.  The substitute vectors as described in
-Section~\ref{sec:subcomp} are high dimensional and continuous.
-Section~\ref{sec:wordsub-type} introduces a simple method to
-discretize the substitute vectors by randomly sampling from the
-distributions for the POS induction of the word types.
-Section~\ref{sec:wordsub-token} leverages the same random sampling
-idea and applies it to the POS induction of word tokens by adding a
-post--processing step to the output of the S-CODE algorithm.
+%% The S-CODE algorithm (Section~\ref{sec:codethr}) works with discrete
+%% inputs.  The substitute vectors as described in
+%% Section~\ref{sec:subcomp} are high dimensional and continuous.
+%% Section~\ref{sec:wordsub-type} introduces a simple method to
+%% discretize the substitute vectors by randomly sampling from the
+%% distributions for the POS induction of the word types.
+%% Section~\ref{sec:wordsub-token} leverages the same random sampling
+%% idea and applies it to the POS induction of word tokens by adding a
+%% post--processing step to the output of the S-CODE algorithm.
 
 Section~\ref{sec:bigram-type} and Section~\ref{sec:bigram-token} aim
 to compare our paradigmatic representation of the word context to
@@ -39,8 +39,8 @@ the gold standard for comparison in our experiments.
 
 % what is the LM training data
 %Train => 5181717 126019973 690121813
-To compute substitute probabilities we trained a language model using
-approximately 126 million tokens of Wall Street Journal data
+To compute substitutes in a given context we trained a language model
+using approximately 126 million tokens of Wall Street Journal data
 (1987-1994) extracted from CSR-III Text \cite{csr3text} (excluding
 sections of the PTB).
 % how is the language model trained
@@ -53,7 +53,6 @@ vocabulary size of 78,498.
 % what is the test data
 % perplexity
 The perplexity of the 4-gram language model on the test corpus is 96.
-
 For computational efficiency only the top 100 substitutes and their
 unnormalized probabilities were computed for each positions in the PTB
 % (1,173,766 tokens, 49,206 types)
@@ -62,7 +61,7 @@ using the {\sc fastsubs} algorithm
   probabilities can be downloaded from
   \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors for
 each position were normalized to add up to 1.0 giving us the final
-substitute vectors used in the rest of this study.
+substitute distributions used in the rest of this study.
 
 % To make a meaningful comparison on the PTB
 The experiments were run using the following default settings (unless
@@ -80,11 +79,19 @@ the results are reported with standard errors in parentheses or error
 bars in graphs.  Table~\ref{tab:results} summarizes all the results
 reported in this section and the ones we cite from the literature.
 
-\subsection{POS Induction of Word Types}
-\label{sec:pos-type}
+\subsection{Clustering Word Embeddings ({\bf W})}
+\label{sec:clustering-w}
 
-\subsubsection{Random Substitutes}
-\label{sec:wordsub-type}
+The S-CODE uses stochastic gradient ascent (see
+Appendix~\ref{sec:codethr}) to find the $\phi_w, \psi_s$ embeddings
+for word and random-substitute in these pairs on a single
+25-dimensional sphere.  The algorithm cycles through the data until we
+get approximately 50 million updates.  The resulting $\phi_w$ vectors
+are clustered using an instance weighted k-means algorithm.
+Cluster-id for each $\phi_w$ is assigned as the predicted cluster-id
+for word type $W$.  Using the default settings and sampling 64
+substitutes for each token the many-to-one accuracy is \wsmto and the
+V-measure is \wsvm.
 
 \begin{table*}[t] \footnotesize
 \caption{Summary of results in terms of the \mto\ and \vm\ scores.
@@ -128,22 +135,15 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 \label{tab:results}
 \end{table*}
 
-To obtain a discrete representation of the context, the
-random-substitutes algorithm pairs each word token with a substitute
-sampled from the pre-computed substitute vectors generated from the
-word token's context (see Section~\ref{sec:subcomp}) and word ($X$) --
-random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
-possible (and beneficial, see below) to run the random-substitutes
-algorithm on the data more than once to generate more pairs from the
-same substitute vectors.  The S-CODE uses stochastic gradient ascent
-to find the $\phi_x, \psi_y$ embeddings for word and random-substitute
-in these pairs on a single 25-dimensional sphere.  The algorithm
-cycles through the data until we get approximately 50 million updates.
-The resulting $\phi_x$ vectors are clustered using an instance
-weighted k-means algorithm.  Cluster-id for each $\phi_x$ is assigned
-as the predicted cluster-id for word type $X$.  Using the default
-settings and sampling 64 substitutes for each token the many-to-one
-accuracy is \wsmto and the V-measure is \wsvm.
+%% Moved to appendix
+%% To obtain a discrete representation of the context, the
+%% random-substitutes algorithm pairs each word token with a substitute
+%% sampled from the pre-computed substitute vectors generated from the
+%% word token's context (see Section~\ref{sec:subcomp}) and word ($X$) --
+%% random-substitute ($Y$) pairs are fed to the S-CODE as input.  It is
+%% possible (and beneficial, see below) to run the random-substitutes
+%% algorithm on the data more than once to generate more pairs from the
+%% same substitute vectors. 
 
 %% To obtain a discrete representation of the context, the
 %% random--partitions algorithm first designates a random subset of
@@ -222,7 +222,7 @@ clusters from coalescing.
 %%% I have seen the first, but the second is pure guess, need to
 %%% look.  The distances seem to be decreasing on that end as well!
 
-We find the random substitute algorithm to be fairly robust to
+We find our model with random substitute to be fairly robust to
 different parameter settings and the resulting many-to-one score
 significantly better than the state-of-the-art distributional models.
 
@@ -257,8 +257,8 @@ significantly better than the state-of-the-art distributional models.
 %% \label{plot-s}
 %% \end{figure}
 
-\subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}
-\label{sec:bigram-type}
+\subsection{Paradigmatic vs Syntagmatic Representations of Word Context}
+\label{sec:pvss}
 
 To get a direct comparison of the paradigmatic and syntagmatic context
 representations we feed 4 different co-occurrences defined in
@@ -273,6 +273,7 @@ the end we cluster the word types ($X$) with k-means algorithm and
 report the results on Table \ref{tab:syntagmatic}.
 
 \begin{table}[ht]
+\centering
 \caption{Summary of results in terms of the \mto\ and \vm\ scores of
   the S-CODE algorithm when the paradigmatic or syntagmatic
   representations are feed as an input.  Standard errors are given in

@@ -2,11 +2,12 @@
 \begin{table}[ht]
 %% Table notation info
 %% PYP is \ddagger
-%% BMMM is \start
+%% BMMM is \star
 %% Clark is \dagger
 %% kmeans is ^k
 %% 
 %  \tiny
+  \centering
   \small
   \caption{The \mto\ and \vm\ scores on 19 corpora in 15 languages
     together with the number of types and tags in gold--set which
@@ -23,7 +24,9 @@
 %  \begin{tabular}{|l|l|l|l|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
   \begin{tabular}{|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|@{ }l@{ }|}
         \hline
-        & Language   & Types   & Tags & \specialcell{Best\\Published}            & \specialcell{Syntagmatic\\Bigram} &DIS           & DIS+O            & DIS+O+M     \\ \hline % Multext data
+        & {\bf Language}   & {\bf Types}   & {\bf Tags} & \specialcell{{\bf Best}\\{\bf Published}} &
+        \specialcell{{\bf Syntagmatic}\\{\bf Bigram}} &{\bf W}
+        & {\bf W+O}            & {\bf W+O+M}     \\ \hline % Multext data
         \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
         & English    & 49,190  & 45 & .775 / .697$^\ddagger$  &.7314 / .6558 & .7667 / .6819 & .7820 / .7020 &{\bf.8002 / .7163}           \\
         & & & & & & & &\\ \hline
@@ -43,7 +46,7 @@
 %        & Chinese    & 40,562  & 15 & -   & & & - & -           \\
         & Czech      & 130,208 & 12   & .701$^\ddagger$ / .484$^\star$  & .6944 / .5036 & .6739 / .4838  & {\bf.7176*} / {\bf.5336}     & .7039 / .5118 \\
         & Danish     & 18,356  & 25   & .761$^\ddagger$ / .591$^\star$ & .6757 / .5290 & .7236 / .5583  & .7538 / .5962     & .7417 / .5919 \\
-        & Dutch      & 28,393  & 13   & .711$^\ddagger$ / .547$^\start$ & .6703 / .5205 & .6957 / .5331  & {\bf.7401} / {\bf.5986}     & .7210 / .5919 \\
+        & Dutch      & 28,393  & 13   & .711$^\ddagger$ / .547$^\star$ & .6703 / .5205 & .6957 / .5331  & {\bf.7401} / {\bf.5986}     & .7210 / .5919 \\
         & German     & 72,326  & 54   & .744$^\star$ / .630$\dagger$& .7525 / .6285 & .7669 / .6306  & {\bf.7799} / {\bf.6575}     & .7557 / .6395 \\
 %        & Japanese   & 3,231   & 80 & -   & - & - & -               & -           \\
         & Portuguese & 28,931  & 22   & .785$^\ddagger$ / .639$^\star$ & .7031 / .5617 & .7439 / .5798  & .7901 / .6316     & .7861 / .6353 \\

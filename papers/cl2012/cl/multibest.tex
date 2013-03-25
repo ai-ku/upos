@@ -20,25 +20,25 @@ the training section of MULTEXT-East\footnote{Languages of
 CONLL-X languages \cite{Lee:2010:STU:1870658.1870741}.
 
 Section~\ref{sec:multivecfeat} details the language model and feature
-statistics of each language.  Section~\ref{sec:multires} summarizes
+extraction of each language.  Section~\ref{sec:multires} summarizes
 the results of our models for all of the languages in our corpora.  In
 the rest of this section we refer to the MULTEXT-East and CONLL-X
 corpora as the testing corpora and the language model training corpora
 as the training corpora.
 
-\subsection{Substitute Vectors and Features}
+\subsection{Random Substitute and Features}
 \label{sec:multivecfeat}
-\input{datatable.tex} 
-To calculate the top 100 substitutes of each position, we train a
-4-gram language model with the corresponding training corpora of each
-language as described in Section~\ref{sec:expset}.
-Table~\ref{tab:lmstatistics} presents statistics related to the
-language model training and testing corpora.  For all languages
-except Serbian, English and Turkish, we train the language models by
-using the corresponding Wikipedia dump files\footnote{Latest Wikipedia
-  dump files are freely available at \url{http://dumps.wikimedia.org/}
-  and the text in the dump files can be extracted using WP2TXT
-  (\url{http://wp2txt.rubyforge.org/})}.
+
+To sample substitutes we calculate the probabilities of top 100
+substitutes of each position, we train a 4-gram language model with
+the corresponding training corpora of each language as described in
+Section~\ref{sec:expset}.  Table~\ref{tab:lmstatistics} presents
+statistics related to the language model training and testing corpora.
+For all languages except Serbian, English and Turkish, we train the
+language models by using the corresponding Wikipedia dump
+files\footnote{Latest Wikipedia dump files are freely available at
+  \url{http://dumps.wikimedia.org/} and the text in the dump files can
+  be extracted using WP2TXT (\url{http://wp2txt.rubyforge.org/})}.
 
 Serbian shares a common basis with Croatian and Bosnian therefore we
 trained 3 different language models using Wikipedia dump files of
@@ -60,7 +60,7 @@ vocabulary threshold to 2 for all languages except English.  English
 has relatively low unknown word ratio therefore we set the threshold
 to 20 instead of 2.
 
-%\subsection{Features}
+% Features paragraphs
 We use the same set of orthographic features described in
 Section~\ref{sec:feat} except we add an ``Only-Punctuation'' feature
 to the languages of MULTEXT-East corpora.  The ``Only-Punctuation''
@@ -72,7 +72,9 @@ Section~\ref{sec:feat} using the training sections of each language in
 MULTEXT-East and CoNLL-X corpora\footnote{We don't use the language
   model corpora to extract morphological features.}.  Language
 specific morphological feature statistics are summarized in
-Table~\ref{tab:lmstatistics}.
+Appendix~D.
+%Table~\ref{tab:lmstatistics}.
+
 %% \begin{table}[h]
 %% \small
 %% \caption{Number of induced suffix parts and word types with these suffix parts after the morfological feature extraction.}
@@ -113,27 +115,27 @@ Table~\ref{tab:lmstatistics}.
 \subsection{Results}
 \label{sec:multires}
 
-For each language we report results of three models: (1)
-distributional (DIS), (2) distributional with orthographic features
-(DIS+O) and (3) distributional with both orthographic and
-morphological features (DIS+O+M).  Similar to the settings used in
-Section~\ref{sec:wordsub}, we use the 25 dimensional sphere with 64
-substitutes for all languages.  For each language the number of induced
-clusters is set to the number of tags in the gold-set as presented in
-Table~\ref{tab:multiresults}.
+For each language we report results of three models: (1) word
+embeddings ($W$), (2) word embeddings with orthographic features
+($W+O$) and (3) word embeddings with both orthographic and
+morphological features ($W+O+M$).  Similar to the settings used in
+Section~\ref{sec:clustering-w}, we use the 25 dimensional sphere with 64
+substitutes for all languages.  For each language the number of
+induced clusters is set to the number of tags in the gold-set as
+presented in Table~\ref{tab:multiresults}.
 
 As a baseline model we chose the syntagmatic bigram version of S-CODE
 described in Section~\ref{sec:bigram} which is a very strong baseline
 compared to the ones used in
 \cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
-Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of our
-models together with the syntagmatic bigram baseline and the best
+Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of
+our models together with the syntagmatic bigram baseline and the best
 published accuracies on each language corpus.
 
-DIS significantly outperforms the syntagmatic bigram baseline in both
-\mto\ and \vm\ scores on 14 languages.  DIS+O+M has the
-state-of-the-art \mto\ and \vm\ accuracy on the PTB.  DIS+O and
-DIS+O+M achieve the highest \mto\ scores on all languages of
+$W$ significantly outperforms the syntagmatic bigram baseline in both
+\mto\ and \vm\ scores on 14 languages.  $W+O+M$ has the
+state-of-the-art \mto\ and \vm\ accuracy on the PTB.  $W+O$ and
+$W+O+M$ achieve the highest \mto\ scores on all languages of
 MULTEXT-East corpora while scoring the highest \vm\ accuracies on
 English and Romanian.  On the CoNLL-X languages our models perform
 better than the best published \mto\ or \vm\ accuracies on 10
