@@ -591,8 +591,8 @@ DISFXY_FEAT=test.$*.dis+omxyfeat.gz
 dis+omxy.%.out: %.seg.gz %.sub.gz %.words.gz %.pos.gz 
 	feature-table.pl ${DIS_FEAT_OPT} -s $< -w $*.words.gz | gzip > ${DISFXY_FEAT}
 	dis+omxy-args.pl ${LANG_CL} ${LANGUAGE} ${DISFXY_NSUB} ${DISFXY_FEAT} | xargs -n${DISFXY_NARGS} -P${NCPU} dis+omxy-run.pl > $@
-	paste token*.out | gzip > token.out.gz
-	-rm token*.out
+	paste xyftoken*.out | gzip > xyftoken.out.gz
+	-rm xyftoken*.out
 	-rm ${DISFXY_FEAT}
 
 dis+omxyplot-s.%.dat: dis+omxy.%.out
