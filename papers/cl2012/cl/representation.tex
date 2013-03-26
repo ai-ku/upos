@@ -23,16 +23,17 @@ whether they group the types or the tokens.
 In syntagmatic representation the context is defined with the
 neighboring words, typically co-occurrences with a single word on the
 left or a single word on the right word called a ``frame'' (e.g., {\em
-  {\bf the} dog {\bf is}; {\bf the} cat {\bf is}}).
+  {\bf the} dog {\bf is}; {\bf the} cat {\bf is}})
 \cite{SchutzePe93,redington1998distributional,mintz2003frequent,20674613,lamar-EtAl:2010:Short,maron2010sphere}.
 Turney and Pantel \shortcite{DBLP:journals/jair/TurneyP10} give a
 broad overview of syntagmatic approaches and their applications within
 the Vector Space Modeling framework.  Depending on the way they
-incorporate co-occurences these models can group types or tokens.
+incorporate co-occurences, these models can perform hard (type based)
+or soft (token based) clustering.
 
 Sch\"{u}tze \shortcite{SchutzePe93} represented the context of a word
-type by concatenating its left and right co-occurences vectors.  These
-vectors were calculated for each type by using the left and the right
+type by concatenating its left and right co-occurence vectors.  These
+vectors were calculated for each type by using the left and right
 neighbors of the type instances therefore they characterize the
 distribution of the left and right neighboring tokens of the type.
 One constraint of this representation is that it represents types
@@ -43,13 +44,13 @@ Mintz \shortcite{mintz2003frequent} showed on a subset of child
 directed speech corpus (CHILDES) \cite{macwhinney2000childes} that
 non-adjacent high frequent bigram frames are useful for the language
 learners on the syntactic categorization of the tokens.  For example,
-the tokens that are observed at ``\_'' in the frame ``{\em {\bf the} \_
-  {\bf is}}'' are assigned to the same category.  Using the top-45
+the tokens that are observed at ``\_'' in the frame ``{\em {\bf the}
+  \_ {\bf is}}'' are assigned to the same category.  Using the top-45
 frequent frames Mintz achieved an average of 98\% unsupervised
 accuracy\footnote{Unsupervised accuracy was defined as the number of
-  hits (when two intervening tokens observed in the frame from the
-  same category) divided by number of false alarms (when two
-  intervening tokens observed in the frame from different
+  hits (when two intervening tokens that observed in the frame are
+  from the same category) divided by number of false alarms (when two
+  intervening tokens that observed in the frame are from different
   categories).}.  The main limitation of the top-45 frequent frames is
 that they could only analyze the 6\% of the tokens on average due to
 the sparsity.  Another drawback is that the tokens with only one
