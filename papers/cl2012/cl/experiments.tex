@@ -1,9 +1,6 @@
 \section{Experiments}
 \label{sec:exp}
 
-Section~\ref{sec:expset} details the test corpus to be induced and
-experiment parameters used in the rest of this work.
-
 %% The S-CODE algorithm (Section~\ref{sec:codethr}) works with discrete
 %% inputs.  The substitute vectors as described in
 %% Section~\ref{sec:subcomp} are high dimensional and continuous.
@@ -14,17 +11,21 @@ experiment parameters used in the rest of this work.
 %% idea and applies it to the POS induction of word tokens by adding a
 %% post--processing step to the output of the S-CODE algorithm.
 
-Section~\ref{sec:bigram-type} and Section~\ref{sec:bigram-token} aim
-to compare our paradigmatic representation of the word context to
-previously described syntagmatic representations of the word context
-for word types and word tokens, respectively.
-Section~\ref{sec:bigram-type} also replicates the bigram based S-CODE
-results from \cite{maron2010sphere}.
-
-Section~\ref{sec:feat} explores morphological and orthographic
-features as additional sources of information for POS induction of
-word types and its results improve the state-of-the-art in the field
-of POS induction.
+Section~\ref{sec:expset} details the test corpus to be induced and
+experiment parameters used in the rest of this work.
+Section~\ref{sec:clustering-w} is presents the sensitivity analysis of
+model parameters.  Section~\ref{sec:clustering-w},
+\ref{sec:clustering-w} and \ref{sec:clustering-concatenation} aim to
+compare performance of models on ${\bf W}$, ${\bf C}$ and ${\bf
+  W}\oplus{\bf C}$, respectively.  Section~\ref{sec:feat} explores
+morphological and orthographic features as additional sources of
+information for POS induction of word types and its results improve
+the state-of-the-art in the field of POS induction.
+Section~\ref{sec:pvss} compares our paradigmatic representation of the
+word context to previously described syntagmatic representations of
+the word context for word types.  Finally, Section~\ref{sec:multilang}
+extends the langauge coverage and applies the best performing model to
+15 languages.
 
 \subsection{Experimental Settings}\label{sec:expset}
 
