@@ -591,8 +591,8 @@ DISFXY_FEAT=test.$*.dis+omxyfeat.gz
 dis+omxy.%.out: %.seg.gz %.sub.gz %.words.gz %.pos.gz 
 	feature-table.pl ${DIS_FEAT_OPT} -s $< -w $*.words.gz | gzip > ${DISFXY_FEAT}
 	dis+omxy-args.pl ${LANG_CL} ${LANGUAGE} ${DISFXY_NSUB} ${DISFXY_FEAT} | xargs -n${DISFXY_NARGS} -P${NCPU} dis+omxy-run.pl > $@
-	paste token*.out | gzip > token.out.gz
-	-rm token*.out
+	paste xyftoken*.out | gzip > xyftoken.out.gz
+	-rm xyftoken*.out
 	-rm ${DISFXY_FEAT}
 
 dis+omxyplot-s.%.dat: dis+omxy.%.out
@@ -630,6 +630,12 @@ bgplot-v.%.dat: bgrun.%.out
 # time-mean time-std (in seconds)
 
 plotall: displot-s.${LANGUAGE}.dat displot-v.${LANGUAGE}.dat dis+oplot-s.${LANGUAGE}.dat dis+oplot-v.${LANGUAGE}.dat dis+omplot-s.${LANGUAGE}.dat dis+omplot-v.${LANGUAGE}.dat
+
+### Analysis:
+# m2o-analysis.py and cluster-analysis.py in upos/src/scripts are
+# interactive analysis scripts.  They are used during the paper
+# writing and included in the repository however not in the makefile.
+#
 
 .SECONDARY: 
 	%.lm.gz %.sub.gz %.knn.gz %.vocab.gz %.words.gz %.pos.gz \
