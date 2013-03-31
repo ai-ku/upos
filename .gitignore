@@ -11,4 +11,4 @@ data
 run.*
 .htaccess
 *~
-
+.nfs*
