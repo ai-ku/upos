@@ -34,72 +34,76 @@ greater than 1.75.  We performed \mto\ evaluation on our induction
 output and obtained the induced-tag -- gold-tag mappings. Using the
 mappings obtained over the test corpus, we evaluated the accuracy in
 the subsets. 
-\begin{table}[h]
-\centering
-\caption{
 
-  The \mto\ accuracy of ${\bf W}$, ${\bf C}$ and ${\bf W}\oplus{\bf
-    C}$ based models on two subsets that consist of words with $GP$
-  smaller and larger than 1.75, respectively.  The average $GP$ of the
-  whole corpus is reported in last column.  Each score is an average
-  over 10 random starts of the algorithm and the standard error of
-  each one is reported in parenthesis while statistically best score
-  of each column is reported in bold.  The percentage of each subset
-  in the test data is reported in the title bar.  }
-\begin{tabular}{|c|c|c|c|c|}
-  \hline
-  Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1$ \\ $100\%$} & Average $GP$ \\
-  \hline
-  \specialcell{Clustering ${\bf W}$ embeddings\\(Type based)} & {\bf .8054 (.0065)} & .4383 (.0104) & {\bf \wsmto} & 1.0 (.0)\\
-  \hline
-  \specialcell{Clustering ${\bf W} \oplus {\bf C}$ embeddings\\(Token based)}& .7322 (.0079) & {\bf .4671 (.0174)} & \wsxymto & 1.34 (.0057)\\ 
-  \hline
-  \specialcell{Clustering ${\bf C}$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093) & \wsymto & 1.5318 (.0076)\\
-  \hline  
-\end{tabular}
-\label{tab:bins}
+\begin{table}[h]
+  \small
+  \centering
+  \caption{The \mto\ accuracy of ${\bf W}$, ${\bf C}$ and ${\bf W}\oplus{\bf C}$
+    based models on two subsets that consist of words with $GP$ smaller
+    and larger than 1.75, respectively.  The
+    percentage of each subset in the test data is reported in the title
+    bar.  The average $GP$ of each
+    clustering over the whole corpus is reported in the last column.  Each
+    score is an average of 10 random starts of our algorithm and the
+    standard error of each one is reported in parenthesis while
+    statistically the best \mto\ score of each column is reported in bold.  
+  }
+  \label{tab:bins}
+  \begin{tabular}{|c|c|c|c||c|}
+    \hline
+    Model & \specialcell{$GP < 1.75$\\$89\%$} & \specialcell{$GP \ge 1.75$\\$11\%$} & \specialcell{$GP \ge 1$ \\ $100\%$} & Average $GP$ \\
+    \hline
+    \specialcell{Clustering ${\bf W}$ embeddings\\(Type based)} & {\bf .8054 (.0065)} & .4383 (.0104) & {\bf \wsmto} & 1.0 (.0)\\
+    \hline
+    \specialcell{Clustering ${\bf W} \oplus {\bf C}$ embeddings\\(Sparse-token based)}& .7322 (.0079) & {\bf .4671 (.0174)} & \wsxymto & 1.3406 (.0057)\\ 
+    \hline
+    \specialcell{Clustering ${\bf C}$ embeddings\\(Token based)} & .6620 (.0051) & .4309 (.0093) & \wsymto & 1.5318 (.0076)\\
+    \hline  
+  \end{tabular}
 \end{table}
 
-The performance of our algorithm on ${\bf C}$ embeddings is summarized in
-Table~\ref{tab:bins}.  Due to the one-tag-per-word nature of POS
-induction, type based model outperforms the token based one on the
-unambiguous words.  However the token based model achieves
-statistically comparable results with the type based model on the
-ambiguous words.  Type base model clearly handles unambiguous words
-better than the token based model however it can not handle words with
-ambiguity while the token based model can.  In order to take advantage
-of both models we apply our algorithm on concatenation of ${\bf W}$ and ${\bf C}$
-embeddings in the next section.
+The performance of our algorithm on ${\bf C}$ embeddings is summarized
+in Table~\ref{tab:bins}.  Due to the one-tag-per-word nature of POS
+induction, the type based model outperforms the token based one on the
+unambiguous words. The token based model achieves statistically
+comparable results with the type based model on the ambiguous words.
+Type based model can not handle words with ambiguity while the token
+based model can.  In order to take advantage of both models we apply
+our algorithm on concatenation of ${\bf W}$ and ${\bf C}$ embeddings
+in the next section.
 
 \subsection{Clustering Concatenation of Word and Context Embeddings (${\bf W}\oplus{\bf C}$)}
 \label{sec:clustering-concatenation}
 
 Two models presented in earlier sections perform POS induction either
-by assuming (Section~\ref{sec:clustering-w}) or discarding the
-one-tag-per-word assumption (Section~\ref{sec:clustering-c}).  In this
-section we define a hybrid model which clusters the concatenation of
-${\bf W}$ and ${\bf C}$ embeddings.  This model not only forces the
-one-tag-per-word assumption but also performs token based clustering
-by incorporating the word type and context information together.
+by assuming (Section~\ref{sec:clustering-w}) or discarding
+(Section~\ref{sec:clustering-c}) the one-tag-per-word assumption.  In
+this section we define a sparse-token based model which clusters the
+concatenation of ${\bf W}$ and ${\bf C}$ embeddings.  This model not
+only tends to put instances of a word type into the same cluster but
+also performs token based clustering by incorporating the word type
+and context information together.
 
 Similar to the previous models, we generate ${\bf W}$ -- ${\bf C}$
-pairs as the input to the S-CODE.  For each observed ${\bf W}$ --
-${\bf C}$ pair in the S-CODE input, corresponding 25-dimensional
-$\phi_w$ and $\psi_c$ embeddings are concatenated to create a
-50-dimensional representation.  We used the same experimental setting
-of the previous section and predict the token clusters according to
-the majority cluster-id of the corresponding pairs.  The many-to-one
-accuracy is \wsxymto\ and the V-measure is \wsxyvm\ .
+pairs as the input to S-CODE.  For each observed ${\bf W}$ -- ${\bf
+  C}$ pair in the S-CODE input, corresponding 25-dimensional $\phi_w$
+and $\psi_c$ embeddings are concatenated to create a 50-dimensional
+representation.  We used the same experimental setting of the previous
+section and predict the token clusters according to the majority
+cluster-id of the corresponding pairs.  The many-to-one accuracy of
+this model is \wsxymto\ and the V-measure is \wsxyvm\ .
 
-Table~\ref{tab:bins} presents the performance of the hybrid model over
-the subsets.  The hybrid model performs statistically better than both
-${\bf W}$ and ${\bf C}$ based models on ambiguous words in terms of
-\mto\.  Forcing the one-tag-per-word assumption on hybrid model
-statistically improves the \mto\ accuracy on unambiguous words
-compared to the ${\bf C}$ based model but it still can not achieve the
-performance of the ${\bf W}$ based model.
-
-
+Table~\ref{tab:bins} presents the performance of the ${\bf
+  W}\oplus{\bf C}$ based model over the subsets and it achieves
+statistically better \mto\ than both of the ${\bf W}$ and ${\bf C}$
+based models on ambiguous words.  Due to the bias towards to the
+sparse clustering, sparse-token based model statistically improves the
+\mto\ accuracy on unambiguous words compared to the ${\bf C}$ based
+model but it still can not achieve the performance of the ${\bf W}$
+based model.  The ${\bf W}\oplus{\bf C}$ based model constructs token
+based clusters that tend to assign instances of a word type into the
+same clusters which leads to a smaller average $GP$ than the ${\bf C}$
+based model as shown in Table~\ref{tab:bins}.
 
 %% We don't really need this part
 %% \subsubsection{Paradigmatic vs Syntagmatic Representations of Word Context}

@@ -26,9 +26,9 @@ substitutes are sampled with replacement from the substitute
 distributions that are calculated based on an n-gram language model.
 The sample space of the substitute word distributions is the
 vocabulary of the language model.\footnote{Sampled substitutes might
-  include the unknown word tag ``\_unk\_'' since it is in the language
+  include the unknown word tag ``<unk>'' since it is in the language
   model vocabulary.  For example substitutes of proper nouns usually
-  include ``\_unk\_'' as a substitute.}  It is possible (and
+  include ``<unk>'' as a substitute.}  It is possible (and
 beneficial, see Section~\ref{sec:exp}) to sample more than one
 substitutes and generate more pairs from the same substitute
 distribution as in Table~\ref{tab:samples}.  The calculation of
@@ -61,7 +61,7 @@ substitutes'' interchangeably.
 \textbf{Word} & \textbf{Random Substitutes}\\
 \hline
 Pierre & \textit{Mr.}  / \textit{Pierre} /  \textit{Mr.}\\
-Vinken & \textit{\_unk\_} / \textit{Beregovoy} / \textit{Cardin}\\
+Vinken & \textit{<unk>} / \textit{Beregovoy} / \textit{Cardin}\\
 , & \textit{,} / \textit{,} / \textit{,}\\
 61 & \textit{48} / \textit{52} / \textit{41}\\
 years & \textit{years} /  \textit{years} /  \textit{years}\\
@@ -88,7 +88,7 @@ Nov. & \textit{April} / \textit{May} / \textit{of}\\
 W:Pierre & \textit{C:Mr.}\\
 W:Pierre & \textit{C:Pierre}\\
 W:Pierre & \textit{C:Mr.}\\
-W:Vinken & \textit{C:\_unk\_}\\
+W:Vinken & \textit{C:<unk>}\\
 W:Vinken & \textit{C:Beregovoy}\\
 W:Vinken & \textit{C:Cardin}\\
 $\hdots$&\\
@@ -253,27 +253,30 @@ which is higher than the one-tag-per-word \mto\ upper bound.
 This representation concatenates the word type and its substitute
 embeddings such that each target word token is represented with $r$
 vectors where $r$ is the number of random substitutes per target word.
-As a result it does not employ the one-tag-word assumption and
-clustering based on this representation produces token based clusters.
-%%Therefore it explicitly forces the one-tag-per-word assumption while
-%%handling the ambiguity.  
 For instance, the target word ``Pierre'' in Table~\ref{tab:samples}
 will be represented with three vectors that will be the concatenation
 of the embedding of {\it W:Pierre} with the embeddings of {\it C:Mr.},
-{\it C:Pierre} and {\it C:Mr.}, seperately.  Similar to the former
-case we run k-means clustering on these concatenated vectors and use
-majority voting to assign the target word cluster.  The model in
-Section~\ref{sec:clustering-concatenation} handles the ambiguity while
-using the fact that words are observed with their most frequent POS
-tag and outperforms the previous models by scoring .8866 \mto\
-accuracy on the word {\it offer}.
+{\it C:Pierre} and {\it C:Mr.}, seperately.  Models that are based on
+this representation does not employ the one-tag-per-word assumption
+and clusters word tokens.  However clusters that are constructed
+according this representation tend to be sparser than the previous one
+due to the incorporation of the ${\bf W}$ embeddings.
+%%Therefore it explicitly forces the one-tag-per-word assumption while
+%%handling the ambiguity.  
+Similar to the former case we run k-means clustering on these
+concatenated vectors and use majority voting to assign the target word
+cluster.  The model in Section~\ref{sec:clustering-concatenation}
+handles the ambiguity while using the fact that words are observed
+with their most frequent POS tag and outperforms the previous models
+by scoring .8866 \mto\ accuracy on the word {\it offer}.
 
 The first representation applies the one-tag-per-word assumption from
 the beginning and clusters word types instead of tokens.  On the other
 hand the second one relaxes the one-tag-per-word assumption and
-clusters word tokens.  The final one clusters tokens by representing
-each token with the concatenation of the word and context embeddings.
-%% therefore it forces the one-tag-per-word assumption while handling
-%% the ambiguity.
+clusters tokens by using context embeddings.  The final one clusters
+tokens by representing each token with the concatenation of the word
+and context embeddings therefore it is more biased to sparse clusters
+than the previous one.
+
 Section~\ref{sec:exp} compares the performance of these three
-representations on the word category induction problem.
+representations on the POS induction problem.
