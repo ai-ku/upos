@@ -11,8 +11,8 @@
 %% idea and applies it to the POS induction of word tokens by adding a
 %% post--processing step to the output of the S-CODE algorithm.
 
-Section~\ref{sec:expset} details the test corpus to be induced and
-experiment parameters used in the rest of this work.
+Section~\ref{sec:expset} details the test corpus and experiment
+parameters used in the rest of this work.
 Section~\ref{sec:clustering-w} is presents the sensitivity analysis of
 model parameters.  Section~\ref{sec:clustering-w},
 \ref{sec:clustering-w} and \ref{sec:clustering-concatenation} aim to
@@ -24,10 +24,11 @@ the state-of-the-art in the field of POS induction.
 Section~\ref{sec:pvss} compares our paradigmatic representation of the
 word context to previously described syntagmatic representations of
 the word context for word types.  Finally, Section~\ref{sec:multilang}
-extends the langauge coverage and applies the best performing model to
-15 languages.
+extends the language and corpus coverage by applying the best
+performing model to 19 corpora in 15 languages.
 
-\subsection{Experimental Settings}\label{sec:expset}
+\subsection{Experimental Settings}
+\label{sec:expset}
 
 To make a meaningful comparison to the previous works
 % what is the test data
@@ -179,7 +180,7 @@ varied over a range of values.
 
 \begin{figure}[ht] \centering
 %\includegraphics[width=0.5\linewidth]{plot-s.pdf}
-\includegraphics[width=0.5\linewidth]{plot-s-cl.pdf}
+\includegraphics[width=0.65\linewidth]{plot-s-cl.pdf}
 \caption{\mto\ is not sensitive to the number of random substitutes
   sampled per word token.}
 \label{plot-s}
@@ -191,7 +192,7 @@ algorithm can observe more than a few random substitutes per word.
 
 \begin{figure}[ht] \centering
 %\includegraphics[width=0.5\linewidth]{plot-d.pdf}
-\includegraphics[width=0.5\linewidth]{plot-d-cl.pdf}
+\includegraphics[width=0.65\linewidth]{plot-d-cl.pdf}
 \caption{\mto\ falls sharply for less than 10 S-CODE dimensions, but
   more than 25 do not help.}
 \label{plot-d}
@@ -203,7 +204,7 @@ significant gain from using more than 25 dimensions.
 
 \begin{figure}[ht] \centering
 %\includegraphics[width=0.5\linewidth]{plot-z.pdf}
-\includegraphics[width=0.5\linewidth]{plot-z-cl.pdf}
+\includegraphics[width=0.65\linewidth]{plot-z-cl.pdf}
 \caption{\mto\ is fairly stable as long as the $\tilde{Z}$ constant is
   within an order of magnitude of the real $Z$ value.}
 \label{plot-z}
