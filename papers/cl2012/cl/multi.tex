@@ -1,40 +1,72 @@
-\section{Multiple Languages}
-\begin{landscape}
-%%Multiple laguage section
-\begin{table}[ht]
-  \begin{tabular}{|l|l|l|l|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-        \hline
-        & Language   & Types   & Tags & k-means      & SVD2         & clark        & BMMM         & PYP    & Best Published & uPos           & uPos+L            & uPos+L+M     \\ \hline % Multext data
-        \multirow{1}{*}{\begin{sideways}\textbf{WSJ}\end{sideways}} 
-%        \textbf{WSJ}
-        & English    & 49,190  & 45   & .616 / .595   & .640 / .582   & .712 / .656   & .728 / .661   & .775 / .697 & .761 / .688$^*$ &               & .8004 / .7160 & -           \\
-        & & & & & & & & & & & &\\ \hline
-        \multirow{8}{*}{\begin{sideways}\textbf{MULTEXT-East}\end{sideways}} & 
-        Bulgarian    & 16,352  & 12+1 & .593 / .503   & .510 / .417   & .665 / .556   & .644 / .545   & -         & & .6883 / .5291  & .7039 / .5496     & .6754 / .5246 \\
-        & Czech      & 19,115  & 12+1 & .567 / .486   & .509 / .355   & .641 / .526   & .642 / .539   & -         & & .6781 / .4829  & .6742 / .4854     & .6977 / .5042 \\
-        & English    & 9,773   & 12+1 & .654 / .565   & .655 / .523   & .706 / .605   & .733 / .633   & -         & & .8229 / .6610  & .8282 / .6719     & .8343 / .6787 \\
-        & Estonian   & 17,845  & 12+1 & .556 / .453   & .553 / .387   & .584 / .444   & .644 / .533   & -         & & .6555 / .4437  & .6634 / .4606     & .6526 / .4418 \\
-        & Hungarian  & 20,321  & 11+1 & .539 / .467   & .495 / .398   & .614 / .489   & .682 / .548   & -         & & .6914 / .5046  & .7052 / .5244     & .7287 / .5444 \\
-        & Romanian   & 15,189  & 12+1 & .551 / .452   & .526 / .421   & .499 / .409   & .611 / .523   & -         & & .6469 / .5012  & .6675 / .5269     & .6488 / .5251 \\
-        & Slovene    & 17,871  & 12+1 & .562 / .469   & .542 / .395   & .694 / .549   & .679 / .567   & -         & & .6873 / .5845  & .6892 / .4901     & .6833 / .4941 \\
-        & Serbian    & 18,095  & 12+1 & .470 / .414   & .546 / .391   & .641 / .510   & .620 / .490   & -         & & .6240 / .4479  & .6181 / .4421     & .6336 / .4566 \\
-        \hline % Conll06 data
-        \multirow{13}{*}{\begin{sideways}\textbf{CoNLL06 Shared Task}\end{sideways}}
-        & Arabic       & 12,915  & 20   & .607 / .433   & .490 / .276   & .598 / .406   & .615 / .424   & .675 / - & - / -   & - & -               & -  \\
-        & Bulgarian  & 32,439  & 54   & .656 / .536   & .653 / .490   & .704 / .596   & .689 / .588   & .732 / -   & - / -   & .7399 / .5824  & .7391 / .5856     & .7207 / .5673 \\
-        & Chinese    & 40,562  & 15   & .611 / .326   & .546 / .245   & .567 / .318   & .694 / .426   & -          & - / -   & & -               & -           \\
-        & Czech      & 130,208 & 12   & -             & -            & .655 / .471   & .657 / .484    & .701 / -   & - / -   & .6764 / .4867  & .7149 / .5330     & .6903 / .5227 \\
-        & Danish     & 18,356  & 25   & .616 / .517   & .576 / .408   & .653 / .527   & .711 / .590   & .762 / -   & .667 / -$^\dagger$& .7214 / .5559  & .7520 / .5927     & .7482 / .5958 \\
-        & Dutch      & 28,393  & 13   & .605 / .453   & .524 / .367   & .679 / .522   & .711 / .547   & .704 / -   & .673 / -$^\ddagger$& .7014 / .5405  & .7393 / .5980     & .7228 / .5925 \\
-        & German     & 72,326  & 54   & .675 / .587   & .642 / .541   & .739 / .630   & .744 / .619   & -          & .684 / -$^\ddagger$& .7637 / .6314  & .7735 / .6554     & .7529 / .6403 \\
-        & Japanese   & 3,231   & 80   & .762 / .761   & .755 / .744   & .774 / .786   & .785 / .774   & -          & - / -   & - & -               & -           \\
-        & Portuguese & 28,931  & 22   & .644 / .516   & .631 / .459   & .692 / .574   & .768 / .639   & .785 / -   & .753 / -$^\dagger$& .7381 / .5770  & .7907 / .6317     & .7948 / .6405 \\
-        & Slovene    & 7,128   & 29   & .642 / .526   & .603 / .440   & .635 / .539   & .562 / .494   & -          & - / -   & .6503 / .4925  & .6555 / .5036     & .6572 / .5023 \\
-        & Spanish    & 16,458  & 47   & .692 / .595   & .682 / .548   & .719 / .616   & .717 / .632   & .788 / -   & .732 / -$^\dagger$& .7492 / .6983  & .7718 / .6372     & .7627 / .6331 \\
-        & Swedish    & 20,057  & 41   & .622 / .532   & .591 / .474   & .687 / .589   & .682 / .580   & .686 / -   & .606 / -$^\ddagger$& .6931 / .5654  & .6946 / .5721     & .6649 / .5613 \\
-        & Turkish    & 17,563  & 30   & .628 / .408   & .524 / .274   & .581 / .368   & .587 / .402   & -          & - / -& .6228 / .3804  & .6348 / .4109    & .65.00 / .4246 \\ \hline % extra data from cristo2011 paper
-        & French     & 49,964  & 23   & .686 / .482   & .685 / .463   & .778 / .573   & .766 / .550   & -          & - / -& & -               & -        \\
-        & A.Greek    & 15,194  & 15   & .448 / .386   & .385 / .242   & .454 / .333  & .451 / .405    & -          & - / -& & -               & -        \\ \hline
-    \end{tabular}
-\end{table}
-\end{landscape}
+\subsection{Multilingual Experiments}
+\label{sec:multilang}
+\noindent We performed experiments with a range of languages and three
+different feature configurations to establish both the robustness of
+our model across languages and to observe the effects of different
+features.  Following Christodoulopoulos et
+al. \shortcite{christodoulopoulos-goldwater-steedman:2011:EMNLP}, in
+addition to the PTB we extend our experiments to 8 languages from
+MULTEXT-East (Bulgarian, Czech, English, Estonian, Hungarian,
+Romanian, Slovene and Serbian) \cite{citeulike:5820223} and 10
+languages from the CoNLL-X shared task (Bulgarian, Czech, Danish,
+Dutch, German, Portuguese, Slovene, Spanish, Swedish and Turkish)
+\cite{Buchholz:2006:CST:1596276.1596305}.  For all experiments, we use
+the best performing model of Section~\ref{sec:clustering-w} (i.e.
+clustering the word embeddings) with default settings.  To perform
+meaningful comparisons with the previous work we train and evaluate
+our models on the training section of MULTEXT-East\footnote{Languages
+  of MULTEXT-East corpora do not tag the punctuation marks, thus we
+  add an extra tag for punctuation to the tag-set of these languages.}
+and CONLL-X languages \cite{Lee:2010:STU:1870658.1870741}.
+
+% Section~\ref{sec:multivecfeat} details the language model and feature
+% extraction for each language.  Section~\ref{sec:multires} summarizes
+% the results of our models for all of the languages in our corpora.  In
+% the rest of this section we refer to the MULTEXT-East and CONLL-X
+% corpora as the testing corpora and the language model training corpora
+% as the training corpora.
+
+% \subsubsection{Random Substitutes and Features}
+% \label{sec:multivecfeat}
+
+%% Language model and feature extraction
+We train a 4-gram language model with the corresponding training
+corpora of each language as described in Section~\ref{sec:expset}.  To
+sample substitutes we calculate the probabilities of the top 100
+substitutes for each position by using the corresponding language
+model.  Morphological features of each language are extracted by the
+method described in Section~\ref{sec:feat}.  The details of the
+language model training and feature extraction are detailed in
+Appendix~D.
+
+%% We ignore these results
+%% \input{tokentable.tex}
+%% \subsubsection{Results}
+%% \label{sec:multires}
+\input{multibesttable.tex}
+For each language we report results of three models: (1) word
+embeddings ($W$), (2) word embeddings with orthographic features
+($W+O$) and (3) word embeddings with both orthographic and
+morphological features ($W+O+M$).  Similar to the settings used in
+Section~\ref{sec:clustering-w}, we use the 25 dimensional sphere with 64
+substitutes for all languages.  For each language the number of
+induced clusters is set to the number of tags in the gold-set as
+presented in Table~\ref{tab:multiresults}.
+
+As a baseline model we chose the syntagmatic bigram version of S-CODE
+described in Section~\ref{sec:bigram} which is a very strong baseline
+compared to the ones used in
+\cite{christodoulopoulos-goldwater-steedman:2011:EMNLP}.
+Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of
+our models together with the syntagmatic bigram baseline and the best
+published accuracies on each language corpus.
+
+$W$ significantly outperforms the syntagmatic bigram baseline in both
+\mto\ and \vm\ scores on 14 languages.  $W+O+M$ has the
+state-of-the-art \mto\ and \vm\ accuracy on the PTB.  $W+O$ and
+$W+O+M$ achieve the highest \mto\ scores on all languages of
+MULTEXT-East corpora while scoring the highest \vm\ accuracies on
+English and Romanian.  On the CoNLL-X languages our models perform
+better than the best published \mto\ or \vm\ accuracies on 10
+languages.
+
