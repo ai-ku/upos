@@ -632,9 +632,10 @@ bgplot-v.%.dat: bgrun.%.out
 plotall: displot-s.${LANGUAGE}.dat displot-v.${LANGUAGE}.dat dis+oplot-s.${LANGUAGE}.dat dis+oplot-v.${LANGUAGE}.dat dis+omplot-s.${LANGUAGE}.dat dis+omplot-v.${LANGUAGE}.dat
 
 ### Analysis:
-# m2o-analysis.py and cluster-analysis.py in upos/src/scripts are
-# interactive analysis scripts.  They are used during the paper
-# writing and included in the repository however not in the makefile.
+# enropy.py, m2o-analysis.py and cluster-analysis.py in
+# upos/src/scripts are interactive analysis scripts.  They are used
+# during the paper writing and included in the repository however not
+# in the makefile.
 #
 
 .SECONDARY: 

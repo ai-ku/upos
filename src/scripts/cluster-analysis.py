@@ -95,7 +95,7 @@ def print_with_limits():
     print "%d (%.2f%%)" % (len(p), float(len(p)) * 100.0 / len(word))
     for k in sorted(clusters.iterkeys()):
         print "%s:\t%g" % (k, m2o_accuracy(matches[k], p, mappings[k]))
-
+    print " avgperp:\t%g" % (avgperp / float(len(p)))
 
 while True:
     line = raw_input(">>> ")
