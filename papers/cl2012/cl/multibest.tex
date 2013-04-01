@@ -11,26 +11,26 @@ Romanian, Slovene and Serbian) \cite{citeulike:5820223} and 10
 languages from the CoNLL-X shared task (Bulgarian, Czech, Danish,
 Dutch, German, Portuguese, Slovene, Spanish, Swedish and Turkish)
 \cite{Buchholz:2006:CST:1596276.1596305}.  For all experiments, we use
-the best performing model of Section~\ref{sec:code} (i.e. the random
-substitute model) with default settings.  To perform meaningful
-comparisons with the previous work we train and evaluate our models on
-the training section of MULTEXT-East\footnote{Languages of
-  MULTEXT-East corpora do not tag the punctuation marks, thus we add
-  an extra tag for punctuation to the tag-set of these languages.} and
-CONLL-X languages \cite{Lee:2010:STU:1870658.1870741}.
+the best performing model of Section~\ref{sec:clustering-w} (i.e.
+clustering the word embeddings) with default settings.  To perform
+meaningful comparisons with the previous work we train and evaluate
+our models on the training section of MULTEXT-East\footnote{Languages
+  of MULTEXT-East corpora do not tag the punctuation marks, thus we
+  add an extra tag for punctuation to the tag-set of these languages.}
+and CONLL-X languages \cite{Lee:2010:STU:1870658.1870741}.
 
 Section~\ref{sec:multivecfeat} details the language model and feature
-extraction of each language.  Section~\ref{sec:multires} summarizes
+extraction for each language.  Section~\ref{sec:multires} summarizes
 the results of our models for all of the languages in our corpora.  In
 the rest of this section we refer to the MULTEXT-East and CONLL-X
 corpora as the testing corpora and the language model training corpora
 as the training corpora.
 
-\subsubsection{Random Substitute and Features}
+\subsubsection{Random Substitutes and Features}
 \label{sec:multivecfeat}
 
-To sample substitutes we calculate the probabilities of top 100
-substitutes of each position, we train a 4-gram language model with
+To sample substitutes we calculate the probabilities of the top 100
+substitutes for each position, we train a 4-gram language model with
 the corresponding training corpora of each language as described in
 Section~\ref{sec:expset}.  Table~\ref{tab:lmstatistics} presents
 statistics related to the language model training and testing corpora.
@@ -57,7 +57,7 @@ Language model training files vary across the languages in terms of
 quality and quantity.  In order to reduce the unknown word ratio of
 resource poor languages and to standardize the process we set the
 vocabulary threshold to 2 for all languages except English.  English
-has relatively low unknown word ratio therefore we set the threshold
+has a relatively low unknown word ratio therefore we set the threshold
 to 20 instead of 2.
 
 % Features paragraphs

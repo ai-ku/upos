@@ -1,4 +1,4 @@
-\section{Abstract Algorithm}
+\section{Algorithm}
 
 In this section we describe the components of our algorithm and their
 relationship with each other.  The algorithm predicts the syntactic
@@ -6,13 +6,14 @@ category of a word in a given context based on its random substitutes.
 In other words first we construct the co-occurrence representation of
 words and their substitutes with the help of a language model and then
 map each value in the co-occurrence data to a corresponding embedding
-on a $n$-dimensional sphere using the S-CODE algorithm.  Finally, we
-apply k-means clustering to categorize the word embeddings by which we
-induced the word categories.  In the next subsection we detail the
-representation of word contexts as co-occurrence data, in
-Subsection~\ref{sec:embedding} we explain the embedding calculation
-and finally in Subsection~\ref{sec:clustering} we describe the
-different ways of embedding clustering.
+on a $n$-dimensional sphere using the S-CODE algorithm
+\cite{maron2010sphere}.  Finally, we apply k-means clustering to
+categorize the word embeddings by which we induced the word
+categories.  In the next subsection we detail the representation of
+word contexts as co-occurrence data, in Subsection~\ref{sec:embedding}
+we explain the embedding calculation and finally in
+Subsection~\ref{sec:clustering} we describe the different ways of
+embedding clustering.
 
 \subsection{Context Representation}
 \label{sec:cooc}
@@ -168,7 +169,7 @@ embeddings of \textit{W:director} and \textit{W:chief} to be close to
 the embedding of \textit{C:chairman}.  Similar to the former case the
 embeddings of \textit{W:Pierre} and \textit{W:Frank} will be close to
 the embedding \textit{C:Mr.} becouse of the frequently observed pairs.
-As a results the final embeddings of \textit{W:director} and
+As a result the final embeddings of \textit{W:director} and
 \textit{W:chief} will be close to each other due to the common
 substitute \textit{C:chairman} and will be apart from
 \textit{W:Pierre} and \textit{W:Frank} due to the lack of common
@@ -217,16 +218,17 @@ in the human labeled PTB data are tagged with their most frequent part
 of speech \cite{Toutanova:2003:FPT:1073445.1073478}.  However the
 clustering performance on the ambiguous words (words that have more
 than one tag) degrades due to the one-tag-per-word assumption.  For
-example, the word ``offer'' is tagged as NN(399), VB(105) and VBP(34)
-in its 538 WSJ instances\footnote{NN, VB and VBP are three
+example, the word {\it offer} is tagged as NN(399), VB(105) and
+VBP(34) in its 538 WSJ instances\footnote{NN, VB and VBP are three
   part-of-speech tags from the Penn Treebank corpus and they
   correspond to singular noun, verb in base form and
   non-$3^{rd}$person singular verb in present tense, respectively.}.
-In this scheme all instances of ``offer'' tagged with one tag and the
-\mto\ upper bound accurcy of ``offer'' is .7616 due to the most
-frequent tag NN(399). Our model in Section~\ref{sec:clustering-w}
-clusters word embeddings and achieves the \mto\ upper bound of
-``offer'' however this is not the case for all ambiguous words.
+In this scheme all instances of {\it offer} tagged with one tag
+and the \mto\ upper bound accurcy of {\it offer} is .7616 due to
+the most frequent tag NN(399). Our model in
+Section~\ref{sec:clustering-w} clusters word embeddings and achieves
+the \mto\ upper bound of {\it offer} however this is not the case
+for all ambiguous words.
 
 %offer tag distribution in WSJ VBP 34, VB 105, NN 399
 \paragraph{Context embeddings (${\bf C}$)} 
@@ -244,7 +246,7 @@ To solve this issue the target word is assigned to the cluster in
 which the majority of its substitute embeddings are
 present\footnote{Ties are broken randomly.}.  The model in
 Section~\ref{sec:clustering-c} clusters ${\bf C}$ and achieves .8215
-\mto\ on the word ``offer'' which is higher than the one-tag-per-word
+\mto\ on the word {\it offer} which is higher than the one-tag-per-word
 \mto\ upper bound.
 
 \paragraph{Concatenation word and context embeddings (${\bf W\oplus C}$)} 
@@ -261,7 +263,7 @@ concatenated vectors and use majority voting to assign the target word
 cluster.  The model in Section~\ref{sec:clustering-concatenation}
 handles the ambiguity while using the fact that words are observed
 with their most frequent POS tag and outperforms the previous models
-by scoring .8866 \mto\ accuracy on the word ``offer''.
+by scoring .8866 \mto\ accuracy on the word {\it offer}.
 
 The first representation applies the one-tag-per-word assumption from
 the beginning and clusters word types instead of tokens.  On the other

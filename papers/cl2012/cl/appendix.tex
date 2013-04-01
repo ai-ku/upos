@@ -13,12 +13,12 @@
 %% using the a co-occurrence modeling framework.
 
 \appendixsection{Computation of Substitute Distributions}
-\label{sec:subcomp}
+\label{app:subcomp}
 
 In this study, we predict the syntactic category of a word in a given
 context based on its substitute distribution.  The sample space of the
 substitute distribution is the vocabulary of the language model
-including the unknow word tag ``\_unk\_''.  Note that the substitute
+including the unknown word tag ``<unk>''.  Note that the substitute
 distribution is a function of the context only and is indifferent to
 the target word.
 
@@ -35,8 +35,9 @@ the probabilities for potential lexical substitutes.  For example, in
 would be difficult to guess from the left context but it is almost
 certain looking at the right context.  We define $c_w$ as the $2n-1$
 word window centered around the target word position: $w_{-n+1} \ldots
-w_0 \ldots w_{n-1}$ ($n=4$ is the n-gram order).  The probability of a
-substitute word $w$ in a given context $c_w$ can be estimated as:
+w_0 \ldots w_{n-1}$ ($n=4$ is the n-gram order we have used).  The
+probability of a substitute word $w$ in a given context $c_w$ can be
+estimated as:
 \begin{eqnarray}
   \label{eq:lm1}P(w_0 = w | c_w) & \propto & P(w_{-n+1}\ldots w_0\ldots w_{n-1})\\
   \label{eq:lm2}& = & P(w_{-n+1})P(w_{-n+2}|w_{-n+1})\nonumber\\
@@ -62,7 +63,7 @@ To obtain a discrete representation of the context, the
 random-substitutes algorithm pairs each word token with a substitute
 sampled from the pre-computed substitute distribution generated from
 the word token's context and then word ($W$) -- random-substitute
-($S$) pairs are fed to the S-CODE as input.
+($S$) pairs are fed to the S-CODE algotihm as input.
 
 \appendixsection{The CODE Model}
 \label{app:codethr}
@@ -122,51 +123,54 @@ calculations for the real $Z$ for computational efficiency.  In our
 experiments, we used S-CODE with its sampling based stochastic
 gradient ascent algorithm and smoothly decreasing learning rate.
 
-\appendixsection{S-Code with More than Two Variables}
+\appendixsection{S-CODE with More than Two Variables}
 
-In order to accommodate multiple feature types the CODE model in the
+In order to accommodate multiple feature types the S-CODE model in the
 previous section needs to be extended to handle more than two
-variables.  Globerson et. al\shortcite{globerson2007euclidean} suggest
-the following likelihood function:
+variables.  Globerson et. al \shortcite{globerson2007euclidean}
+suggest the following likelihood function:
 
 \begin{eqnarray}
 &\ell(\phi,& \psi^{(1)}, \ldots, \psi^{(K)}) = \label{eq:multicode}
   \bar{p}(w,c) \log p(w,c) + \sum_i^K \sum_{w,f^{(i)}} \bar{p}(w,f^{(i)}) \log p(w,f^{(i)})
 \end{eqnarray}
 
-\noindent where $\bar{p}(w,c)$ is the emprical joint distribution 
-of context $C$ with $W$, $F^{(1)}, \ldots, F^{(K)}$ are extra $K$
+\noindent where $\bar{p}(w,c)$ is the empirical joint distribution of
+context $C$ with $W$, $F^{(1)}, \ldots, F^{(K)}$ are extra $K$
 different variables whose empirical joint distributions with $W$,
 $\bar{p}(w,f^{(1)})\ldots\bar{p}(w,f^{(K)})$, are known.
 Eq.~\ref{eq:multicode} then represents a set of CODE models
 $p(w,f^{(k)})$ where each $F^{(k)}$ has an embedding $\psi_f^{(k)}$
 but all models share the same $\phi_w$ embedding.
 
-We adopt this likelihood function, let $W$ represents a word, $C$
-represents a context (i.e., random substitute), and $F^{(1)}, \ldots,
+We adopt this likelihood function, let $W$ represent a word, $C$
+represent a context (i.e., random substitute), and $F^{(1)}, \ldots,
 F^{(K)}$ stand for morphological and orthographic features of the word
-thus each word is a (K+1)-tuple, $(W, C, F^{(1)}, \hdots F^{(K)})$.
-With this setup, the training procedure needs to change little:
-instead of sampling a word ($w$) -- context ($c$), the word ($w$) --
-context ($c$) -- features ($f_1,\hdots,f_K$) tuple is sampled and
-input to the gradient ascent algorithm.  The gradient search algorithm
-updates the embeddings according to $p(w,c)$ and $p(w,f^{(i)})$ where
-$i=1\hdots k$ and no updates are performed between $c$ and $f^{(i)}$s
-since they do not have any co-occurrence statistics and $w$ is the
-only shared variable.
+thus each co-occurrence is a (K+1)-tuple, $(W, C, F^{(1)}, \hdots
+F^{(K)})$.  With this setup, the training procedure needs to change
+little: instead of sampling a word ($w$) -- context ($c$), the word
+($w$) -- context ($c$) -- features ($f_1,\hdots,f_K$) tuple is sampled
+and input to the gradient ascent algorithm.  The gradient search
+algorithm updates the embeddings according to $p(w,c)$ and
+$p(w,f^{(i)})$ where $i=1\hdots k$ and no updates are performed
+between $c$ and $f^{(i)}$s since they do not have any co-occurrence
+statistics and $w$ is the only shared variable.
 
-Tuples might have null values due to the unobserved features.  For
-example in the case of POS induction, the word ``\textbf{car}'' has no
+Tuples might have null values due to unobserved features.  For example
+in the case of POS induction, the word ``\textbf{car}'' has no
 morphological or orthographic features therefore all the elements of
 the tuple have null value except the word type ($w$) and the context
 ($c$).  We do not perform any pull or push updates on embeddings
 during the gradient search if the corresponding $f^{(k)}$ is
 null\footnote{In the POS induction problem $w$ and $c$ represents the
-word type and context therefore they are always observed.}.
+  word type and context therefore they are always observed.}.
 
 \newpage
 \appendixsection{Language Statistics}
-\input{datatable.tex} 
+Table~\ref{tab:lmstatistics} summarizes statistics of the training
+corpora of language model and the test corpora for each language in
+the test set.  
+\input{datatable.tex}
 %% S-CODE handles two variables, whereas underlying syntactic categories
 %% can be captured by more than two different variables such as
 %% contextual, morphologic and ortographic features.  S-CODE can be
