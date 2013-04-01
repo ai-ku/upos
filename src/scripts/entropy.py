@@ -34,14 +34,16 @@ if (not word) or (not pos) or (len(word) != len(pos)):
 
 counts = []
 
+#print "counting"
 for i in range(len(pos[0])):
     h = dd(lambda: dd(int))
     for w,t in izip(word,pos):
         h[w[0]][t[i]] += 1
     counts.append(h)
 
-print "calculating entropy"
-avgentropy = 0.0
+#print "calculating entropy"
+entarr = []
+
 for i in xrange(len(pos[0])):
     entropy = 0.0
     for (w,v) in counts[i].items():
@@ -49,8 +51,11 @@ for i in xrange(len(pos[0])):
         for t in v.values():
             pr = float(t) / s
             entropy += -pr * math.log(pr,2)
-    print "%d\t%g" % (i,entropy)
-    avgentropy += entropy
-avgentropy /= 10
-print avgentropy, len(counts[0]), avgentropy/len(counts[0]), 2**(avgentropy/len(counts[0]))
+#    print "%d\t%g" % (i,2**(entropy/len(counts[i])))
+    entarr.append(2**(entropy/len(counts[i])))
 
+entvar = sum(map(lambda x: x * x,entarr))/len(entarr) - (sum(entarr)/len(entarr))**2
+print "entvar",entvar
+entbstd = math.sqrt(entvar)
+
+print "average entropy:%g var(n): %g" % (sum(entarr) / len(entarr),entbstd)
