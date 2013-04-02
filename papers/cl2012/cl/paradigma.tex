@@ -9,9 +9,9 @@ second model accepts word ($W$) - left bigram($C$) pairs as the input,
 the third model accepts word ($W$) - concatenation of the left and
 right bigrams ($C$) pairs \cite{mintz2003frequent} as the input and
 the final model accepts words ($W$) - left bigram($C_1$) and right
-bigram ($C_2$) tuples \cite{20674613} as the input to the S-CODE.  At
-the end we cluster the word types ($W$) with k-means algorithm and
-report the results on Table \ref{tab:syntagmatic}.
+bigram ($C_2$) tuples \cite{20674613} as the input to the S-CODE.
+Finally, we cluster the word type embeddings ($W$) with k-means
+algorithm and report the results on Table \ref{tab:syntagmatic}.
 \begin{table}[ht]
 \centering
 \caption{Summary of results in terms of the \mto\ and \vm\ scores of
@@ -35,6 +35,7 @@ $W$ (word) - $C$ (random substitutes) & {\bf\wsmto} & {\bf\wsvm} \\
 \end{tabular}
 \label{tab:syntagmatic}
 \end{table}
+
 To replicate the work of Maron et al. \shortcite{maron2010sphere} we
 feed word ($W$) - right bigram ($C$) pairs as the input.  At the end
 each word $w$ in the vocabulary ends up with two points on the sphere,
