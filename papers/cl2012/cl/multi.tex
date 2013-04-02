@@ -38,20 +38,19 @@ model.  Morphological features of each language are extracted by the
 method described in Section~\ref{sec:feat}.  The details of the
 language model training and feature extraction are detailed in
 Appendix~D.
-
+\input{multibesttable.tex}
 %% We ignore these results
 %% \input{tokentable.tex}
 %% \subsubsection{Results}
 %% \label{sec:multires}
-\input{multibesttable.tex}
-For each language we report results of three models: (1) word
-embeddings ($W$), (2) word embeddings with orthographic features
-($W+O$) and (3) word embeddings with both orthographic and
-morphological features ($W+O+M$).  Similar to the settings used in
-Section~\ref{sec:clustering-w}, we use the 25 dimensional sphere with 64
-substitutes for all languages.  For each language the number of
-induced clusters is set to the number of tags in the gold-set as
-presented in Table~\ref{tab:multiresults}.
+For each language we report results of three models that cluster: (1)
+word embeddings ({\em CLU-W}), (2) word embeddings with orthographic
+features ({\em CLU-W+O}) and (3) word embeddings with both orthographic
+and morphological features ({\em CLU-W+O+M}).  Similar to the settings
+used in Section~\ref{sec:clustering-w}, we use the 25 dimensional
+sphere with 64 substitutes for all languages.  For each language the
+number of induced clusters is set to the number of tags in the
+gold-set as presented in Table~\ref{tab:multiresults}.
 
 As a baseline model we chose the syntagmatic bigram version of S-CODE
 described in Section~\ref{sec:pvss} which is a very strong baseline
@@ -61,12 +60,12 @@ Table~\ref{tab:multiresults} summarizes the \mto\ and \vm\ scores of
 our models together with the syntagmatic bigram baseline and the best
 published accuracies on each language corpus.
 
-$W$ significantly outperforms the syntagmatic bigram baseline in both
-\mto\ and \vm\ scores on 14 languages.  $W+O+M$ has the
-state-of-the-art \mto\ and \vm\ accuracy on the PTB.  $W+O$ and
-$W+O+M$ achieve the highest \mto\ scores on all languages of
-MULTEXT-East corpora while scoring the highest \vm\ accuracies on
-English and Romanian.  On the CoNLL-X languages our models perform
-better than the best published \mto\ or \vm\ accuracies on 10
-languages.
+{\em CLU-W} significantly outperforms the syntagmatic bigram baseline
+in both \mto\ and \vm\ scores on 14 languages.  {\em CLU-W+O+M} has
+the state-of-the-art \mto\ and \vm\ accuracy on the PTB.  {\em
+  CLU-W+O} and {\em CLU-W+O+M} achieve the highest \mto\ scores on all
+languages of MULTEXT-East corpora while scoring the highest \vm\
+accuracies on English and Romanian.  On the CoNLL-X languages our
+models perform better than the best published \mto\ or \vm\ accuracies
+on 10 languages.
 

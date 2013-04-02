@@ -199,15 +199,15 @@ their most frequent part of speech
 \cite{Toutanova:2003:FPT:1073445.1073478}.  However the clustering
 performance on the ambiguous words (words that have more than one tag)
 degrades due to the one-tag-per-word assumption.  For example, the
-word {\it offer} is tagged as NN(399), VB(105) and VBP(34) in its 538
+word {\em offer} is tagged as NN(399), VB(105) and VBP(34) in its 538
 WSJ instances\footnote{NN, VB and VBP are three part-of-speech tags
   from the Penn Treebank corpus and they correspond to singular noun,
   verb in base form and non-$3^{rd}$person singular verb in present
-  tense, respectively.}.  In this scheme all instances of {\it offer}
-tagged with one tag and \mto\ upper bound of {\it offer} will be .7616
+  tense, respectively.}.  In this scheme all instances of {\em offer}
+tagged with one tag and \mto\ upper bound of {\em offer} will be .7616
 due to the most frequent tag NN(399). Our model in
 Section~\ref{sec:clustering-w} clusters word embeddings and achieves
-the \mto\ upper bound of {\it offer} however this is not the case for
+the \mto\ upper bound of {\em offer} however this is not the case for
 all ambiguous words.
 
 %offer tag distribution in WSJ VBP 34, VB 105, NN 399
@@ -226,7 +226,7 @@ ambiguity on the final cluster of the target word.  To solve this
 issue the target word is assigned to the cluster in which the majority
 of its substitute embeddings are present\footnote{Ties are broken
   randomly.}.  The model in Section~\ref{sec:clustering-c} clusters
-${\bf C}$ and achieves .8215 \mto\ on the word {\it offer} which is
+${\bf C}$ and achieves .8215 \mto\ on the word {\em offer} which is
 higher than the one-tag-per-word \mto\ upper bound.
 
 \paragraph{Concatenation of word and context embeddings (${\bf W\oplus
@@ -246,7 +246,7 @@ on these concatenated vectors and use majority voting to decide the
 target word cluster.  The model in
 Section~\ref{sec:clustering-concatenation} clusters concatenation of
 embeddings and outperforms the previous models by scoring .8866 \mto\
-accuracy on the word {\it offer}.
+accuracy on the word {\em offer}.
 
 The first representation applies the one-tag-per-word assumption from
 the beginning and clusters word types instead of tokens.  On the other
