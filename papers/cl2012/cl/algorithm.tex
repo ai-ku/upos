@@ -49,14 +49,14 @@ of the paper we use the term ``substitutes'' and ``random
 substitutes'' interchangeably.
 
 \begin{table}[ht]
-  \caption{The table on the left shows three possible substitutes, seperated
+  \caption{The table on the left shows three possible substitutes, separated
     with ``/'', sampled for each position in the example sentence
     \textit{``Pierre Vinken, 61 years old, will join the board as a
       nonexecutive director Nov.~29 .''} based on a 4-gram language
     model.  The right one represents the input sentence as
     co-occurrences of words and their substitutes.  Thus words on the
     left column presents the target word while words on the right column
-    represents the context of the correponding target word.}
+    represents the context of the corresponding target word.}
 \begin{tabular}{|ll|} \hline
 \textbf{Word} & \textbf{Random Substitutes}\\
 \hline
@@ -108,7 +108,7 @@ $\hdots$&\\
 \label{tab:samples}
 \end{table}
 
-\subsection{Co-occurence Embedding}
+\subsection{Co-occurrence Embedding}
 \label{sec:embedding}
 The S-CODE algorithm maps each word and substitute value in the
 co-occurrence data to an embedding on an $n$-dimensional sphere as
@@ -168,7 +168,7 @@ pairs such as (\textit{W:director}, \textit{C:chairman}) and
 embeddings of \textit{W:director} and \textit{W:chief} to be close to
 the embedding of \textit{C:chairman}.  Similar to the former case the
 embeddings of \textit{W:Pierre} and \textit{W:Frank} will be close to
-the embedding \textit{C:Mr.} becouse of the frequently observed pairs.
+the embedding \textit{C:Mr.} because of the frequently observed pairs.
 As a result the final embeddings of \textit{W:director} and
 \textit{W:chief} will be close to each other due to the common
 substitute \textit{C:chairman} and will be apart from
@@ -224,7 +224,7 @@ VBP(34) in its 538 WSJ instances\footnote{NN, VB and VBP are three
   correspond to singular noun, verb in base form and
   non-$3^{rd}$person singular verb in present tense, respectively.}.
 In this scheme all instances of {\it offer} tagged with one tag
-and the \mto\ upper bound accurcy of {\it offer} is .7616 due to
+and the \mto\ upper bound accuracy of {\it offer} is .7616 due to
 the most frequent tag NN(399). Our model in
 Section~\ref{sec:clustering-w} clusters word embeddings and achieves
 the \mto\ upper bound of {\it offer} however this is not the case
@@ -256,7 +256,7 @@ vectors where $r$ is the number of random substitutes per target word.
 For instance, the target word ``Pierre'' in Table~\ref{tab:samples}
 will be represented with three vectors that will be the concatenation
 of the embedding of {\it W:Pierre} with the embeddings of {\it C:Mr.},
-{\it C:Pierre} and {\it C:Mr.}, seperately.  Models that are based on
+{\it C:Pierre} and {\it C:Mr.}, separately.  Models that are based on
 this representation does not employ the one-tag-per-word assumption
 and clusters word tokens.  However clusters that are constructed
 according this representation tend to be sparser than the previous one
