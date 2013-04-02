@@ -28,19 +28,18 @@ The sample space of the substitute word distributions is the
 vocabulary of the language model.\footnote{Sampled substitutes might
   include the unknown word tag ``<unk>'' since it is in the language
   model vocabulary.  For example substitutes of proper nouns usually
-  include ``<unk>'' as a substitute.}  It is possible (and
-beneficial, see Section~\ref{sec:exp}) to sample more than one
-substitutes and generate more pairs from the same substitute
-distribution as in Table~\ref{tab:samples}.  The calculation of
-substitute distributions and random substitute sampling are detailed
-in Appendix~A.  To capture the relation between each word and its
-context we construct a co-occurrence representation by pairing the
-words with their random substitutes.  Table~\ref{tab:samples} shows
-random substitutes of each word and their co-occurrence representation
-on an example sentence.  A target word might appear as a word or a
-random substitute therefore to clarify this ambiguity we concatenate
-``W'' and ``C'' to words and contexts (i.e., random substitutes),
-respectively, in the co-occurrence data.
+  include ``<unk>'' as a substitute.}  It is possible (and beneficial)
+to sample more than one substitutes and generate more pairs from the
+same substitute distribution as in Table~\ref{tab:samples}.  The
+calculation of substitute distributions and random substitute sampling
+are detailed in Appendix~A.  To capture the relation between each word
+and its context we construct a co-occurrence representation by pairing
+the words with their random substitutes.  Table~\ref{tab:samples}
+shows random substitutes of each word and their co-occurrence
+representation on an example sentence.  A target word might appear
+both as a word and a random substitute therefore to clarify this
+ambiguity we concatenate ``W'' and ``C'' to words and contexts (i.e.,
+random substitutes), respectively, in the co-occurrence data.
 
 The next section explains the S-CODE algorithm which takes the
 co-occurrence data as its input and calculates the embeddings of the
@@ -143,25 +142,6 @@ will have embeddings that are apart from each other.
   \label{fig:scodeexample}
 \end{figure}
 
-%% \begin{figure}
-%% \begin{floatrow}
-%% \capbtabbox{%
-%% }
-%% {%
-%%   \caption{A co-occurrence data that
-%%  is input to the S-CODE algorithm.}%
-%% }
-%% \hspace{1cm}
-%% \ffigbox{%
-%%   \includegraphics[height=.45\textwidth]{scode-ex.png}\\  
-%% }
-%% {%
-%%   \caption{}  
-%%   \label{fig:scodeexample}
-%% }
-%% \end{floatrow}
-%% \end{figure}
-
 The co-occurrence data in Figure~\ref{fig:scodeexample} consists of
 pairs such as (\textit{W:director}, \textit{C:chairman}) and
 (\textit{W:chief}, \textit{C:chairman}) therefore S-CODE forces the
@@ -183,7 +163,7 @@ type and substitute.  Each pair in the co-occurrence data can be
 represented in three different ways by using the output of S-CODE: (1)
 word embedding (${\bf W}$) which represents the word type information,
 (2) substitute embedding (${\bf C}$) which represents the context
-information, and (3) word and substitute embeddings concatenated
+information, and (3) concatenation of word and substitute embeddings
 (${\bf W}\oplus{\bf C}$).  In the next section we apply k-means
 clustering to these three representation and analyze the
 characteristic of final clusters.
@@ -202,73 +182,71 @@ represented with embeddings on an $n$ dimensional sphere.  Therefore
 clustering the embeddings means clustering the target words in the
 original input.  We run instance weighted k-means algorithm to cluster
 the final embeddings constructed by S-CODE.  The target words can be
-represented in three ways as suggested in the previous section.
-Clustering each representation with k-means will end up with a
-clusters with different characteristics.
+represented in three ways as suggested in the previous section and the
+clustering output of each representation will have different
+characteristics.  We use instance weighted k-means to cluster each
+representation.
 
-\paragraph{Word embeddings (${\bf W}$)} All of the target word
-instances are represented with the same embedding.  For instance,
-although we sample three substitutes per target word in
-Table~\ref{tab:samples}, each unique target word has only one
-embedding in ${\bf W}$.  Thus clustering target words based on this
-representation employ the one-tag-per-word assumption from the
-beginning.  The one-tag-per-word assumption is suitable for the part
-of speech induction problem given that 93.69\% of the word occurrences
-in the human labeled PTB data are tagged with their most frequent part
-of speech \cite{Toutanova:2003:FPT:1073445.1073478}.  However the
-clustering performance on the ambiguous words (words that have more
-than one tag) degrades due to the one-tag-per-word assumption.  For
-example, the word {\it offer} is tagged as NN(399), VB(105) and
-VBP(34) in its 538 WSJ instances\footnote{NN, VB and VBP are three
-  part-of-speech tags from the Penn Treebank corpus and they
-  correspond to singular noun, verb in base form and
-  non-$3^{rd}$person singular verb in present tense, respectively.}.
-In this scheme all instances of {\it offer} tagged with one tag
-and the \mto\ upper bound accuracy of {\it offer} is .7616 due to
-the most frequent tag NN(399). Our model in
+\paragraph{Word embeddings (${\bf W}$)} All tokens of a word type are
+represented with the same embedding.  For instance, although we sample
+three substitutes per target word in Table~\ref{tab:samples}, each
+word type has only one embedding in ${\bf W}$.  Thus clustering target
+words based on this representation employ the one-tag-per-word
+assumption from the beginning.  The one-tag-per-word assumption is
+suitable for the part of speech induction problem given that 93.69\%
+of the word occurrences in the human labeled PTB data are tagged with
+their most frequent part of speech
+\cite{Toutanova:2003:FPT:1073445.1073478}.  However the clustering
+performance on the ambiguous words (words that have more than one tag)
+degrades due to the one-tag-per-word assumption.  For example, the
+word {\it offer} is tagged as NN(399), VB(105) and VBP(34) in its 538
+WSJ instances\footnote{NN, VB and VBP are three part-of-speech tags
+  from the Penn Treebank corpus and they correspond to singular noun,
+  verb in base form and non-$3^{rd}$person singular verb in present
+  tense, respectively.}.  In this scheme all instances of {\it offer}
+tagged with one tag and \mto\ upper bound of {\it offer} will be .7616
+due to the most frequent tag NN(399). Our model in
 Section~\ref{sec:clustering-w} clusters word embeddings and achieves
-the \mto\ upper bound of {\it offer} however this is not the case
-for all ambiguous words.
+the \mto\ upper bound of {\it offer} however this is not the case for
+all ambiguous words.
 
 %offer tag distribution in WSJ VBP 34, VB 105, NN 399
 \paragraph{Context embeddings (${\bf C}$)} 
-Each target word instance is represented with embeddings of its
-substitutes instead of its word embedding therefore clustering them
-does not force the one-tag-per-word assumption.  For example, the word
-``Pierre'' in Table~\ref{tab:samples} will be represented with the
-embeddings of {\it S:Mr.}, {\it S:Pierre} and {\it S:Mr.}  however
-another occurrence of the word ``Pierre'' in a different context might
-be represented with different substitutes.  It is possible to
-represent context with several substitutes, in such a case k-means
-might group substitute embeddings into different clusters which leads
-to an ambiguity on the final cluster of the target word.  To solve
-this issue the target word is assigned to the cluster in which the
-majority of its substitute embeddings are present\footnote{Ties are
-  broken randomly.}.  The model in Section~\ref{sec:clustering-c}
-clusters ${\bf C}$ and achieves .8215 \mto\ on the word {\it offer}
-which is higher than the one-tag-per-word \mto\ upper bound.
+Each target word token is represented with embeddings of its
+substitutes that depends on the token context.  Models based on this
+representation cluster word tokens and do not force the
+one-tag-per-word assumption.  For example, the word ``Pierre'' in
+Table~\ref{tab:samples} will be represented with the embeddings of
+{\it S:Mr.}, {\it S:Pierre} and {\it S:Mr.}  while another occurrence
+of the word ``Pierre'' in a different context might be represented
+with different substitutes.  It is possible to represent the context
+with several substitutes, in such a case k-means might group
+substitute embeddings into different clusters which leads to an
+ambiguity on the final cluster of the target word.  To solve this
+issue the target word is assigned to the cluster in which the majority
+of its substitute embeddings are present\footnote{Ties are broken
+  randomly.}.  The model in Section~\ref{sec:clustering-c} clusters
+${\bf C}$ and achieves .8215 \mto\ on the word {\it offer} which is
+higher than the one-tag-per-word \mto\ upper bound.
 
 \paragraph{Concatenation of word and context embeddings (${\bf W\oplus
     C}$)}
 This representation concatenates the word type and its substitute
-embeddings such that each target word token is represented with $r$
+embeddings such that each word instance is represented with $r$
 vectors where $r$ is the number of random substitutes per target word.
 For instance, the target word ``Pierre'' in Table~\ref{tab:samples}
 will be represented with three vectors that will be the concatenation
 of the embedding of {\it W:Pierre} with the embeddings of {\it C:Mr.},
 {\it C:Pierre} and {\it C:Mr.}, separately.  Models that are based on
-this representation does not employ the one-tag-per-word assumption
-and clusters word tokens.  However clusters that are constructed
-according this representation tend to be sparser than the previous one
-due to the incorporation of the ${\bf W}$ embeddings.
-%%Therefore it explicitly forces the one-tag-per-word assumption while
-%%handling the ambiguity.  
-Similar to the former case we run k-means clustering on these
-concatenated vectors and use majority voting to assign the target word
-cluster.  The model in Section~\ref{sec:clustering-concatenation}
-handles the ambiguity while using the fact that words are observed
-with their most frequent POS tag and outperforms the previous models
-by scoring .8866 \mto\ accuracy on the word {\it offer}.
+this representation do not employ the one-tag-per-word assumption and
+cluster word tokens.  Clusters that are constructed according this
+representation tend to be sparser than the previous one due to the
+concatenation of ${\bf W}$.  Similar to the former case we run k-means
+on these concatenated vectors and use majority voting to decide the
+target word cluster.  The model in
+Section~\ref{sec:clustering-concatenation} clusters concatenation of
+embeddings and outperforms the previous models by scoring .8866 \mto\
+accuracy on the word {\it offer}.
 
 The first representation applies the one-tag-per-word assumption from
 the beginning and clusters word types instead of tokens.  On the other
