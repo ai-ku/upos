@@ -3,17 +3,16 @@
 In this section we describe the components of our algorithm and their
 relationship with each other.  The algorithm predicts the syntactic
 category of a word in a given context based on its random substitutes.
-In other words first we construct the co-occurrence representation of
-words and their substitutes with the help of a language model and then
-map each value in the co-occurrence data to a corresponding embedding
-on a $n$-dimensional sphere using the S-CODE algorithm
-\cite{maron2010sphere}.  Finally, we apply k-means clustering to
-categorize the word embeddings by which we induced the word
-categories.  In the next subsection we detail the representation of
-word contexts as co-occurrence data, in Subsection~\ref{sec:embedding}
-we explain the embedding calculation and finally in
-Subsection~\ref{sec:clustering} we describe the different ways of
-embedding clustering.
+First, we construct the co-occurrence representation of words and
+their substitutes with the help of a language model and then map each
+value in the co-occurrence data to a corresponding embedding on a
+$n$-dimensional sphere using the S-CODE algorithm
+\cite{maron2010sphere}.  Finally, we apply the k-means clustering to
+categorize word embeddings by which we induce the word categories.  In
+the next subsection we detail the representation of word contexts as
+co-occurrence data, in Subsection~\ref{sec:embedding} we explain the
+embedding calculation and finally in Subsection~\ref{sec:clustering}
+we describe the different ways of embedding clustering.
 
 \subsection{Context Representation}
 \label{sec:cooc}
