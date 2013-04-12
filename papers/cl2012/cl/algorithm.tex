@@ -31,9 +31,9 @@ substitutes (with replacement) from a substitute word distribution for
 the context calculated based on an n-gram language model.  The sample
 space of the substitute word distribution is the vocabulary of the
 language model.\footnote{Sampled substitutes might include the unknown
-  word tag ``<unk>'' representing words outside the fixed size
+  word tag \unk\ representing words outside the fixed size
   vocabulary of the language model.  For example proper nouns
-  typically have ``<unk>'' as a substitute.}  In effect, we are using
+  typically have \unk\ as a substitute.}  In effect, we are using
 substitute word distributions and the sampled random substitutes as
 {\em contextual features} that represent properties of a word's
 position.  Table~\ref{tab:subdist} shows the substitute word
@@ -79,7 +79,7 @@ detailed in Appendix~A.
 \textbf{Word} & \textbf{Random Substitutes}\\
 \hline
 Pierre & \textit{Mr.}  / \textit{Pierre} /  \textit{John}\\
-Vinken & \textit{<unk>} / \textit{Beregovoy} / \textit{Cardin}\\
+Vinken & \textit{\unk} / \textit{Beregovoy} / \textit{Cardin}\\
 , & \textit{,} / \textit{,} / \textit{,}\\
 61 & \textit{48} / \textit{52} / \textit{41}\\
 years & \textit{years} /  \textit{years} /  \textit{years}\\
@@ -106,7 +106,7 @@ Nov. & \textit{April} / \textit{May} / \textit{of}\\
 W:Pierre & \textit{S:Mr.}\\
 W:Pierre & \textit{S:Pierre}\\
 W:Pierre & \textit{S:John}\\
-W:Vinken & \textit{S:<unk>}\\
+W:Vinken & \textit{S:\unk}\\
 W:Vinken & \textit{S:Beregovoy}\\
 W:Vinken & \textit{S:Cardin}\\
 $\hdots$&\\

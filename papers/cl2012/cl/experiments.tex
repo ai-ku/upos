@@ -11,37 +11,52 @@
 %% idea and applies it to the POS induction of word tokens by adding a
 %% post--processing step to the output of the S-CODE algorithm.
 
-In this section we run our model on three different representation
-that are described in Section~\ref{sec:cooc} to determine their
-performance on the English POS induction problem.  We extend the best
+In this section we present our experiments categorizing word types and
+word tokens using the three different settings that were described in
+Section~\ref{sec:clustering} to determine their performance on the
+unsupervised part of speech induction problem.  We extend the best
 performing model with orthographic and morphological features to
 improve its performance further.  Finally, we apply our best
-performing model to languages other than English.
+performing model to languages other than English to test its
+cross-language applicability.
 
-Section~\ref{sec:expset} details the test corpus and experiment
-parameters used in the rest of this work.
-Section~\ref{sec:clustering-w} is presents the sensitivity analysis of
-model parameters.  Section~\ref{sec:clustering-w},
-\ref{sec:clustering-w} and \ref{sec:clustering-concatenation} aim to
-compare performance of models on ${\bf W}$, ${\bf C}$ and ${\bf
-  W}\oplus{\bf C}$, respectively.  Section~\ref{sec:feat} explores
-morphological and orthographic features as additional sources of
-information for POS induction of word types and its results improve
-the state-of-the-art in the field of POS induction.
-Section~\ref{sec:pvss} compares our paradigmatic representation of the
-word context to previously described syntagmatic representations of
-the word context for word types.  Finally, Section~\ref{sec:multilang}
-extends the language and corpus coverage by applying the best
-performing model to 19 corpora in 15 languages.
+Section~\ref{sec:expset} details the test corpus and the experimental
+parameters used in the English experiments.
+Section~\ref{sec:clustering-w} presents experiments that cluster word
+{\em types} based on target word embeddings ${\bf W}$.
+Section~\ref{sec:clustering-s} presents experiments that cluster word
+{\em tokens} based on substitute embeddings ${\bf S}$.
+Section~\ref{sec:clustering-concatenation} presents experiments that
+also cluster word tokens based on a concatenation of target word and
+substitute embeddings ${\bf W}\oplus{\bf S}$.  Section~\ref{sec:feat}
+explores morphological and orthographic features as additional sources
+of information for POS induction of word types.  Section~\ref{sec:pvss} compares our paradigmatic
+representation of word context to previously described syntagmatic
+representations of word context for POS induction in word types to
+validate our hypothesis that the improvement we get is due to our
+original representation of word context.  Finally,
+Section~\ref{sec:multilang} extends the language and corpus coverage
+by applying the best performing model to 19 corpora in 15 languages.
+
+Our word type clustering results, first presented in
+\cite{yatbaz-sert-yuret:2012:EMNLP-CoNLL}, are still state of the art
+for English POS induction.  However in this study we show that the
+performance on ambiguous words can be further improved by clustering
+word tokens (Sections~\ref{sec:clustering-s} and
+\ref{sec:clustering-concatenation}), we improve the model that
+incorporates morphological and orthographic features
+(Section~\ref{sec:feat} and Appendix~C), and we demonstrate the
+applicability of our methods to other languages
+(Section~\ref{sec:multilang}).
 
 \subsection{Experimental Settings}
 \label{sec:expset}
 
-To make a meaningful comparison to the previous works
+To make a direct comparison with previously published results,
 % what is the test data
 the Wall Street Journal Section of the Penn Treebank (PTB) \cite{treebank3}
-was used as the test corpus (1,173,766 tokens, 49,206 types) to be
-induced.
+was used as the test corpus (1,173,766 tokens, 49,206 types) for
+English experiments.
 % what is the tag set
 The treebank uses 45 part-of-speech tags which is the set we used as
 the gold standard for comparison in our experiments.
@@ -57,31 +72,35 @@ We used SRILM \cite{Stolcke2002} to build a 4-gram language model with
 Kneser-Ney discounting.
 % what is the vocabulary
 Words that were observed less than 20 times in the language model
-training data were replaced by \textsc{unk} tags, which gave us a
+training data were replaced by \unk\ tags, which gave us a
 vocabulary size of 78,498.
 % what is the test data
 % perplexity
 The perplexity of the 4-gram language model on the test corpus is 96.
 For computational efficiency only the top 100 substitutes and their
-unnormalized probabilities were computed for each positions in the PTB
+unnormalized probabilities were computed for each position in the PTB
 % (1,173,766 tokens, 49,206 types)
 using the {\sc fastsubs} algorithm
 \cite{yuret2012fastsub}\footnote{The substitutes with unnormalized log
   probabilities can be downloaded from
   \mbox{\url{http://goo.gl/jzKH0}}.}.  The probability vectors for
 each position were normalized to add up to 1.0 giving us the final
-substitute distributions used in the rest of this study.
+substitute distributions used in the following experiments.
 
+%TODO: define phi_0, nu_0 in appendix.
 % To make a meaningful comparison on the PTB
 The experiments were run using the following default settings (unless
 otherwise stated): (i) each word was kept with its original
-capitalization, (ii) the learning rate parameters were set to
-$\varphi_0=50$, $\eta_0=0.2$ for faster convergence in log likelihood,
+capitalization, (ii) the learning rate parameters for S-CODE (see
+%Appendix~\ref{app:codethr}) 
+Appendix~B)
+were set to $\varphi_0=50$, $\eta_0=0.2$,
 (iii) the number of S-CODE iterations were set to 50 million, (iv) the
-S-CODE dimensions and $Z$ were set to 25 and 0.166, respectively, (v)
-a modified k-means algorithm with smart initialization was used
-\cite{arthur2007k}, and (vi) the number of k-means restarts were set
-to 128 to improve clustering and reduce variance.
+S-CODE dimensions and $\tilde{Z}$ were set to 25 and 0.166,
+respectively, (v) a modified k-means algorithm with smart
+initialization was used \cite{arthur2007k}, and (vi) the number of
+k-means restarts were set to 128 to improve clustering and reduce
+variance.
 
 Each experiment was repeated 10 times with different random seeds and
 the results are reported with standard errors in parentheses or error
@@ -91,15 +110,19 @@ reported in this section and the ones we cite from the literature.
 \subsection{Clustering Word Embeddings ({\bf W})}
 \label{sec:clustering-w}
 
-The S-CODE uses stochastic gradient ascent (see Appendix~B) to find
-the $\phi_w, \psi_c$ embeddings for word and random-substitute in
-these pairs on a single 25-dimensional sphere.  The algorithm cycles
-through the data until we get approximately 50 million updates.  The
+In order to categorize word types, we cluster the embeddings
+(i.e. 25-dimensional vectors) $\phi_w$ assigned to each word type $w$
+by S-CODE.  S-CODE uses stochastic gradient ascent (see Appendix~B) to
+find the $\phi_w, \psi_c$ embeddings for words and substitutes on a
+25-dimensional unit sphere.  The algorithm cycles through the
+word-substitute pair data for approximately 50 million updates.  The
 resulting $\phi_w$ vectors are clustered using an instance weighted
-k-means algorithm.  Cluster-id for each $\phi_w$ is assigned as the
-predicted cluster-id for word type $W$.  Using the default settings
-and sampling 64 substitutes for each token the many-to-one accuracy is
-\wsmto and the V-measure is \wsvm.
+k-means algorithm (each $\phi_w$ vector is weighted in proportion to
+the number of times $w$ appears in the data).  The resulting
+cluster-id for each $\phi_w$ becomes the predicted category for word
+type $w$.  Using the default settings and sampling 64 substitutes for
+each token the many-to-one accuracy is \wsmto\ and the V-measure is
+\wsvm.
 
 \begin{table*}[t] \footnotesize
 \caption{Summary of results in terms of the \mto\ and \vm\ scores.
@@ -169,6 +192,8 @@ Substitutes and Features (Sec.~\ref{sec:feat}) & \ftmto & \ftvm \\
 %% partitions the many-to-one accuracy is \rpmto\ and the V-measure is
 %% \rpvm.
 
+\subsubsection*{Sensitivity Analysis}
+
 To analyze the sensitivity of this result to our specific parameter
 settings we ran a number of experiments where each parameter was
 varied over a range of values.
@@ -193,9 +218,10 @@ varied over a range of values.
 \label{plot-s}
 \end{figure}
 
-Figure~\ref{plot-s} illustrates that the
-random-substitute result is fairly robust as long as the training
-algorithm can observe more than a few random substitutes per word.
+Figure~\ref{plot-s} illustrates that the result is fairly robust with
+respect to the number of random substitutes sampled for each target
+word token, as long as the training algorithm can observe more than a
+few random substitutes per word.
 
 \begin{figure}[ht] \centering
 %\includegraphics[width=0.5\linewidth]{plot-d.pdf}
@@ -230,9 +256,9 @@ clusters from coalescing.
 %%% I have seen the first, but the second is pure guess, need to
 %%% look.  The distances seem to be decreasing on that end as well!
 
-We find our model with random substitute to be fairly robust to
-different parameter settings and the resulting many-to-one score
-significantly better than the state-of-the-art distributional models.
+%% We find our model with random substitute to be fairly robust to
+%% different parameter settings and the resulting many-to-one score
+%% significantly better than the state-of-the-art distributional models.
 
 %% We find the random partition algorithm to be fairly robust to
 %% different parameter settings and the resulting many-to-one score
