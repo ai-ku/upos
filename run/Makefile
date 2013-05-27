@@ -189,7 +189,7 @@ rparte.%.eval: rparte.%.kmeans.gz
 	zcat $< | eval.pl -m -v -g $*.pos.gz
 
 ### WORDSUB options:
-WORDSUB=12 # Number of random substitutes per word
+WORDSUB=64 # Number of random substitutes per word
 WS_OPTIONS=-n ${WORDSUB} -s ${SEED}
 
 wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 809663253
@@ -207,7 +207,7 @@ wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-WSC_OPTIONS=-r 1 -i 9 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
+WSC_OPTIONS=-r 1 -i 10 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
@@ -637,6 +637,12 @@ plotall: displot-s.${LANGUAGE}.dat displot-v.${LANGUAGE}.dat dis+oplot-s.${LANGU
 # during the paper writing and included in the repository however not
 # in the makefile.
 #
+
+summarize: type.out.gz context.out.gz xytoken.out.gz
+	for label in 0 1 2 3 4 5 6 7 8 9; do \
+		echo "Summaring experiment $${label}";\
+		cluster-analysis-offline.py enw.words.gz enw.pos.gz $$label type.out.gz context.out.gz xytoken.out.gz |gzip > summarize.$$label.gz;\
+	done
 
 .SECONDARY: 
 	%.lm.gz %.sub.gz %.knn.gz %.vocab.gz %.words.gz %.pos.gz \
