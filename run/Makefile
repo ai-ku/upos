@@ -207,7 +207,7 @@ wordsub.%.pairs.gz: %.sub.gz ## WS_NSUB=64: time=20m55s wc=75121024 150242048 80
 # -c: calculate real Z (default false)                          
 # -m: merge vectors at output (default false)                   
 # -v: verbose messages (default false)
-WSC_OPTIONS=-r 1 -i 10 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
+WSC_OPTIONS=-r 1 -i 2 -d 25 -z 0.166 -p 50 -u 0.2 -s ${SEED} -v -a
 wordsub.%.scode.gz: wordsub.%.pairs.gz 
 	zcat $< | scode ${WSC_OPTIONS} | gzip > $@
 
